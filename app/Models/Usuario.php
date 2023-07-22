@@ -72,9 +72,9 @@ class Usuario extends Model
 		return $this->hasOne(Almacenero::class, 'nombre_usuario');
 	}
 
-	public function chofere()
+	public function chofer()
 	{
-		return $this->hasOne(Chofere::class, 'nombre_usuario');
+		return $this->hasOne(Chofer::class, 'nombre_usuario');
 	}
 
 	public function usuario_telefonos()
