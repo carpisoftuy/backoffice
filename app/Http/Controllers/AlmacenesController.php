@@ -10,6 +10,11 @@ class AlmacenesController extends Controller
     public function GetAlmacenes(Request $request){
         return Almacen::all();
     }
+
+    public function GetAlmacen(Request $request){
+        return Almacen::find($request->id);
+    }
+    
     public function CreateAlmacen(Request $request){
         $almacen = new Almacen();
         $almacen->espacio = $request->post('espacio');
