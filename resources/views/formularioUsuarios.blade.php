@@ -12,6 +12,15 @@
     /usuarios/actualizar/{{$usuario->nombre_usuario}}
     @endif
     @if(!isset($usuario))
+    @php
+    $usuario = new stdClass();
+    $usuario->nombre_usuario = '';
+    $usuario->idioma_favorito = '';
+    $usuario->isAdmin = false;
+    $usuario->isAlmacenero = false;
+    $usuario->isChofer = false;
+    
+    @endphp
     /usuarios/crear/
     @endif
     " method="post">
