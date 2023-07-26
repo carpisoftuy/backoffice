@@ -19,15 +19,3 @@ use App\Http\Controllers\BultosController;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
-
-Route::get('almacenes', [AlmacenesController::class, 'GetAlmacenes']);
-Route::get('almacenes/{id}', [AlmacenesController::class, 'GetAlmacen']);
-Route::post('almacenes', [AlmacenesController::class, 'CreateAlmacen']);
-Route::put('almacenes/{id}', [AlmacenesController::class, 'UpdateAlmacen']);
-Route::delete('almacenes/{id}', [AlmacenesController::class, 'DeleteAlmacen']);
-
-Route::get('bultos', [BultosController::class, 'GetBultos']);
-Route::get('bultos/{id}', [BultosController::class, 'GetBulto']);
-Route::post('bultos', [BultosController::class, 'CreateBulto']);
-Route::put('bultos/{id}', [BultosController::class, 'UpdateBulto']);
-Route::delete('bultos/{id}', [BultosController::class, 'DeleteBulto']);

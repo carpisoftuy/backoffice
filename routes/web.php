@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UsuariosController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,6 +14,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/', [UsuariosController::class, 'MenuUsuarios']);
+Route::get('/usuarios/crear', function(){
+    return view('formularioUsuarios');
 });
+Route::get('usuarios/actualizar/{nombre_usuario}', [UsuariosController::class, 'CrearFormulario']);
+Route::post('usuarios/actualizar/{nombre_usuario}', [UsuariosController::class, 'UpdateUsuarios']);
+Route::post('/usuarios/crear', [UsuariosController::class, 'CrearUsuario']);
+Route::get('/usuarios/borrar/{nombre_usuario}', [UsuariosController::class, 'BorrarUsuario']);
