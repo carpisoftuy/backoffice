@@ -14,15 +14,15 @@ class Roles extends Migration
     public function up()
     {
         Schema::create('admin', function (Blueprint $table){
-            $table->id('id_usuario');
+            $table->id();
                 $table->foreign('id_usuario')->references('id_usuario')->on('usuarios');
         });
         Schema::create('chofer', function (Blueprint $table){
-            $table->id('id_usuario');
+            $table->id();
                 $table->foreign('id_usuario')->references('id_usuario')->on('usuarios');
         });
         Schema::create('almacenero', function (Blueprint $table){
-            $table->id('id_usuario');
+            $table->id();
                 $table->foreign('id_usuario')->references('id_usuario')->on('usuarios');
         });
     }
