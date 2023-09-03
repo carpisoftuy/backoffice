@@ -29,6 +29,6 @@ class Informacion extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('informacion');
     }
 }
