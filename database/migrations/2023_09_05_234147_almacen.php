@@ -29,6 +29,6 @@ class Almacen extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('almacen');
     }
 }
