@@ -19,7 +19,7 @@ class CargaBulto extends Migration
             $table->foreign('id_bulto')->references('id')->on('bulto')->unique('bulto_fecha');
             $table->timestamp('fecha_inicio')->unique('bulto_fecha');
             $table->unsignedBigInteger('id_vehiculo');
-            $table->foreign('id_vehiculo')->references('id')->on('vehiculo');
+            $table->foreign('id_vehiculo')->references('id')->on('camion');
         });
     }
 
