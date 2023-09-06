@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class GestionaFin extends Migration
+class Bulto extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,13 @@ class GestionaFin extends Migration
      */
     public function up()
     {
-        Schema::create('gestiona_fin', function (Blueprint $table){
+        Schema::create('bulto', function (Blueprint $table){
             $table->id();
-            $table->foreign('id')->references('id')->on('gestiona');
-            $table->timestamp('fecha_fin');
+            $table->timestamp('fecha_armado');
+            $table->int('volumen');
+            $table->int('peso');
+            $table->int('almacen_destino');
+            $table->foreign('almacen_destino')->references('id')->on('almacen');
         });
     }
 
@@ -27,6 +30,6 @@ class GestionaFin extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('gestiona_fin');
+        Schema::dropIfExists('bulto');
     }
 }

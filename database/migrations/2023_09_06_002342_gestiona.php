@@ -15,8 +15,10 @@ class Gestiona extends Migration
     {
         Schema::create('gestiona', function (Blueprint $table){
             $table->id();
-            $table->foreign('id_usuario')->references('id')->on('almacenero')->unique();
-            $table->timestamp('fecha_inicio')->unique();
+            $table->unsignedBigInteger('id_usuario');
+            $table->foreign('id_usuario')->references('id')->on('almacenero')->unique('usuario_fecha');
+            $table->timestamp('fecha_inicio')->unique('usuario_fecha');
+            $table->unsignedBigInteger('id_almacen');
             $table->foreign('id_almacen')->references('id')->on('almacen');
         });
     }
