@@ -13,15 +13,13 @@
         <tr>
             <th>Nombre de Usuario</th>
             <th>Nombre y Apellido</th>
-            <th>E-mail</th>
             <th>Roles</th>
             <th></th>
         </tr>
         @foreach ($usuarios as $usuario)
         <tr>
-            <td>{{$usuario->nombre_usuario}}</td>
+            <td>{{$usuario->username}}</td>
             <td>{{$usuario->nombre . " " . $usuario->apellido}}</td>
-            <td>{{$usuario->email}}</td>
             <td>
             @if($usuario->isAdmin)
             Administrador
