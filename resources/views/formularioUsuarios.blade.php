@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,8 +14,6 @@
     @if(!isset($usuario))
     @php
     $usuario = new stdClass();
-    $usuario->nombre_usuario = '';
-    $usuario->idioma_favorito = '';
     $usuario->isAdmin = false;
     $usuario->isAlmacenero = false;
     $usuario->isChofer = false;
@@ -51,30 +49,7 @@
         checked
         @endif
         >
-        
-        <div id="informaciones"><button id="nuevoCampo">Nuevo Campo</button></div>
         <button type="submit">Enviar</button>
     </form>
-    <script>
-        let nuevoCampo = document.querySelector("#nuevoCampo");
-        let divInformaciones = document.querySelector("#informaciones");
-        let informaciones = {{ json_encode($usuario->informaciones) }};
-        let cantidadInformaciones = informaciones.lenght;
-        nuevoCampo.addEventListener("click", function(){
-            cantidadInformaciones++;
-            let tipo = document.createElement("input");
-            tipo.id = "tipo" + informaciones.lenght;
-            tipo.placeholder = "Tipo";
-            divInformaciones.append(tipo);
-            tipo.name= "informaciones["+cantidadInformaciones+"][tipo]"
-            let detalle = document.createElement("input");
-            detalle.id = "detalle" + cantidadInformaciones;
-            detalle.placeholder = "Detalle";
-            detalle.name= "informaciones["+cantidadInformaciones+"][detalle]"
-            divInformaciones.append(detalle);
-        })
-                
-
-    </script>
 </body>
 </html>

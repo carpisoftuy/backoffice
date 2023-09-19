@@ -73,7 +73,7 @@ class UsuariosController extends Controller
         $usuario->isAdmin = !is_null(Admin::find($usuario->id));
         $usuario->isAlmacenero = !is_null(Almacenero::find($usuario->id));
         $usuario->isChofer = !is_null(Chofer::find($usuario->id));
-        $usuario->informaciones = Informacion::where("id_usuario", "=", $usuario->id);
+        $usuario->informaciones = Informacion::where("id_usuario", "=", $usuario->id)->get();
         return view('formularioUsuarios', ["usuario" => $usuario]);
     }
 
@@ -111,15 +111,6 @@ class UsuariosController extends Controller
         if(!$request->post('chofer') && !is_null(Chofer::find($usuario->id))){
             $almacenero = Chofer::find($request->id);
             $almacenero->delete();
-        }
-
-        if(!is_null($request->post('informaciones')))
-        foreach ($request->post('informaciones') as $dato) {
-            $informacion = new Informacion();
-            $informacion->id_usuario = $usuario->id;
-            $informacion->tipo = $dato['tipo'];
-            $informacion->detalle = $dato['detalle'];
-            $informacion->save();
         }
         
         return redirect('/');
