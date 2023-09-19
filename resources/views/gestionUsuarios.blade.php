@@ -32,8 +32,8 @@
             @endif
             </td>
             <td>
-                <a href="./usuarios/borrar/{{ $usuario->nombre_usuario }}">Borrar</a>
-                <a href="./usuarios/actualizar/{{ $usuario->nombre_usuario }}">Actualizar</a>
+                <a href="./usuarios/borrar/{{ $usuario->id }}">Borrar</a>
+                <a href="./usuarios/actualizar/{{ $usuario->id }}">Actualizar</a>
             </td>
             
         </tr>
