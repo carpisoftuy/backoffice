@@ -121,6 +121,7 @@
             <td>{{$paquete_transito->matricula}}</td>
             <td>{{$paquete_transito->peso}}</td>
             <td>{{$paquete_transito->volumen}}</td>
+            <td><a href="./paquete/finalizar_transito/{{ $paquete_transito->id_paquete }}">Finalizar transito</a></td>
         </tr>
         @endforeach
     </table>

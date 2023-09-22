@@ -37,15 +37,18 @@ class UsuariosController extends Controller
         ->where([])
         ->get();
 
+        $paquetes_finalizados = DB::table('carga_paquete_fin')
+        ->select('id');
+
         $paquetes_en_transito = DB::table('carga_paquete')
-        ->select('paquete.id', 'usuario.nombre', 'usuario.apellido', 'vehiculo.matricula', 'paquete.peso', 'paquete.volumen')
+        ->select('paquete.id', 'usuario.nombre', 'usuario.apellido', 'vehiculo.matricula', 'paquete.peso', 'paquete.volumen', 'carga_paquete.id as id_paquete')
         ->join('paquete', 'carga_paquete.id_paquete', '=', 'paquete.id')
         ->join('camioneta', 'carga_paquete.id_vehiculo', '=', 'camioneta.id')
         ->join('vehiculo', 'camioneta.id', '=', 'vehiculo.id')
         ->join('maneja', 'maneja.id_vehiculo', '=', 'vehiculo.id')
         ->join('chofer', 'chofer.id', '=', 'maneja.id_usuario')
         ->join('usuario', 'usuario.id', '=', 'chofer.id')
-        ->where([])
+        ->whereNotIn('carga_paquete.id', $paquetes_finalizados)
         ->get();
 
         return view('gestionUsuarios', 
