@@ -37,12 +37,23 @@ class UsuariosController extends Controller
         ->where([])
         ->get();
 
+        $paquetes_en_transito = DB::table('carga_paquete')
+        ->select('paquete.id', 'usuario.nombre', 'usuario.apellido', 'vehiculo.matricula', 'paquete.peso', 'paquete.volumen')
+        ->join('paquete', 'carga_paquete.id_paquete', '=', 'paquete.id')
+        ->join('camioneta', 'carga_paquete.id_vehiculo', '=', 'camioneta.id')
+        ->join('vehiculo', 'camioneta.id', '=', 'vehiculo.id')
+        ->join('maneja', 'maneja.id_vehiculo', '=', 'vehiculo.id')
+        ->join('chofer', 'chofer.id', '=', 'maneja.id_usuario')
+        ->join('usuario', 'usuario.id', '=', 'chofer.id')
+        ->where([])
+        ->get();
 
         return view('gestionUsuarios', 
             ['usuarios' => $usuarios, 
             'choferes' => $choferes,
             'paquetes' => $paquetes,
-            'camionetas' => $camionetas]);
+            'camionetas' => $camionetas,
+            'paquetes_en_transito' => $paquetes_en_transito]);
     }
     public function CrearUsuario(Request $request){
         $usuario = new Usuario();

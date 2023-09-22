@@ -80,12 +80,47 @@
             <th>id</th>
             <th>Peso</th>
             <th>Volumen</th>
+            <th>Asignar camioneta</th>
+            <th></th>
         </tr>
         @foreach ($paquetes as $paquete)
+        <form action="paquete/asignar_camioneta" method="POST">
+            @csrf
+            <input name="paquete" value="{{$paquete->id}}" style="display: none">
+            <tr>
+                <td>{{$paquete->id}}</td>
+                <td>{{$paquete->peso}}</td>
+                <td>{{$paquete->volumen}}</td>
+                <td>
+                    <select name="camioneta">
+                            <option disabled selected></option>
+                        @foreach ($camionetas as $camioneta)
+                            <option value="{{$camioneta->id}}">{{$camioneta->matricula}}</option>
+                        @endforeach
+                    </select>
+                </td>
+                <td><button type="submit">Actualizar</button></td>
+            </tr>
+        </form>
+        @endforeach
+    </table>
+
+    <table>
+        <h2>Paquetes en transito</h2>
         <tr>
-            <td>{{$paquete->id}}</td>
-            <td>{{$paquete->peso}}</td>
-            <td>{{$paquete->volumen}}</td>
+            <th>id paquete</th>
+            <th>Chofer asignado</th>
+            <th>Camioneta asignada</th>
+            <th>Peso</th>
+            <th>Volumen</th>
+        </tr>
+        @foreach ($paquetes_en_transito as $paquete_transito)
+        <tr>
+            <td>{{$paquete_transito->id}}</td>
+            <td>{{$paquete_transito->nombre}}</td>
+            <td>{{$paquete_transito->matricula}}</td>
+            <td>{{$paquete_transito->peso}}</td>
+            <td>{{$paquete_transito->volumen}}</td>
         </tr>
         @endforeach
     </table>

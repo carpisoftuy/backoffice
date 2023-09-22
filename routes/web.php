@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UsuariosController;
+use App\Http\Controllers\PaqueteController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,3 +23,4 @@ Route::get('usuarios/actualizar/{id}', [UsuariosController::class, 'CrearFormula
 Route::post('usuarios/actualizar/{id}', [UsuariosController::class, 'UpdateUsuarios']);
 Route::post('/usuarios/crear', [UsuariosController::class, 'CrearUsuario']);
 Route::get('/usuarios/borrar/{id}', [UsuariosController::class, 'BorrarUsuario']);
+Route::post('/paquete/asignar_camioneta', [PaqueteController::class, 'AsignarCamioneta']);
