@@ -18,7 +18,7 @@ Route::get('/', [UsuariosController::class, 'MenuUsuarios']);
 Route::get('/usuarios/crear', function(){
     return view('formularioUsuarios');
 });
-Route::get('usuarios/actualizar/{nombre_usuario}', [UsuariosController::class, 'CrearFormulario']);
-Route::post('usuarios/actualizar/{nombre_usuario}', [UsuariosController::class, 'UpdateUsuarios']);
+Route::get('usuarios/actualizar/{id}', [UsuariosController::class, 'CrearFormulario']);
+Route::post('usuarios/actualizar/{id}', [UsuariosController::class, 'UpdateUsuarios']);
 Route::post('/usuarios/crear', [UsuariosController::class, 'CrearUsuario']);
-Route::get('/usuarios/borrar/{nombre_usuario}', [UsuariosController::class, 'BorrarUsuario']);
+Route::get('/usuarios/borrar/{id}', [UsuariosController::class, 'BorrarUsuario']);
