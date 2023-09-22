@@ -8,6 +8,7 @@ use App\Models\Admin;
 use App\Models\Chofer;
 use App\Models\Almacenero;
 use App\Models\Informacion;
+use Illuminate\Support\Facades\DB;
 
 class UsuariosController extends Controller
 {
@@ -18,7 +19,30 @@ class UsuariosController extends Controller
             $usuario->isAlmacenero = !is_null(Almacenero::find($usuario->id));
             $usuario->isChofer = !is_null(Chofer::find($usuario->id));
         }
-        return view('gestionUsuarios', ['usuarios' => $usuarios]);
+
+        $choferes = DB::table('usuario')
+        ->select('*')
+        ->join('chofer', 'chofer.id', '=', 'usuario.id')
+        ->where([])
+        ->get();
+
+        $paquetes = DB::table('paquete')
+        ->select('*')
+        ->where([])
+        ->get();
+
+        $camionetas = DB::table('camioneta')
+        ->select('*')
+        ->join('vehiculo', 'camioneta.id', '=', 'vehiculo.id')
+        ->where([])
+        ->get();
+
+
+        return view('gestionUsuarios', 
+            ['usuarios' => $usuarios, 
+            'choferes' => $choferes,
+            'paquetes' => $paquetes,
+            'camionetas' => $camionetas]);
     }
     public function CrearUsuario(Request $request){
         $usuario = new Usuario();
@@ -115,4 +139,5 @@ class UsuariosController extends Controller
         
         return redirect('/');
     }
+
 }

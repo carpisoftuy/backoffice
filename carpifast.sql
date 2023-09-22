@@ -1,782 +1,261 @@
--- phpMyAdmin SQL Dump
--- version 5.2.1
--- https://www.phpmyadmin.net/
---
--- Host: 192.168.122.1:3306
--- Generation Time: Jul 19, 2023 at 10:46 PM
--- Server version: 8.0.33
--- PHP Version: 8.1.20
-
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-START TRANSACTION;
-SET time_zone = "+00:00";
-
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
-
---
--- Database: `carpifast`
---
-CREATE DATABASE IF NOT EXISTS `carpifast` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci;
-USE `carpifast`;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `admins`
---
-
-CREATE TABLE `admins` (
-  `nombre_usuario` varchar(32) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `almaceneros`
---
-
-CREATE TABLE `almaceneros` (
-  `nombre_usuario` varchar(32) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `almacenes`
---
-
-CREATE TABLE `almacenes` (
-  `id_almacen` int UNSIGNED NOT NULL,
-  `espacio` int UNSIGNED NOT NULL COMMENT 'en L',
-  `espacio_ocupado` int UNSIGNED NOT NULL COMMENT 'en L',
-  `codigo_postal` varchar(10) NOT NULL,
-  `calle` varchar(32) NOT NULL,
-  `nro_puerta` varchar(8) NOT NULL,
-  `observaciones_direccion` varchar(255) NOT NULL,
-  `latitud` decimal(8,6) NOT NULL,
-  `longitud` decimal(8,6) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `almacen_contiene_bulto`
---
-
-CREATE TABLE `almacen_contiene_bulto` (
-  `id_bulto` int UNSIGNED NOT NULL,
-  `fecha_inicio` timestamp NOT NULL,
-  `id_almacen` int UNSIGNED NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `almacen_contiene_bulto_fin`
---
-
-CREATE TABLE `almacen_contiene_bulto_fin` (
-  `id_bulto` int UNSIGNED NOT NULL,
-  `fecha_inicio` timestamp NOT NULL,
-  `fecha_fin` timestamp NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `almacen_contiene_paquete`
---
-
-CREATE TABLE `almacen_contiene_paquete` (
-  `id_paquete` int UNSIGNED NOT NULL,
-  `fecha_inicio` timestamp NOT NULL,
-  `id_almacen` int UNSIGNED NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `almacen_contiene_paquete_fin`
---
-
-CREATE TABLE `almacen_contiene_paquete_fin` (
-  `id_paquete` int UNSIGNED NOT NULL,
-  `fecha_inicio` timestamp NOT NULL,
-  `fecha_fin` timestamp NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `bultos`
---
-
-CREATE TABLE `bultos` (
-  `id_bulto` int UNSIGNED NOT NULL,
-  `fecha_armado` timestamp NOT NULL,
-  `volumen` int UNSIGNED NOT NULL COMMENT 'en L',
-  `peso` int UNSIGNED NOT NULL COMMENT 'en Kg',
-  `destino` int UNSIGNED NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `bultos_desarmados`
---
-
-CREATE TABLE `bultos_desarmados` (
-  `id_bulto` int UNSIGNED NOT NULL,
-  `fecha_desarmado` timestamp NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `bulto_contiene`
---
-
-CREATE TABLE `bulto_contiene` (
-  `id_paquete` int UNSIGNED NOT NULL,
-  `fecha_inicio` timestamp NOT NULL,
-  `id_bulto` int UNSIGNED NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `bulto_contiene_fin`
---
-
-CREATE TABLE `bulto_contiene_fin` (
-  `id_paquete` int UNSIGNED NOT NULL,
-  `fecha_inicio` timestamp NOT NULL,
-  `fecha_fin` timestamp NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `camiones`
---
-
-CREATE TABLE `camiones` (
-  `id_camion` int UNSIGNED NOT NULL,
-  `matricula` varchar(10) NOT NULL,
-  `codigo_pais` char(2) NOT NULL,
-  `capacidad_volumen` int NOT NULL,
-  `capacidad_peso` int NOT NULL,
-  `peso_ocupado` int NOT NULL,
-  `volumen_ocupado` int NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `carga_bulto`
---
-
-CREATE TABLE `carga_bulto` (
-  `id_bulto` int UNSIGNED NOT NULL,
-  `id_camion` int UNSIGNED NOT NULL,
-  `fecha_inicio` timestamp NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `carga_bulto_fin`
---
-
-CREATE TABLE `carga_bulto_fin` (
-  `id_bulto` int UNSIGNED NOT NULL,
-  `id_camion` int UNSIGNED NOT NULL,
-  `fecha_inicio` timestamp NOT NULL,
-  `fecha_fin` timestamp NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `carga_paquete`
---
-
-CREATE TABLE `carga_paquete` (
-  `id_paquete` int UNSIGNED NOT NULL,
-  `id_camion` int UNSIGNED NOT NULL,
-  `fecha_inicio` timestamp NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `carga_paquete_fin`
---
-
-CREATE TABLE `carga_paquete_fin` (
-  `id_paquete` int UNSIGNED NOT NULL,
-  `id_camion` int UNSIGNED NOT NULL,
-  `fecha_inicio` timestamp NOT NULL,
-  `fecha_fin` timestamp NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `choferes`
---
-
-CREATE TABLE `choferes` (
-  `nombre_usuario` varchar(32) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `entrega_bulto`
---
-
-CREATE TABLE `entrega_bulto` (
-  `id_bulto` int UNSIGNED NOT NULL,
-  `fecha_entrega` timestamp NOT NULL,
-  `nombre_usuario` varchar(32) NOT NULL,
-  `id_camion` int UNSIGNED NOT NULL,
-  `fecha_inicio` timestamp NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `entrega_paquete`
---
-
-CREATE TABLE `entrega_paquete` (
-  `id_paquete` int UNSIGNED NOT NULL,
-  `fecha_entrega` timestamp NOT NULL,
-  `nombre_usuario` varchar(32) NOT NULL,
-  `id_camion` int UNSIGNED NOT NULL,
-  `fecha_inicio` timestamp NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `gestiona`
---
-
-CREATE TABLE `gestiona` (
-  `nombre_usuario` varchar(32) NOT NULL,
-  `id_almacen` int UNSIGNED NOT NULL,
-  `fecha_inicio` timestamp NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `gestiona_fin`
---
-
-CREATE TABLE `gestiona_fin` (
-  `nombre_usuario` varchar(32) NOT NULL,
-  `id_almacen` int UNSIGNED NOT NULL,
-  `fecha_inicio` timestamp NOT NULL,
-  `fecha_fin` timestamp NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `maneja`
---
-
-CREATE TABLE `maneja` (
-  `nombre_usuario` varchar(32) NOT NULL,
-  `id_camion` int UNSIGNED NOT NULL,
-  `fecha_inicio` timestamp NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `maneja_fin`
---
-
-CREATE TABLE `maneja_fin` (
-  `nombre_usuario` varchar(32) NOT NULL,
-  `id_camion` int UNSIGNED NOT NULL,
-  `fecha_inicio` timestamp NOT NULL,
-  `fecha_fin` timestamp NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `paquetes`
---
-
-CREATE TABLE `paquetes` (
-  `id_paquete` int UNSIGNED NOT NULL,
-  `peso` int UNSIGNED NOT NULL,
-  `volumen` int UNSIGNED NOT NULL,
-  `fecha_despacho` timestamp NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `paquete_para_entregar`
---
-
-CREATE TABLE `paquete_para_entregar` (
-  `id_paquete` int UNSIGNED NOT NULL,
-  `codigo_ṕostal` varchar(8) NOT NULL,
-  `calle` varchar(32) NOT NULL,
-  `nro_puerta` varchar(8) NOT NULL,
-  `observaciones_direccion` varchar(256) NOT NULL,
-  `latitud` decimal(8,6) NOT NULL,
-  `longitud` decimal(8,6) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `paquete_para_recoger`
---
-
-CREATE TABLE `paquete_para_recoger` (
-  `id_paquete` int UNSIGNED NOT NULL,
-  `id_almacen` int UNSIGNED NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `paquete_recogido`
---
-
-CREATE TABLE `paquete_recogido` (
-  `id_paquete` int UNSIGNED NOT NULL,
-  `fecha_recogido` timestamp NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `usuarios`
---
-
-CREATE TABLE `usuarios` (
-  `nombre_usuario` varchar(32) NOT NULL,
-  `contrasena` varchar(255) NOT NULL,
-  `nombre` varchar(32) NOT NULL,
-  `apellido` varchar(32) NOT NULL,
-  `email` varchar(255) NOT NULL,
-  `idioma_favorito` char(2) NOT NULL,
-  `codigo_postal` varchar(10) NOT NULL,
-  `calle` varchar(32) NOT NULL,
-  `nro_puerta` varchar(8) NOT NULL,
-  `observaciones_direccion` varchar(256) NOT NULL,
-  `latitud` decimal(8,6) NOT NULL,
-  `longitud` decimal(8,6) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `usuario_telefono`
---
-
-CREATE TABLE `usuario_telefono` (
-  `nombre_usuario` varchar(32) NOT NULL,
-  `telefono` varchar(20) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Indexes for dumped tables
---
-
---
--- Indexes for table `admins`
---
-ALTER TABLE `admins`
-  ADD PRIMARY KEY (`nombre_usuario`);
-
---
--- Indexes for table `almaceneros`
---
-ALTER TABLE `almaceneros`
-  ADD PRIMARY KEY (`nombre_usuario`);
-
---
--- Indexes for table `almacenes`
---
-ALTER TABLE `almacenes`
-  ADD PRIMARY KEY (`id_almacen`);
-
---
--- Indexes for table `almacen_contiene_bulto`
---
-ALTER TABLE `almacen_contiene_bulto`
-  ADD PRIMARY KEY (`id_bulto`,`fecha_inicio`),
-  ADD KEY `ALMACEN_CONTIENE_BULTO FK ALMACENES` (`id_almacen`);
-
---
--- Indexes for table `almacen_contiene_bulto_fin`
---
-ALTER TABLE `almacen_contiene_bulto_fin`
-  ADD KEY `ALMACEN_CONTIENE_BULTO_FIN FK ALMACEN_CONTIENE_BULTO` (`id_bulto`,`fecha_inicio`);
-
---
--- Indexes for table `almacen_contiene_paquete`
---
-ALTER TABLE `almacen_contiene_paquete`
-  ADD PRIMARY KEY (`id_paquete`,`fecha_inicio`),
-  ADD KEY `ALMACEN_CONTIENE_PAQUETE FK ALMACENES` (`id_almacen`);
-
---
--- Indexes for table `almacen_contiene_paquete_fin`
---
-ALTER TABLE `almacen_contiene_paquete_fin`
-  ADD PRIMARY KEY (`id_paquete`,`fecha_inicio`);
-
---
--- Indexes for table `bultos`
---
-ALTER TABLE `bultos`
-  ADD PRIMARY KEY (`id_bulto`),
-  ADD KEY `BULTOS FK ALMACENES` (`destino`);
-
---
--- Indexes for table `bultos_desarmados`
---
-ALTER TABLE `bultos_desarmados`
-  ADD PRIMARY KEY (`id_bulto`);
-
---
--- Indexes for table `bulto_contiene`
---
-ALTER TABLE `bulto_contiene`
-  ADD PRIMARY KEY (`id_paquete`,`fecha_inicio`) USING BTREE,
-  ADD KEY `BULTO_CONTIENE FK BULTOS` (`id_bulto`);
-
---
--- Indexes for table `bulto_contiene_fin`
---
-ALTER TABLE `bulto_contiene_fin`
-  ADD PRIMARY KEY (`id_paquete`,`fecha_inicio`);
-
---
--- Indexes for table `camiones`
---
-ALTER TABLE `camiones`
-  ADD PRIMARY KEY (`id_camion`);
-
---
--- Indexes for table `carga_bulto`
---
-ALTER TABLE `carga_bulto`
-  ADD PRIMARY KEY (`id_bulto`,`id_camion`,`fecha_inicio`),
-  ADD KEY `CARGA_BULTO FK CAMIONES` (`id_camion`);
-
---
--- Indexes for table `carga_bulto_fin`
---
-ALTER TABLE `carga_bulto_fin`
-  ADD PRIMARY KEY (`id_bulto`,`id_camion`,`fecha_inicio`);
-
---
--- Indexes for table `carga_paquete`
---
-ALTER TABLE `carga_paquete`
-  ADD PRIMARY KEY (`id_paquete`,`id_camion`,`fecha_inicio`),
-  ADD KEY `CARGA_PAQUETE FK CAMIONES` (`id_camion`);
-
---
--- Indexes for table `carga_paquete_fin`
---
-ALTER TABLE `carga_paquete_fin`
-  ADD PRIMARY KEY (`id_paquete`,`id_camion`,`fecha_inicio`);
-
---
--- Indexes for table `choferes`
---
-ALTER TABLE `choferes`
-  ADD PRIMARY KEY (`nombre_usuario`);
-
---
--- Indexes for table `entrega_bulto`
---
-ALTER TABLE `entrega_bulto`
-  ADD PRIMARY KEY (`id_bulto`),
-  ADD KEY `ENTREGA_BULTO FK MANEJA` (`nombre_usuario`,`id_camion`,`fecha_inicio`);
-
---
--- Indexes for table `entrega_paquete`
---
-ALTER TABLE `entrega_paquete`
-  ADD PRIMARY KEY (`id_paquete`),
-  ADD KEY `ENTREGA_PAQUETE FK MANEJA` (`nombre_usuario`,`id_camion`,`fecha_inicio`);
-
---
--- Indexes for table `gestiona`
---
-ALTER TABLE `gestiona`
-  ADD PRIMARY KEY (`nombre_usuario`,`id_almacen`,`fecha_inicio`),
-  ADD KEY `GESTIONA FK ALMACENES` (`id_almacen`);
-
---
--- Indexes for table `gestiona_fin`
---
-ALTER TABLE `gestiona_fin`
-  ADD KEY `GESTIONA_FIN FK GESTIONA` (`nombre_usuario`,`id_almacen`,`fecha_inicio`);
-
---
--- Indexes for table `maneja`
---
-ALTER TABLE `maneja`
-  ADD PRIMARY KEY (`nombre_usuario`,`id_camion`,`fecha_inicio`),
-  ADD KEY `MANEJA FK CAMION` (`id_camion`);
-
---
--- Indexes for table `maneja_fin`
---
-ALTER TABLE `maneja_fin`
-  ADD PRIMARY KEY (`nombre_usuario`,`id_camion`,`fecha_inicio`);
-
---
--- Indexes for table `paquetes`
---
-ALTER TABLE `paquetes`
-  ADD PRIMARY KEY (`id_paquete`);
-
---
--- Indexes for table `paquete_para_entregar`
---
-ALTER TABLE `paquete_para_entregar`
-  ADD KEY `PAQUETE_PARA_ENTREGAR FK PAQUETES` (`id_paquete`);
-
---
--- Indexes for table `paquete_para_recoger`
---
-ALTER TABLE `paquete_para_recoger`
-  ADD PRIMARY KEY (`id_paquete`),
-  ADD KEY `PAQUETE_PARA_RECOGER FK ALMACENES` (`id_almacen`);
-
---
--- Indexes for table `paquete_recogido`
---
-ALTER TABLE `paquete_recogido`
-  ADD PRIMARY KEY (`id_paquete`);
-
---
--- Indexes for table `usuarios`
---
-ALTER TABLE `usuarios`
-  ADD PRIMARY KEY (`nombre_usuario`);
-
---
--- Indexes for table `usuario_telefono`
---
-ALTER TABLE `usuario_telefono`
-  ADD PRIMARY KEY (`nombre_usuario`,`telefono`);
-
---
--- AUTO_INCREMENT for dumped tables
---
-
---
--- AUTO_INCREMENT for table `almacenes`
---
-ALTER TABLE `almacenes`
-  MODIFY `id_almacen` int UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `bultos`
---
-ALTER TABLE `bultos`
-  MODIFY `id_bulto` int UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `camiones`
---
-ALTER TABLE `camiones`
-  MODIFY `id_camion` int UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `paquetes`
---
-ALTER TABLE `paquetes`
-  MODIFY `id_paquete` int UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
--- Constraints for dumped tables
---
-
---
--- Constraints for table `admins`
---
-ALTER TABLE `admins`
-  ADD CONSTRAINT `ADMINS FK USUARIOS` FOREIGN KEY (`nombre_usuario`) REFERENCES `usuarios` (`nombre_usuario`) ON DELETE RESTRICT ON UPDATE RESTRICT;
-
---
--- Constraints for table `almaceneros`
---
-ALTER TABLE `almaceneros`
-  ADD CONSTRAINT `ALMACENEROS FK USUARIOS` FOREIGN KEY (`nombre_usuario`) REFERENCES `usuarios` (`nombre_usuario`) ON DELETE RESTRICT ON UPDATE RESTRICT;
-
---
--- Constraints for table `almacen_contiene_bulto`
---
-ALTER TABLE `almacen_contiene_bulto`
-  ADD CONSTRAINT `ALMACEN_CONTIENE_BULTO FK ALMACENES` FOREIGN KEY (`id_almacen`) REFERENCES `almacenes` (`id_almacen`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  ADD CONSTRAINT `ALMACEN_CONTIENE_BULTO FK BULTOS` FOREIGN KEY (`id_bulto`) REFERENCES `bultos` (`id_bulto`) ON DELETE RESTRICT ON UPDATE RESTRICT;
-
---
--- Constraints for table `almacen_contiene_bulto_fin`
---
-ALTER TABLE `almacen_contiene_bulto_fin`
-  ADD CONSTRAINT `ALMACEN_CONTIENE_BULTO_FIN FK ALMACEN_CONTIENE_BULTO` FOREIGN KEY (`id_bulto`,`fecha_inicio`) REFERENCES `almacen_contiene_bulto` (`id_bulto`, `fecha_inicio`) ON DELETE RESTRICT ON UPDATE RESTRICT;
-
---
--- Constraints for table `almacen_contiene_paquete`
---
-ALTER TABLE `almacen_contiene_paquete`
-  ADD CONSTRAINT `ALMACEN_CONTIENE_PAQUETE FK ALMACENES` FOREIGN KEY (`id_almacen`) REFERENCES `almacenes` (`id_almacen`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  ADD CONSTRAINT `ALMACEN_CONTIENE_PAQUETE FK PAQUETES` FOREIGN KEY (`id_paquete`) REFERENCES `paquetes` (`id_paquete`) ON DELETE RESTRICT ON UPDATE RESTRICT;
-
---
--- Constraints for table `almacen_contiene_paquete_fin`
---
-ALTER TABLE `almacen_contiene_paquete_fin`
-  ADD CONSTRAINT `ALMACEN_CONTIENE_PAQUETE_FIN FK ALMACEN_CONTIENE_PAQUETE` FOREIGN KEY (`id_paquete`,`fecha_inicio`) REFERENCES `almacen_contiene_paquete` (`id_paquete`, `fecha_inicio`) ON DELETE RESTRICT ON UPDATE RESTRICT;
-
---
--- Constraints for table `bultos`
---
-ALTER TABLE `bultos`
-  ADD CONSTRAINT `BULTOS FK ALMACENES` FOREIGN KEY (`destino`) REFERENCES `almacenes` (`id_almacen`) ON DELETE RESTRICT ON UPDATE RESTRICT;
-
---
--- Constraints for table `bultos_desarmados`
---
-ALTER TABLE `bultos_desarmados`
-  ADD CONSTRAINT `BULTOS_DESARMADOS FK  BULTOS` FOREIGN KEY (`id_bulto`) REFERENCES `bultos` (`id_bulto`) ON DELETE RESTRICT ON UPDATE RESTRICT;
-
---
--- Constraints for table `bulto_contiene`
---
-ALTER TABLE `bulto_contiene`
-  ADD CONSTRAINT `BULTO_CONTIENE FK BULTOS` FOREIGN KEY (`id_bulto`) REFERENCES `bultos` (`id_bulto`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  ADD CONSTRAINT `BULTO_CONTIENE FK PAQUETES` FOREIGN KEY (`id_paquete`) REFERENCES `paquetes` (`id_paquete`) ON DELETE RESTRICT ON UPDATE RESTRICT;
-
---
--- Constraints for table `bulto_contiene_fin`
---
-ALTER TABLE `bulto_contiene_fin`
-  ADD CONSTRAINT `BULTO_CONTIENE_FIN FK BULTO_CONTIENE` FOREIGN KEY (`id_paquete`,`fecha_inicio`) REFERENCES `bulto_contiene` (`id_paquete`, `fecha_inicio`) ON DELETE RESTRICT ON UPDATE RESTRICT;
-
---
--- Constraints for table `carga_bulto`
---
-ALTER TABLE `carga_bulto`
-  ADD CONSTRAINT `CARGA_BULTO FK BULTOS` FOREIGN KEY (`id_bulto`) REFERENCES `bultos` (`id_bulto`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  ADD CONSTRAINT `CARGA_BULTO FK CAMIONES` FOREIGN KEY (`id_camion`) REFERENCES `camiones` (`id_camion`) ON DELETE RESTRICT ON UPDATE RESTRICT;
-
---
--- Constraints for table `carga_bulto_fin`
---
-ALTER TABLE `carga_bulto_fin`
-  ADD CONSTRAINT `CARGA_BULTO_FIN FK CARGA_BULTO` FOREIGN KEY (`id_bulto`,`id_camion`,`fecha_inicio`) REFERENCES `carga_bulto` (`id_bulto`, `id_camion`, `fecha_inicio`) ON DELETE RESTRICT ON UPDATE RESTRICT;
-
---
--- Constraints for table `carga_paquete`
---
-ALTER TABLE `carga_paquete`
-  ADD CONSTRAINT `CARGA_PAQUETE FK CAMIONES` FOREIGN KEY (`id_camion`) REFERENCES `camiones` (`id_camion`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  ADD CONSTRAINT `CARGA_PAQUETE FK PAQUETES` FOREIGN KEY (`id_paquete`) REFERENCES `paquetes` (`id_paquete`) ON DELETE RESTRICT ON UPDATE RESTRICT;
-
---
--- Constraints for table `carga_paquete_fin`
---
-ALTER TABLE `carga_paquete_fin`
-  ADD CONSTRAINT `CARGA_PAQUETE_FIN FK CARGA_PAQUETE` FOREIGN KEY (`id_paquete`,`id_camion`,`fecha_inicio`) REFERENCES `carga_paquete` (`id_paquete`, `id_camion`, `fecha_inicio`) ON DELETE RESTRICT ON UPDATE RESTRICT;
-
---
--- Constraints for table `choferes`
---
-ALTER TABLE `choferes`
-  ADD CONSTRAINT `CHOFERES FK USUARIOS` FOREIGN KEY (`nombre_usuario`) REFERENCES `usuarios` (`nombre_usuario`) ON DELETE RESTRICT ON UPDATE RESTRICT;
-
---
--- Constraints for table `entrega_bulto`
---
-ALTER TABLE `entrega_bulto`
-  ADD CONSTRAINT `ENTREGA_BULTO FK BULTOS` FOREIGN KEY (`id_bulto`) REFERENCES `bultos` (`id_bulto`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  ADD CONSTRAINT `ENTREGA_BULTO FK MANEJA` FOREIGN KEY (`nombre_usuario`,`id_camion`,`fecha_inicio`) REFERENCES `maneja` (`nombre_usuario`, `id_camion`, `fecha_inicio`) ON DELETE RESTRICT ON UPDATE RESTRICT;
-
---
--- Constraints for table `entrega_paquete`
---
-ALTER TABLE `entrega_paquete`
-  ADD CONSTRAINT `ENTREGA_PAQUETE FK MANEJA` FOREIGN KEY (`nombre_usuario`,`id_camion`,`fecha_inicio`) REFERENCES `maneja` (`nombre_usuario`, `id_camion`, `fecha_inicio`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  ADD CONSTRAINT `ENTREGA_PAQUETE FK PAQUETE` FOREIGN KEY (`id_paquete`) REFERENCES `paquete_para_entregar` (`id_paquete`) ON DELETE RESTRICT ON UPDATE RESTRICT;
-
---
--- Constraints for table `gestiona`
---
-ALTER TABLE `gestiona`
-  ADD CONSTRAINT `GESTIONA FK ALMACENEROS` FOREIGN KEY (`nombre_usuario`) REFERENCES `almaceneros` (`nombre_usuario`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  ADD CONSTRAINT `GESTIONA FK ALMACENES` FOREIGN KEY (`id_almacen`) REFERENCES `almacenes` (`id_almacen`) ON DELETE RESTRICT ON UPDATE RESTRICT;
-
---
--- Constraints for table `gestiona_fin`
---
-ALTER TABLE `gestiona_fin`
-  ADD CONSTRAINT `GESTIONA_FIN FK GESTIONA` FOREIGN KEY (`nombre_usuario`,`id_almacen`,`fecha_inicio`) REFERENCES `gestiona` (`nombre_usuario`, `id_almacen`, `fecha_inicio`) ON DELETE RESTRICT ON UPDATE RESTRICT;
-
---
--- Constraints for table `maneja`
---
-ALTER TABLE `maneja`
-  ADD CONSTRAINT `MANEJA FK CAMION` FOREIGN KEY (`id_camion`) REFERENCES `camiones` (`id_camion`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  ADD CONSTRAINT `MANEJA FK CHOFERES` FOREIGN KEY (`nombre_usuario`) REFERENCES `choferes` (`nombre_usuario`) ON DELETE RESTRICT ON UPDATE RESTRICT;
-
---
--- Constraints for table `maneja_fin`
---
-ALTER TABLE `maneja_fin`
-  ADD CONSTRAINT `MANEJA_FIN FK MANEJA` FOREIGN KEY (`nombre_usuario`,`id_camion`,`fecha_inicio`) REFERENCES `maneja` (`nombre_usuario`, `id_camion`, `fecha_inicio`) ON DELETE RESTRICT ON UPDATE RESTRICT;
-
---
--- Constraints for table `paquete_para_entregar`
---
-ALTER TABLE `paquete_para_entregar`
-  ADD CONSTRAINT `PAQUETE_PARA_ENTREGAR FK PAQUETES` FOREIGN KEY (`id_paquete`) REFERENCES `paquetes` (`id_paquete`) ON DELETE RESTRICT ON UPDATE RESTRICT;
-
---
--- Constraints for table `paquete_para_recoger`
---
-ALTER TABLE `paquete_para_recoger`
-  ADD CONSTRAINT `PAQUETE_PARA_RECOGER FK ALMACENES` FOREIGN KEY (`id_almacen`) REFERENCES `almacenes` (`id_almacen`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  ADD CONSTRAINT `PAQUETE_PARA_RECOGER FK PAQUETES` FOREIGN KEY (`id_paquete`) REFERENCES `paquetes` (`id_paquete`) ON DELETE RESTRICT ON UPDATE RESTRICT;
-
---
--- Constraints for table `paquete_recogido`
---
-ALTER TABLE `paquete_recogido`
-  ADD CONSTRAINT `PAQUETE_RECOGIDO FK PAQUETE_PARA_RECOGER` FOREIGN KEY (`id_paquete`) REFERENCES `paquetes` (`id_paquete`) ON DELETE RESTRICT ON UPDATE RESTRICT;
-
---
--- Constraints for table `usuario_telefono`
---
-ALTER TABLE `usuario_telefono`
-  ADD CONSTRAINT `USUARIO_TELEFONO FK USUARIOS` FOREIGN KEY (`nombre_usuario`) REFERENCES `usuarios` (`nombre_usuario`) ON DELETE RESTRICT ON UPDATE RESTRICT;
-COMMIT;
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+create database carpisoft;
+use carpisoft;
+
+create table usuario(
+id bigint unsigned auto_increment not null,
+username varchar(32) not null,
+password varchar(256) not null,
+nombre varchar(32) not null,
+apellido varchar(32) not null,
+primary key (id),
+UNIQUE (username)
+);
+
+create table informacion(
+id bigint unsigned auto_increment not null,
+id_usuario bigint unsigned not null,
+tipo varchar(16) not null,
+detalle varchar(256) not null,
+primary key (id),
+FOREIGN KEY (id_usuario) REFERENCES usuario(id)
+);
+
+create table administrador(
+id bigint unsigned not null,
+primary key (id),
+FOREIGN KEY (id) REFERENCES usuario(id)
+);
+
+create table chofer(
+id bigint unsigned not null,
+primary key (id),
+FOREIGN KEY (id) REFERENCES usuario(id)
+);
+
+create table almacenero(
+id bigint unsigned not null,
+primary key (id),
+FOREIGN KEY (id) REFERENCES usuario(id)
+);
+
+create table ubicacion(
+id bigint unsigned auto_increment not null,
+direccion varchar(256) not null,
+codigo_postal varchar(8) not null,
+latitud decimal(10,8) not null,
+longitud decimal(10,8) not null,
+primary key (id)
+);
+
+create table almacen(
+id bigint unsigned auto_increment not null,
+espacio int not null,
+espacio_ocupado int not null,
+id_ubicacion bigint unsigned not null,
+primary key (id),
+FOREIGN KEY (id_ubicacion) REFERENCES ubicacion(id)
+);
+
+create table gestiona(
+id bigint unsigned auto_increment not null,
+id_usuario bigint unsigned not null,
+fecha_inicio timestamp not null,
+id_almacen bigint unsigned not null,
+primary key (id),
+UNIQUE (id_usuario, fecha_inicio),
+FOREIGN KEY (id_usuario) REFERENCES almacenero(id),
+FOREIGN KEY (id_almacen) REFERENCES almacen(id)
+);
+
+create table gestiona_fin(
+id bigint unsigned not null,
+fecha_fin timestamp not null,
+primary key (id),
+FOREIGN KEY (id) REFERENCES gestiona(id)
+);
+
+create table bulto(
+id bigint unsigned auto_increment not null,
+fecha_armado timestamp not null,
+volumen int not null,
+peso int not null,
+almacen_destino bigint unsigned not null,
+primary key (id),
+FOREIGN KEY (almacen_destino) REFERENCES almacen(id)
+);
+
+create table bulto_desarmado(
+id bigint unsigned not null,
+fecha_desarmado timestamp not null,
+primary key (id),
+FOREIGN KEY (id) REFERENCES bulto(id)
+);
+
+create table paquete(
+id bigint unsigned auto_increment not null,
+fecha_despacho timestamp not null,
+peso int not null,
+volumen int not null,
+primary key (id)
+);
+
+create table paquete_para_recoger(
+id bigint unsigned not null,
+almacen_destino bigint unsigned not null,
+primary key (id),
+FOREIGN KEY (id) REFERENCES paquete(id),
+FOREIGN KEY (almacen_destino) REFERENCES almacen(id)
+);
+
+create table paquete_recogido(
+id bigint unsigned not null,
+fecha_recogido timestamp not null,
+primary key (id),
+FOREIGN KEY (id) REFERENCES paquete_para_recoger(id)
+);
+
+create table paquete_para_entregar(
+id bigint unsigned not null,
+ubicacion_destino bigint unsigned not null,
+primary key (id),
+FOREIGN KEY (id) REFERENCES paquete(id),
+FOREIGN KEY (ubicacion_destino) REFERENCES ubicacion(id)
+);
+
+create table paquete_entregado(
+id bigint unsigned not null,
+fecha_entregado timestamp not null,
+primary key (id),
+FOREIGN KEY (id) REFERENCES paquete_para_entregar(id)
+);
+
+create table almacen_contiene_bulto(
+id bigint unsigned auto_increment not null,
+id_bulto bigint unsigned not null,
+fecha_inicio timestamp not null,
+id_almacen bigint unsigned not null,
+primary key (id),
+UNIQUE(id_bulto, fecha_inicio),
+FOREIGN KEY (id_bulto) REFERENCES bulto(id),
+FOREIGN KEY (id_almacen) REFERENCES almacen(id)
+);
+
+create table almacen_contiene_bulto_fin(
+id bigint unsigned not null,
+fecha_fin timestamp not null,
+primary key (id),
+FOREIGN KEY (id) REFERENCES almacen_contiene_bulto(id)
+);
+
+create table almacen_contiene_paquete(
+id bigint unsigned auto_increment not null,
+id_paquete bigint unsigned not null,
+fecha_inicio timestamp not null,
+id_almacen bigint unsigned not null,
+primary key (id),
+UNIQUE(id_paquete, fecha_inicio),
+FOREIGN KEY (id_paquete) REFERENCES paquete(id),
+FOREIGN KEY (id_almacen) REFERENCES almacen(id)
+);
+
+create table almacen_contiene_paquete_fin(
+id bigint unsigned not null,
+fecha_fin timestamp not null,
+primary key (id),
+FOREIGN KEY (id) REFERENCES almacen_contiene_paquete(id)
+);
+
+create table bulto_contiene(
+id bigint unsigned auto_increment not null,
+id_paquete bigint unsigned not null,
+fecha_inicio timestamp not null,
+id_bulto bigint unsigned not null,
+primary key (id),
+FOREIGN KEY (id_paquete) REFERENCES paquete(id),
+FOREIGN KEY (id_bulto) REFERENCES bulto(id)
+);
+
+create table bulto_contiene_fin(
+id bigint unsigned not null,
+fecha_fin timestamp not null,
+primary key (id),
+FOREIGN KEY (id) REFERENCES bulto_contiene(id)
+);
+
+create table vehiculo(
+id bigint unsigned auto_increment not null,
+codigo_pais varchar(3) not null,
+matricula varchar(16) not null,
+capacidad_volumen int not null,
+capacidad_peso int not null,
+peso_ocupado int not null,
+volumen_ocupado int not null,
+primary key (id),
+UNIQUE(codigo_pais, matricula)
+);
+
+create table camion(
+id bigint unsigned not null,
+primary key (id),
+FOREIGN KEY (id) REFERENCES vehiculo(id)
+);
+
+create table camioneta(
+id bigint unsigned not null,
+primary key (id),
+FOREIGN KEY (id) REFERENCES vehiculo(id)
+);
+
+create table maneja(
+id bigint unsigned auto_increment not null,
+id_vehiculo bigint unsigned not null,
+id_usuario bigint unsigned not null,
+fecha_inicio timestamp not null,
+primary key (id),
+UNIQUE(id_vehiculo, fecha_inicio),
+FOREIGN KEY (id_vehiculo) REFERENCES vehiculo(id),
+FOREIGN KEY (id_usuario) REFERENCES chofer(id)
+);
+
+create table maneja_fin(
+id bigint unsigned not null,
+fecha_fin timestamp not null,
+primary key (id),
+FOREIGN KEY (id) REFERENCES maneja(id)
+);
+
+create table carga_bulto(
+id bigint unsigned auto_increment not null,
+id_bulto bigint unsigned not null,
+fecha_inicio timestamp not null,
+id_vehiculo bigint unsigned not null,
+primary key (id),
+UNIQUE(id_bulto, fecha_inicio),
+FOREIGN KEY (id_bulto) REFERENCES bulto(id),
+FOREIGN KEY (id_vehiculo) REFERENCES camion(id)
+);
+
+create table  carga_bulto_fin(
+id bigint unsigned not null,
+fecha_fin timestamp not null,
+primary key (id),
+FOREIGN KEY (id) REFERENCES carga_bulto(id)
+);
+
+create table carga_paquete(
+id bigint unsigned auto_increment not null,
+id_paquete bigint unsigned not null,
+fecha_inicio timestamp not null,
+id_vehiculo bigint unsigned not null,
+primary key (id),
+UNIQUE(id_paquete, fecha_inicio),
+FOREIGN KEY (id_paquete) REFERENCES paquete(id),
+FOREIGN KEY (id_vehiculo) REFERENCES vehiculo(id)
+);
+
+create table  carga_paquete_fin(
+id bigint unsigned not null,
+fecha_fin timestamp not null,
+primary key (id),
+FOREIGN KEY (id) REFERENCES carga_paquete(id)
+);
