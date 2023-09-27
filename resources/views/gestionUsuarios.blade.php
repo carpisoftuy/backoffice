@@ -47,13 +47,26 @@
             <th>id</th>
             <th>Nombre de usuario</th>
             <th>Nombre y apellido</th>
-            <th></th>
+            <th>Asignar camioneta</th>
         </tr>
         @foreach ($choferes as $chofer)
         <tr>
-            <td>{{$chofer->id}}</td>
-            <td>{{$chofer->username}}</td>
-            <td>{{$chofer->nombre . " " . $chofer->apellido}}</td>
+            <form method="post" action="chofer/asignar_camioneta">
+                @csrf
+                <input name="id_usuario" value="{{$chofer->id}}" style="display: none">
+                <td>{{$chofer->id}}</td>
+                <td>{{$chofer->username}}</td>
+                <td>{{$chofer->nombre . " " . $chofer->apellido}}</td>
+                <td>
+                    <select name="id_vehiculo">
+                        <option disabled selected></option>
+                    @foreach ($camionetas as $camioneta)
+                        <option value="{{$camioneta->id}}">{{$camioneta->matricula}}</option>
+                    @endforeach
+                </select>
+                </td>
+                <td><button type="submit">Actualizar</button></td>
+            </form>
         </tr>
         @endforeach
     </table>

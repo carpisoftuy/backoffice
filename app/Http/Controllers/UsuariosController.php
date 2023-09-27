@@ -154,4 +154,12 @@ class UsuariosController extends Controller
         return redirect('/');
     }
 
+    public function AsignarChoferACamioneta(Request $request){
+
+        $maneja = DB::table('maneja')
+        ->insert(['id_vehiculo' => $request->post('id_vehiculo'),
+                  'id_usuario' => $request->post('id_usuario')]);
+
+    }
+
 }
