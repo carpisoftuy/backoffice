@@ -15,18 +15,46 @@ use App\Http\Controllers\PaqueteController;
 |
 */
 
-Route::get('/', [UsuariosController::class, 'MenuUsuarios']);
-Route::get('/usuarios/crear', function(){
-    return view('formularioUsuarios');
-});
-Route::get('usuarios/actualizar/{id}', [UsuariosController::class, 'CrearFormulario']);
-Route::post('usuarios/actualizar/{id}', [UsuariosController::class, 'UpdateUsuarios']);
-Route::post('/usuarios/crear', [UsuariosController::class, 'CrearUsuario']);
-Route::get('/usuarios/borrar/{id}', [UsuariosController::class, 'BorrarUsuario']);
-Route::post('/paquete/asignar_camioneta', [PaqueteController::class, 'AsignarCamioneta']);
-Route::get('/paquete/finalizar_transito/{id}', [PaqueteController::class, 'FinalizarTransito']);
-Route::post('/chofer/asignar_camioneta', [UsuariosController::class, 'AsignarChoferACamioneta']);
+Route::prefix("v1")->group(function(){
 
-Route::get('/backoffice', function(){
-    return view('backoffice');
+    Route::get('/', [UsuariosController::class, 'MenuUsuarios']);
+    Route::get('/usuarios/crear', function(){
+        return view('formularioUsuarios');
+    });
+
+    Route::get('usuarios/actualizar/{id}', [UsuariosController::class, 'CrearFormulario']);
+    Route::post('usuarios/actualizar/{id}', [UsuariosController::class, 'UpdateUsuarios']);
+    Route::post('/usuarios/crear', [UsuariosController::class, 'CrearUsuario']);
+    Route::get('/usuarios/borrar/{id}', [UsuariosController::class, 'BorrarUsuario']);
+    Route::post('/paquete/asignar_camioneta', [PaqueteController::class, 'AsignarCamioneta']);
+    Route::get('/paquete/finalizar_transito/{id}', [PaqueteController::class, 'FinalizarTransito']);
+    Route::post('/chofer/asignar_camioneta', [UsuariosController::class, 'AsignarChoferACamioneta']);
+
+    Route::get('/backoffice', function(){
+        return view('backoffice');
 });
+
+});
+
+Route::prefix("v2")->group(function(){
+
+    Route::get('/', [UsuariosController::class, 'MenuUsuarios']);
+    Route::get('/usuarios/crear', function(){
+        return view('formularioUsuarios');
+    });
+
+    Route::get('usuarios/actualizar/{id}', [UsuariosController::class, 'CrearFormulario']);
+    Route::post('usuarios/actualizar/{id}', [UsuariosController::class, 'UpdateUsuarios']);
+    Route::post('/usuarios/crear', [UsuariosController::class, 'CrearUsuario']);
+    Route::get('/usuarios/borrar/{id}', [UsuariosController::class, 'BorrarUsuario']);
+    Route::post('/paquete/asignar_camioneta', [PaqueteController::class, 'AsignarCamioneta']);
+    Route::get('/paquete/finalizar_transito/{id}', [PaqueteController::class, 'FinalizarTransito']);
+    Route::post('/chofer/asignar_camioneta', [UsuariosController::class, 'AsignarChoferACamioneta']);
+
+    Route::get('/backoffice', function(){
+        return view('backoffice');
+});
+
+});
+
+
