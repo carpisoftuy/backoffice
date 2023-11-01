@@ -26,3 +26,7 @@ Route::get('/usuarios/borrar/{id}', [UsuariosController::class, 'BorrarUsuario']
 Route::post('/paquete/asignar_camioneta', [PaqueteController::class, 'AsignarCamioneta']);
 Route::get('/paquete/finalizar_transito/{id}', [PaqueteController::class, 'FinalizarTransito']);
 Route::post('/chofer/asignar_camioneta', [UsuariosController::class, 'AsignarChoferACamioneta']);
+
+Route::get('/backoffice', function(){
+    return view('backoffice');
+});
