@@ -1,6 +1,3 @@
-create database carpisoft;
-use carpisoft;
-
 create table usuario(
 id bigint unsigned auto_increment not null,
 username varchar(32) not null,
@@ -42,8 +39,8 @@ create table ubicacion(
 id bigint unsigned auto_increment not null,
 direccion varchar(256) not null,
 codigo_postal varchar(8) not null,
-latitud decimal(10,8) not null,
-longitud decimal(10,8) not null,
+latitud decimal(11,8) not null,
+longitud decimal(11,8) not null,
 primary key (id)
 );
 
@@ -62,7 +59,7 @@ id_usuario bigint unsigned not null,
 fecha_inicio timestamp not null,
 id_almacen bigint unsigned not null,
 primary key (id),
-UNIQUE (id_usuario, fecha_inicio),
+UNIQUE (id_usuario, fecha_inicio), -- por laravel
 FOREIGN KEY (id_usuario) REFERENCES almacenero(id),
 FOREIGN KEY (id_almacen) REFERENCES almacen(id)
 );
