@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
+use App\Models\Vehiculo;
 
 class DeleteVehiculoTest extends TestCase
 {
@@ -13,10 +14,19 @@ class DeleteVehiculoTest extends TestCase
      *
      * @return void
      */
-    public function test_example()
-    {
-        $response = $this->get('/');
+    public function testDeleteAlmacenCorrectamente(){
 
-        $response->assertStatus(200);
+        $vehiculo = Vehiculo::create([
+            'codigo_pais' => "UYU",
+            'matricula' => "SBZ-1441",
+            'capacidad_volumen' => 1000,
+            'capacidad_peso' => 1000,
+            'peso_ocupado' => 0,
+            'volumen_ocupado' => 0
+       ]);
+   
+       $response = $this->delete("/v2/vehiculos/{$vehiculo->id}");
+       $response->assertStatus(200);
+   
     }
 }
