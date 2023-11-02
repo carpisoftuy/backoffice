@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UsuariosController;
 use App\Http\Controllers\PaqueteController;
+use App\Http\Controllers\VehiculoController;
 
 /*
 |--------------------------------------------------------------------------
@@ -47,13 +48,21 @@ Route::prefix("v2")->group(function(){
     Route::post('usuarios/actualizar/{id}', [UsuariosController::class, 'UpdateUsuarios']);
     Route::post('/usuarios/crear', [UsuariosController::class, 'CrearUsuario']);
     Route::get('/usuarios/borrar/{id}', [UsuariosController::class, 'BorrarUsuario']);
+
     Route::post('/paquete/asignar_camioneta', [PaqueteController::class, 'AsignarCamioneta']);
     Route::get('/paquete/finalizar_transito/{id}', [PaqueteController::class, 'FinalizarTransito']);
+
     Route::post('/chofer/asignar_camioneta', [UsuariosController::class, 'AsignarChoferACamioneta']);
+
+    Route::get('/vehiculos', [VehiculoController::class, 'GetVehiculos']);
+    Route::get('/vehiculos/{id}', [VehiculoController::class, 'GetVehiculo']);
+    Route::post('/vehiculos', [VehiculoController::class, 'CreateVehiculo']);
+    Route::put('/vehiculos/{id}', [VehiculoController::class, 'UpdateVehiculo']);
+    Route::delete('/vehiculos/{id}', [VehiculoController::class, 'DeleteVehiculo']);
 
     Route::get('/backoffice', function(){
         return view('backoffice');
-});
+    });
 
 });
 

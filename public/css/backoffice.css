@@ -12,6 +12,12 @@
     color: var(--color-fuente);
 }
 
+h2, table, .table-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 body{
     background-color: var(--background);
 }
