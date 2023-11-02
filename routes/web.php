@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UsuariosController;
 use App\Http\Controllers\PaqueteController;
 use App\Http\Controllers\VehiculoController;
+use App\Http\Controllers\AlmacenesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -59,6 +60,12 @@ Route::prefix("v2")->group(function(){
     Route::post('/vehiculos', [VehiculoController::class, 'CreateVehiculo']);
     Route::put('/vehiculos/{id}', [VehiculoController::class, 'UpdateVehiculo']);
     Route::delete('/vehiculos/{id}', [VehiculoController::class, 'DeleteVehiculo']);
+
+    Route::get('almacenes', [AlmacenesController::class, 'GetAlmacenes']);
+    Route::get('almacenes/{id}', [AlmacenesController::class, 'GetAlmacen']);
+    Route::post('almacenes', [AlmacenesController::class, 'CreateAlmacen']);
+    Route::put('almacenes/{id}', [AlmacenesController::class, 'UpdateAlmacen']);
+    Route::delete('almacenes/{id}', [AlmacenesController::class, 'DeleteAlmacen']);
 
     Route::get('/backoffice', function(){
         return view('backoffice');
