@@ -5,6 +5,7 @@ use App\Http\Controllers\UsuariosController;
 use App\Http\Controllers\PaqueteController;
 use App\Http\Controllers\VehiculoController;
 use App\Http\Controllers\AlmacenesController;
+use App\Http\Controllers\UbicacionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -66,6 +67,12 @@ Route::prefix("v2")->group(function(){
     Route::post('almacenes', [AlmacenesController::class, 'CreateAlmacen']);
     Route::put('almacenes/{id}', [AlmacenesController::class, 'UpdateAlmacen']);
     Route::delete('almacenes/{id}', [AlmacenesController::class, 'DeleteAlmacen']);
+
+    Route::get('ubicaciones', [UbicacionController::class, 'GetUbicaciones']);
+    Route::get('ubicaciones/{id}', [UbicacionController::class, 'GetUbicacion']);
+    Route::post('ubicaciones/', [UbicacionController::class, 'CreateUbicacion']);
+    Route::put('ubicaciones/{id}', [UbicacionController::class, 'UpdateUbicacion']);
+    Route::delete('ubicaciones/{id}', [UbicacionController::class, 'DeleteUbicacion']);
 
     Route::get('/backoffice', function(){
         return view('backoffice');
