@@ -56,6 +56,7 @@ Route::prefix("v2")->group(function(){
 
     Route::post('/chofer/asignar_camioneta', [UsuariosController::class, 'AsignarChoferACamioneta']);
 
+    
     Route::get('/vehiculos', [VehiculoController::class, 'GetVehiculos']);
     Route::get('/vehiculos/{id}', [VehiculoController::class, 'GetVehiculo']);
     Route::post('/vehiculos', [VehiculoController::class, 'CreateVehiculo']);

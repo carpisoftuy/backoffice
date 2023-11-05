@@ -137,6 +137,24 @@
         </table>
     </div>
 
+    <h2>Camiones</h2>
+    <div class="table-container">
+        <table>
+            <tr>
+                <th>id</th>
+                <th>Pais registrado</th>
+                <th>Matrícula</th>
+            </tr>
+            @foreach ($camiones as $camion)
+            <tr>
+                <td>{{$camion->id}}</td>
+                <td>{{$camion->codigo_pais}}</td>
+                <td>{{$camion->matricula}}</td>
+            </tr>
+            @endforeach
+        </table>
+    </div>
+
     <h2>Paquetes</h2>
     <div class="table-container">
         <table>

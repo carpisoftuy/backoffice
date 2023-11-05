@@ -37,6 +37,11 @@ class UsuariosController extends Controller
         ->where([])
         ->get();
 
+        $camiones = DB::table('camion')
+        ->select('*')
+        ->join('vehiculo', 'camion.id', '=', 'vehiculo.id')
+        ->get();
+
         $paquetes_finalizados = DB::table('carga_paquete_fin')
         ->select('id');
 
@@ -56,6 +61,7 @@ class UsuariosController extends Controller
             'choferes' => $choferes,
             'paquetes' => $paquetes,
             'camionetas' => $camionetas,
+            'camiones' => $camiones,
             'paquetes_en_transito' => $paquetes_en_transito]);
     }
     public function CrearUsuario(Request $request){
