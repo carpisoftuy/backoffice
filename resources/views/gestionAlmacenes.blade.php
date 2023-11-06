@@ -129,6 +129,23 @@
         </table>
     </div>
 
+    <h2>Crear Ubicación</h2>
+    <div class="container-form">
+        <form class="formulario-almacen" method="POST" action="../ubicaciones">
+            <label for="direccion">Dirección (calle y nro)</label>
+            <input type="text" name="direccion">
+            <label for="codigo_postal">Código postal</label>
+            <input type="number" name="codigo_postal">
+            <label for="latitud">Latitud</label>
+            <input type="number" name="latitud" step="0.000000000000001">
+            <label for="longitud">Longitud</label>
+            <input type="number" name="longitud" step="0.000000000000001">
+
+
+            <button type="submit">Crear</button>
+        </form>
+    </div>
+
 
     <footer id="footer">
         <img class="logo-footer" src="{{ asset('img/carpifast.svg') }}">
