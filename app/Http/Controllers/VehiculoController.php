@@ -116,14 +116,27 @@ class VehiculoController extends Controller
                 Camioneta::find($request->id)->delete();
             }
         }
-        return "editado";
         return [Vehiculo::find($request->id), Camion::find($request->id), Camioneta::find($request->id)];
     }
     public function DeleteVehiculo(Request $request){
-        $vehiculo = Vehiculo::find($request->id);
-        $vehiculo->delete();
-    }
 
+        $vehiculo = Vehiculo::find($request->id);
+
+        if ($vehiculo) {
+        $camiones = Camion::where('id', $vehiculo->id)->get();
+        foreach ($camiones as $camion) {
+            $camion->delete();
+        }
+
+        $camionetas = Camioneta::where('id', $vehiculo->id)->get();
+        foreach ($camionetas as $camioneta) {
+            $camioneta->delete();
+        }
+
+        $vehiculo->delete();
+        
+    }
+}
     public function ModificarUbicacion(Request $request){
         $ubicacion = Ubicacion::find($request->id);
         return view('modificarUbicacion', ["ubicacion" => $ubicacion]);

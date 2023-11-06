@@ -73,7 +73,7 @@
                 <td>{{$vehiculo->capacidad_peso}}</td>
                 <td>{{$vehiculo->peso_ocupado}}</td>
                 <td>{{$vehiculo->volumen_ocupado}}</td>
-                <td><a>Modificar</a></td>
+                <td><a href="/backoffice/vehiculos/{{$vehiculo->id}}">Modificar</a></td>
                 <td><form action="{{ route('vehiculos.delete', ['id' => $vehiculo->id]) }}" method="POST">
                     @csrf
                     @method('DELETE')

@@ -77,7 +77,7 @@
                 @endif
                 </td>
                 <td><a href="./usuarios/borrar/{{ $usuario->id }}">Borrar</a></td>
-                <td><a href="./usuarios/actualizar/{{ $usuario->id }}">Actualizar</a></td>
+                <td><a href="./usuarios/actualizar/{{ $usuario->id }}">Modificar</a></td>
 
             </tr>
             @endforeach
