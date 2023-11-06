@@ -61,7 +61,7 @@ Route::prefix("v2")->group(function(){
     Route::get('/vehiculos/{id}', [VehiculoController::class, 'GetVehiculo']);
     Route::post('/vehiculos', [VehiculoController::class, 'CreateVehiculo']);
     Route::put('/vehiculos/{id}', [VehiculoController::class, 'UpdateVehiculo']);
-    Route::delete('/vehiculos/{id}', [VehiculoController::class, 'DeleteVehiculo']);
+    Route::delete('/vehiculos/{id}', [VehiculoController::class, 'DeleteVehiculo'])->name('vehiculos.delete');
 
     Route::get('almacenes', [AlmacenesController::class, 'GetAlmacenes']);
     Route::get('almacenes/{id}', [AlmacenesController::class, 'GetAlmacen']);

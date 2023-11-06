@@ -61,6 +61,8 @@
                 <th>Capacidad Peso</th>
                 <th>Peso ocupado</th>
                 <th>Volumen ocupado</th>
+                <th>Modificar</th>
+                <th>Eliminar</th>
             </tr>
             @foreach ($vehiculos as $vehiculo)
             <tr>
@@ -71,6 +73,12 @@
                 <td>{{$vehiculo->capacidad_peso}}</td>
                 <td>{{$vehiculo->peso_ocupado}}</td>
                 <td>{{$vehiculo->volumen_ocupado}}</td>
+                <td><a>Modificar</a></td>
+                <td><form action="{{ route('vehiculos.delete', ['id' => $vehiculo->id]) }}" method="POST">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit">Eliminar</button>
+                </form></td>
             </tr>
             @endforeach
         </table>
