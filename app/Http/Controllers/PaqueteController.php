@@ -13,12 +13,12 @@ class PaqueteController extends Controller
         $camioneta = $request->camioneta;
 
         DB::table('carga_paquete')->insert([
-
-            ['id_paquete' => $paquete, 'id_vehiculo' => $camioneta]
-
+            'id_paquete' => $paquete,
+            'id_vehiculo' => $camioneta,
+            'fecha_inicio' => now()
         ]);
 
-        return redirect('/');
+        return redirect('../v2');
 
     }
 
@@ -28,7 +28,8 @@ class PaqueteController extends Controller
 
         DB::table('carga_paquete_fin')->insert([
 
-            ['id' => $id]
+            'id' => $id,
+            'fecha_fin' => now()
 
         ]);
 

@@ -4,12 +4,12 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Vehiculo;
-use App\Http\Requests\Camion;
-use App\Http\Requests\Camioneta;
+use App\Models\Camion;
+use App\Models\Camioneta;
 use App\Http\Controllers\Usuario;
 
 class VehiculoController extends Controller
-{   
+{
 
     public function menuVehiculos(Request $request){
 
@@ -53,6 +53,18 @@ class VehiculoController extends Controller
         $vehiculo->peso_ocupado = $request->post('peso_ocupado');
         $vehiculo->volumen_ocupado = $request->post('volumen_ocupado');
         $vehiculo->save();
+
+        if($request->tipo == "camioneta"){
+            $tipo = new Camioneta();
+            $tipo->id = $vehiculo->id;
+            $tipo->save();
+        }
+
+        if($request->tipo == "camion"){
+            $tipo = new Camion();
+            $tipo->id = $vehiculo->id;
+            $tipo->save();
+        }
 
         return $vehiculo;
     }

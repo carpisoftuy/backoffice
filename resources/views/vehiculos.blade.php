@@ -86,7 +86,7 @@
 
     <h2>Crear Vehiculo</h2>
     <div class="container-form">
-        <form class="formulario-almacen" method="POST" action="../vehiculos"> 
+        <form class="formulario-almacen" method="POST" action="../vehiculos">
             <label for="codigo_pais">Código país (ej: UY)</label>
             <input type="text" name="codigo_pais">
             <label for="matricula">Matricula</label>
@@ -99,9 +99,9 @@
             <input type="number"  name="peso_ocupado">
             <label for="volumen_ocupado">Volumen ocupado</label>
             <input type="number" name="volumen_ocupado">
-            <select>
-                <option>Camión</option>
-                <option>Camioneta</option>
+            <select name="tipo">
+                <option value="camion">Camión</option>
+                <option value="camioneta">Camioneta</option>
             </select>
 
 

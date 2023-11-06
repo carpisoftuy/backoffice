@@ -50,7 +50,7 @@
         <div class="container-form">
             <form action="
             @if(isset($usuario))
-            /v2/usuarios/actualizar/{{$usuario->id}}
+            /usuarios/actualizar/{{$usuario->id}}
             @endif
             @if(!isset($usuario))
             @php
@@ -58,9 +58,9 @@
             $usuario->isAdmin = false;
             $usuario->isAlmacenero = false;
             $usuario->isChofer = false;
-            
+
             @endphp
-            /v2/usuarios/crear/
+            /usuarios/crear/
             @endif
             " method="post">
                 @csrf
@@ -74,19 +74,19 @@
                 <label for="apellido"><p>Apellidos</p></label><br>
                 <input class="form-control" id="apellido" name="apellido" type="text" value="{{$usuario->apellido ?? '' }}"><br>
                 <label for="almacenero"><p>Almacenero</p></label>
-                <input id="almacenero" name="almacenero" type="checkbox" 
+                <input id="almacenero" name="almacenero" type="checkbox"
                 @if ($usuario->isAlmacenero)
                 checked
                 @endif
                 ><br>
                 <label for="admin"><p>Administrador</p></label>
-                <input id="admin" name="admin" type="checkbox" 
+                <input id="admin" name="admin" type="checkbox"
                 @if ($usuario->isAdmin)
                 checked
                 @endif
                 ><br>
                 <label for="chofer"><p>Chofer</p></label>
-                <input id="chofer" name="chofer" type="checkbox" 
+                <input id="chofer" name="chofer" type="checkbox"
                 @if ($usuario->isChofer)
                 checked
                 @endif

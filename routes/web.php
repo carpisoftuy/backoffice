@@ -39,7 +39,6 @@ Route::prefix("v1")->group(function(){
 
 });
 
-Route::prefix("v2")->group(function(){
 
     Route::get('/', [UsuariosController::class, 'MenuUsuarios']);
     Route::get('/usuarios/crear', function(){
@@ -56,7 +55,7 @@ Route::prefix("v2")->group(function(){
 
     Route::post('/chofer/asignar_camioneta', [UsuariosController::class, 'AsignarChoferACamioneta']);
 
-    
+
     Route::get('/vehiculos', [VehiculoController::class, 'GetVehiculos']);
     Route::get('/vehiculos/{id}', [VehiculoController::class, 'GetVehiculo']);
     Route::post('/vehiculos', [VehiculoController::class, 'CreateVehiculo']);
@@ -79,7 +78,5 @@ Route::prefix("v2")->group(function(){
     Route::get('/backoffice/vehiculos', [VehiculoController::class, 'menuVehiculos']);
 
     Route::get('/backoffice/almacenes', [AlmacenesController::class, 'menuAlmacenes']);
-    
-});
 
 

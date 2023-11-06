@@ -56,13 +56,13 @@ class UsuariosController extends Controller
         ->whereNotIn('carga_paquete.id', $paquetes_finalizados)
         ->get();
 
-        return view('gestionUsuarios', 
-            ['usuarios' => $usuarios, 
+        return view('gestionUsuarios',
+            ['usuarios' => $usuarios,
             'choferes' => $choferes,
             'paquetes' => $paquetes,
             'camionetas' => $camionetas,
             'camiones' => $camiones,
-            'paquetes_en_transito' => $paquetes_en_transito]);   
+            'paquetes_en_transito' => $paquetes_en_transito]);
     }
 
     public function CrearUsuario(Request $request){
@@ -92,12 +92,12 @@ class UsuariosController extends Controller
 
     public function BorrarUsuario(Request $request){
         $usuario = Usuario::findOrFail($request->id);
-        
+
         if(Almacenero::find($request->id)){
             $almacenero = Almacenero::find($request->id);
             $almacenero->delete();
         }
-        
+
         if(Admin::find($request->id)){
             $admin = Admin::find($request->id);
             $admin->delete();
@@ -107,7 +107,7 @@ class UsuariosController extends Controller
             $chofer = Chofer::find($request->id);
             $chofer->delete();
         }
-        
+
         $usuario->delete();
 
         return redirect('/');
@@ -129,12 +129,12 @@ class UsuariosController extends Controller
         $usuario->nombre = $request->post('nombre');
         $usuario->apellido = $request->post('apellido');
         $usuario->save();
-        
+
         if($request->post('admin') && is_null(Admin::find($usuario->id))){
             $almacenero = new Admin();
             $almacenero->id = $usuario->id;
             $almacenero->save();
-        } 
+        }
         if(!$request->post('admin') && !is_null(Admin::find($usuario->id))){
             $almacenero = Admin::find($request->id);
             $almacenero->delete();
@@ -143,7 +143,7 @@ class UsuariosController extends Controller
             $almacenero = new Almacenero();
             $almacenero->id = $usuario->id;
             $almacenero->save();
-        } 
+        }
         if(!$request->post('almacenero') && !is_null(Almacenero::find($usuario->id))){
             $almacenero = Almacenero::find($request->id);
             $almacenero->delete();
@@ -152,12 +152,12 @@ class UsuariosController extends Controller
             $almacenero = new Chofer();
             $almacenero->id = $usuario->id;
             $almacenero->save();
-        } 
+        }
         if(!$request->post('chofer') && !is_null(Chofer::find($usuario->id))){
             $almacenero = Chofer::find($request->id);
             $almacenero->delete();
         }
-        
+
         return redirect('/');
     }
 
@@ -165,7 +165,9 @@ class UsuariosController extends Controller
 
         $maneja = DB::table('maneja')
         ->insert(['id_vehiculo' => $request->post('id_vehiculo'),
-                  'id_usuario' => $request->post('id_usuario')]);
+                  'id_usuario' => $request->post('id_usuario'),
+                  'fecha_inicio' => now()
+        ]);
 
     }
 

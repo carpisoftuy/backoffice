@@ -49,11 +49,11 @@
     <header>
         <h2 id="bienvenido">Bienvenido Administrador</h2>
     </header>
-    
+
     <h2>Listado de usuarios</h2>
 
     <div class="table-container">
-        <table>    
+        <table>
             <tr>
                 <th>Nombre de Usuario</th>
                 <th>Nombre y Apellido</th>
@@ -78,7 +78,7 @@
                 </td>
                 <td><a href="./usuarios/borrar/{{ $usuario->id }}">Borrar</a></td>
                 <td><a href="./usuarios/actualizar/{{ $usuario->id }}">Actualizar</a></td>
-                
+
             </tr>
             @endforeach
         </table>
@@ -97,7 +97,7 @@
             </tr>
             @foreach ($choferes as $chofer)
             <tr>
-                <form method="post" action="v2/chofer/asignar_camioneta">
+                <form method="post" action="./chofer/asignar_camioneta">
                     @csrf
                     <input name="id_usuario" value="{{$chofer->id}}" style="display: none">
                     <td>{{$chofer->id}}</td>
@@ -223,6 +223,9 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     <script src="{{ asset('/js/modoClaroOscuro/estiloBackoffice.js') }}"></script>
     <script src="{{ asset('/js/idiomas/backoffice_idioma.js') }}"></script>
+    <script>
+        console.log({{$paquetes_en_transito}})
+    </script>
 
 </body>
 </html>
