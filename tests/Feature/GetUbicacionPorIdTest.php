@@ -23,7 +23,7 @@ class GetUbicacionPorIdTest extends TestCase
             'longitud' => -56.17532811,
         ]);
 
-        $response = $this->get("/v2/ubicaciones/{$ubicacion->id}");
+        $response = $this->get("/ubicaciones/{$ubicacion->id}");
 
         $response->assertStatus(200);
 

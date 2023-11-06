@@ -14,7 +14,7 @@ class GetUbicacionTest extends TestCase
      * @return void
      */
     public function testGetUbicaciones() {
-        $response = $this->get('/v2/ubicaciones');
+        $response = $this->get('/ubicaciones');
         $response->assertStatus(200);
     }
 }

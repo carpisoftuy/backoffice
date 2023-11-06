@@ -15,7 +15,7 @@ class CreateUbicacionTest extends TestCase
      * @return void
      */
     public function testCreateUbicacionCorrectamente() {
-        $response = $this->post('/v2/ubicaciones', [
+        $response = $this->post('/ubicaciones', [
             'direccion' => "vilardebo 2024",
             'codigo_postal' => "11800",
             'latitud' => -34.87958216,
@@ -33,7 +33,7 @@ class CreateUbicacionTest extends TestCase
     }
 
     public function testCreateUbicacionSinDatos() {
-        $response = $this->post('/v2/ubicaciones', [
+        $response = $this->post('/ubicaciones', [
             'direccion' => '',
             'codigo_postal' => '',
             'latitud' => '',
@@ -45,7 +45,7 @@ class CreateUbicacionTest extends TestCase
     }
 
     public function testCreateUbicacionConDatoIncorrecto() {
-        $response = $this->post('/v2/ubicaciones', [
+        $response = $this->post('/ubicaciones', [
             'direccion' => 'asda',
             'codigo_postal' => 122112,
             'latitud' => 'dsad',

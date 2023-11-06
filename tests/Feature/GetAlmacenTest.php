@@ -15,7 +15,7 @@ class GetAlmacenTest extends TestCase
      * @return void
      */
     public function testGetAlmacenes() {
-        $response = $this->get('/v2/almacenes');
+        $response = $this->get('/almacenes');
         $response->assertStatus(200);
     } 
 }

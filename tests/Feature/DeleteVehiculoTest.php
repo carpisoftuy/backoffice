@@ -25,7 +25,7 @@ class DeleteVehiculoTest extends TestCase
             'volumen_ocupado' => 0
        ]);
    
-       $response = $this->delete("/v2/vehiculos/{$vehiculo->id}");
+       $response = $this->delete("/vehiculos/{$vehiculo->id}");
        $response->assertStatus(200);
    
     }

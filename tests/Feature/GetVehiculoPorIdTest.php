@@ -17,7 +17,7 @@ class GetVehiculoPorIdTest extends TestCase
     public function testGetVehiculoPorSuIdCorrecta() {
         
         $vehiculo = Vehiculo::create([
-            'codigo_pais' => "UYU",
+            'codigo_pais' => "ZM",
             'matricula' => "SBZ-1441",
             'capacidad_volumen' => 1000,
             'capacidad_peso' => 1000,
@@ -25,7 +25,7 @@ class GetVehiculoPorIdTest extends TestCase
             'volumen_ocupado' => 0
         ]);
 
-        $response = $this->get("/v2/vehiculos/{$vehiculo->id}");
+        $response = $this->get("/vehiculos/{$vehiculo->id}");
 
         $response->assertStatus(200);
 

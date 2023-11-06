@@ -26,7 +26,7 @@ class UpdateAlmacenTest extends TestCase
         $nuevoEspacioOcupado = 8;
         $nuevoIdUbicacion = 2;
 
-        $response = $this->put("/v2/almacenes/{$almacen->id}", [
+        $response = $this->put("/almacenes/{$almacen->id}", [
             'espacio' => $nuevoEspacio,
             'espacio_ocupado' => $nuevoEspacioOcupado,
             'id_ubicacion' => $nuevoIdUbicacion,

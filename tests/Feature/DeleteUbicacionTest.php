@@ -23,7 +23,7 @@ class DeleteUbicacionTest extends TestCase
         'longitud' => -56.17532811,
     ]);
 
-    $response = $this->delete("/v2/ubicaciones/{$ubicacion->id}");
+    $response = $this->delete("/ubicaciones/{$ubicacion->id}");
     $response->assertStatus(200);
 
     }
@@ -39,7 +39,7 @@ class DeleteUbicacionTest extends TestCase
 
       $id_incorrecta = "ads";
   
-      $response = $this->delete("/v2/ubicaciones/{$id_incorrecta}");
+      $response = $this->delete("/ubicaciones/{$id_incorrecta}");
       $response->assertStatus(500);
 
       $ubicacion->delete();

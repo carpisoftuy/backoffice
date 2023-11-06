@@ -22,7 +22,7 @@ class DeleteAlmacenTest extends TestCase
             'id_ubicacion' => 1
        ]);
    
-       $response = $this->delete("/v2/almacenes/{$almacen->id}");
+       $response = $this->delete("/almacenes/{$almacen->id}");
        $response->assertStatus(200);
    
        }
@@ -37,7 +37,7 @@ class DeleteAlmacenTest extends TestCase
    
           $id_incorrecta = "ads";
       
-          $response = $this->delete("/v2/almacenes/{$id_incorrecta}");
+          $response = $this->delete("/almacenes/{$id_incorrecta}");
           $response->assertStatus(500);
    
           $almacen->delete();

@@ -14,7 +14,7 @@ class GetVehiculoTest extends TestCase
      * @return void
      */
     public function testGetVehiculos() {
-        $response = $this->get('/v2/vehiculos');
+        $response = $this->get('/vehiculos');
         $response->assertStatus(200);
     } 
 }

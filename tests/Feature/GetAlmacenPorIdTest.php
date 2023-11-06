@@ -22,7 +22,7 @@ class GetAlmacenPorIdTest extends TestCase
             'id_ubicacion' => 1
         ]);
 
-        $response = $this->get("/v2/almacenes/{$almacen->id}");
+        $response = $this->get("/almacenes/{$almacen->id}");
 
         $response->assertStatus(200);
 

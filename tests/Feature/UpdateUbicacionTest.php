@@ -25,7 +25,7 @@ class UpdateUbicacionTest extends TestCase
 
         $nuevaDireccion = "Help me";
 
-        $response = $this->put("/v2/ubicaciones/{$ubicacion->id}", [
+        $response = $this->put("/ubicaciones/{$ubicacion->id}", [
             'direccion' => $nuevaDireccion,
             'codigo_postal' => "11800",
             'latitud' => -34.87958216,

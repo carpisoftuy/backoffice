@@ -15,7 +15,7 @@ class CreateAlmacenTest extends TestCase
      * @return void
      */
     public function testCreateAlmacenCorrectamente() {
-        $response = $this->post('/v2/almacenes', [
+        $response = $this->post('/almacenes', [
 
             'espacio' => 3020,
             'espacio_ocupado' => 1000,
@@ -34,7 +34,7 @@ class CreateAlmacenTest extends TestCase
     }
 
     public function testCreateAlmacenSinDatos() {
-        $response = $this->post('/v2/almacenes', [
+        $response = $this->post('/almacenes', [
             'espacio' => "",
             'espacio_ocupado' => "",
             'id_ubicacion' => ""
@@ -45,7 +45,7 @@ class CreateAlmacenTest extends TestCase
     }
 
     public function testCreateAlmacenConDatoIncorrecto() {
-        $response = $this->post('/v2/almacenes', [
+        $response = $this->post('/almacenes', [
             'espacio' => "asdas",
             'espacio_ocupado' => "hola",
             'id_ubicacion' => ""
