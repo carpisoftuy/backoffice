@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Almacen;
+use Illuminate\Support\Facades\DB;
 
 class AlmacenesController extends Controller
 {
@@ -73,4 +74,17 @@ class AlmacenesController extends Controller
         $almacen = Almacen::find($request->id);
         $almacen->delete();
     }
+
+    public function menuAlmacenes(Request $request){
+
+        $almacenes = DB::table('almacen')
+        ->select('*')
+        ->get();
+
+        return view('gestionAlmacenes', [
+            'almacenes' => $almacenes,
+        ]);
+
+    }
+
 }

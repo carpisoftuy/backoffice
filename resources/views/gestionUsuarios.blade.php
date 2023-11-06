@@ -23,6 +23,7 @@
         <ul class="nav-list">
             <li class="list-element-logo"><a href="./index.html"><img class="logo" src="{{ asset('img/carpifast.svg') }}"></a></li>
             <li class="list-element"><a id="inicio" href="./index.html">Inicio</a></li>
+            <li class="list-element"><a id="inicio" href="./backoffice/almacenes">Almacenes</a></li>
             <li class="list-element"><a id="inicio" href="./backoffice/vehiculos">Vehiculos</a></li>
             <li class="list-element"><a id="panel" href="./">Panel backoffice</a></li>
             <li class="list-element"><a id="registro" href="./usuarios/crear">Registrar usuario</a></li>
