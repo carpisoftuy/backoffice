@@ -62,8 +62,9 @@ class UsuariosController extends Controller
             'paquetes' => $paquetes,
             'camionetas' => $camionetas,
             'camiones' => $camiones,
-            'paquetes_en_transito' => $paquetes_en_transito]);
+            'paquetes_en_transito' => $paquetes_en_transito]);   
     }
+
     public function CrearUsuario(Request $request){
         $usuario = new Usuario();
         $usuario->username = $request->post('username');

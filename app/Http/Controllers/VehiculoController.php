@@ -2,10 +2,41 @@
 
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Models\Vehiculo;
+use App\Http\Requests\Camion;
+use App\Http\Requests\Camioneta;
+use App\Http\Controllers\Usuario;
 
 class VehiculoController extends Controller
-{
+{   
+
+    public function menuVehiculos(Request $request){
+
+        $camionetas = DB::table('camioneta')
+        ->select('*')
+        ->join('vehiculo', 'camioneta.id', '=', 'vehiculo.id')
+        ->where([])
+        ->get();
+
+        $camiones = DB::table('camion')
+        ->select('*')
+        ->join('vehiculo', 'camion.id', '=', 'vehiculo.id')
+        ->get();
+
+        $choferes = DB::table('usuario')
+        ->select('*')
+        ->join('chofer', 'chofer.id', '=', 'usuario.id')
+        ->where([])
+        ->get();
+
+        return view('vehiculos', [
+            'choferes' => $choferes,
+            'camionetas' => $camionetas,
+            'camiones' => $camiones,
+        ]);
+
+    }
 
     public function CreateVehiculo(request $request){
         $vehiculo = new Vehiculo();

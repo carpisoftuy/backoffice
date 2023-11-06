@@ -75,10 +75,9 @@ Route::prefix("v2")->group(function(){
     Route::put('ubicaciones/{id}', [UbicacionController::class, 'UpdateUbicacion']);
     Route::delete('ubicaciones/{id}', [UbicacionController::class, 'DeleteUbicacion']);
 
-    Route::get('/backoffice', function(){
-        return view('backoffice');
-    });
 
+    Route::get('/backoffice/vehiculos', [VehiculoController::class, 'menuVehiculos']);
+    
 });
 
 

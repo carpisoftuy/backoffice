@@ -23,10 +23,9 @@
         <ul class="nav-list">
             <li class="list-element-logo"><a href="./index.html"><img class="logo" src="{{ asset('img/carpifast.svg') }}"></a></li>
             <li class="list-element"><a id="inicio" href="./index.html">Inicio</a></li>
-            <li class="list-element"><a id="envios" href="./envios.html">Envios</a></li>
-            <li class="list-element"><a id="contacto" href="./contacto.html">Contacto</a></li>
+            <li class="list-element"><a id="inicio" href="../backoffice/vehiculos">Vehiculos</a></li>
             <li class="list-element"><a id="panel" href="../">Panel backoffice</a></li>
-            <li class="list-element"><a id="registro" href="./usuarios/crear">Registrar usuario</a></li>
+            <li class="list-element"><a id="registro" href="./crear">Registrar usuario</a></li>
             <li class="list-element">
                 <div class="dropdown">
                   <button id="idioma" class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">Idioma</button>

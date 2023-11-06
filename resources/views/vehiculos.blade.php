@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>backOffice</title>
+    <title>Vehiculos</title>
     <link rel="shortcut icon" href="{{ asset('img/carpifast.svg') }}" type="image/x-icon">
     <link rel="stylesheet" href="{{ asset('css/fuentes.css') }}">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
@@ -23,9 +23,9 @@
         <ul class="nav-list">
             <li class="list-element-logo"><a href="./index.html"><img class="logo" src="{{ asset('img/carpifast.svg') }}"></a></li>
             <li class="list-element"><a id="inicio" href="./index.html">Inicio</a></li>
-            <li class="list-element"><a id="inicio" href="./backoffice/vehiculos">Vehiculos</a></li>
-            <li class="list-element"><a id="panel" href="./">Panel backoffice</a></li>
-            <li class="list-element"><a id="registro" href="./usuarios/crear">Registrar usuario</a></li>
+            <li class="list-element"><a id="inicio" href="./vehiculos">Vehiculos</a></li>
+            <li class="list-element"><a id="panel" href="../">Panel backoffice</a></li>
+            <li class="list-element"><a id="registro" href="../usuarios/crear">Registrar usuario</a></li>
             <li class="list-element">
                 <div class="dropdown">
                   <button id="idioma" class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">Idioma</button>
@@ -46,42 +46,8 @@
     </nav>
 
     <header>
-        <h2 id="bienvenido">Bienvenido Administrador</h2>
+        <h2 id="bienvenido">Vehiculos</h2>
     </header>
-    
-    <h2>Listado de usuarios</h2>
-
-    <div class="table-container">
-        <table>    
-            <tr>
-                <th>Nombre de Usuario</th>
-                <th>Nombre y Apellido</th>
-                <th>Roles</th>
-                <th>Eliminar usuario</th>
-                <th>Modificar</th>
-            </tr>
-            @foreach ($usuarios as $usuario)
-            <tr>
-                <td>{{$usuario->username}}</td>
-                <td>{{$usuario->nombre . " " . $usuario->apellido}}</td>
-                <td>
-                @if($usuario->isAdmin)
-                Administrador
-                @endif
-                @if($usuario->isChofer)
-                Chofer
-                @endif
-                @if($usuario->isAlmacenero)
-                Almacenero
-                @endif
-                </td>
-                <td><a href="./usuarios/borrar/{{ $usuario->id }}">Borrar</a></td>
-                <td><a href="./usuarios/actualizar/{{ $usuario->id }}">Actualizar</a></td>
-                
-            </tr>
-            @endforeach
-        </table>
-    </div>
 
 
     <h2>Listado de choferes</h2>
@@ -149,62 +115,6 @@
                 <td>{{$camion->id}}</td>
                 <td>{{$camion->codigo_pais}}</td>
                 <td>{{$camion->matricula}}</td>
-            </tr>
-            @endforeach
-        </table>
-    </div>
-
-    <h2>Paquetes</h2>
-    <div class="table-container">
-        <table>
-            <tr>
-                <th>id</th>
-                <th>Peso</th>
-                <th>Volumen</th>
-                <th>Asignar camioneta</th>
-                <th></th>
-            </tr>
-            @foreach ($paquetes as $paquete)
-            <form action="./paquete/asignar_camioneta" method="POST">
-                @csrf
-                <input name="paquete" value="{{$paquete->id}}" style="display: none">
-                <tr>
-                    <td>{{$paquete->id}}</td>
-                    <td>{{$paquete->peso}}</td>
-                    <td>{{$paquete->volumen}}</td>
-                    <td>
-                        <select name="camioneta">
-                                <option disabled selected></option>
-                            @foreach ($camionetas as $camioneta)
-                                <option value="{{$camioneta->id}}">{{$camioneta->matricula}}</option>
-                            @endforeach
-                        </select>
-                    </td>
-                    <td><button type="submit">Actualizar</button></td>
-                </tr>
-            </form>
-            @endforeach
-        </table>
-    </div>
-
-    <h2>Paquetes en transito</h2>
-    <div class="table-container">
-        <table>
-            <tr>
-                <th>id paquete</th>
-                <th>Chofer asignado</th>
-                <th>Camioneta asignada</th>
-                <th>Peso</th>
-                <th>Volumen</th>
-            </tr>
-            @foreach ($paquetes_en_transito as $paquete_transito)
-            <tr>
-                <td>{{$paquete_transito->id}}</td>
-                <td>{{$paquete_transito->nombre}}</td>
-                <td>{{$paquete_transito->matricula}}</td>
-                <td>{{$paquete_transito->peso}}</td>
-                <td>{{$paquete_transito->volumen}}</td>
-                <td><a href="./paquete/finalizar_transito/{{ $paquete_transito->id_paquete }}">Finalizar transito</a></td>
             </tr>
             @endforeach
         </table>
