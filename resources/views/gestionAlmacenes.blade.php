@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="{{ asset('css/fuentes.css') }}">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="{{ asset('/css/backoffice.css') }}">
+    <link rel="stylesheet" href="{{ asset('/css/almacenes.css') }}">
 </head>
 <body>
 
@@ -65,7 +66,7 @@
                 <td>{{$almacen->id}}</td>
                 <td>{{$almacen->espacio}}</td>
                 <td>{{$almacen->espacio_ocupado}}</td>
-                <td>{{$almacen->direccion}}</td>
+                <td>{{$almacen->direccion}} {{$almacen->codigo_postal}}</td>
                 <td><a>Modificar</a></td>
                 <td><form action="{{ route('almacenes.delete', ['id' => $almacen->id]) }}" method="POST">
                     @csrf
@@ -79,20 +80,23 @@
     </div>
 
     <h2>Crear Almacen</h2>
-    <form method="POST" action="../almacenes">
+    <div class="container-form">
+        <form class="formulario-almacen" method="POST" action="../almacenes">
+            <label for="espacio" name="espacio">Espacio</label>
+            <input type="number" name="espacio" required>
+            <label for="espacio_ocupado" name="espacio_ocupado">Espacio ocupado</label>
+            <input type="number" name="espacio_ocupado" required>
+            <label for="id_ubicacion" name="id_ubicacion">Ubicación</label>
+            <select name="id_ubicacion">
+                @foreach ($direcciones as $direccion)
 
-        <input type="number" name="espacio" required>
-        <input type="number" name="espacio_ocupado" required>
-        <select name="id_ubicacion">
-            @foreach ($direcciones as $direccion)
+                <option>{{$direccion->id}}</option>
+                @endforeach
+            </select>
 
-            <option>{{$direccion->id}}</option>
-            @endforeach
-        </select>
-
-        <button type="submit">Crear</button>
-
-    </form>
+            <button type="submit">Crear</button>
+        </form>
+    </div>
     
 
 
