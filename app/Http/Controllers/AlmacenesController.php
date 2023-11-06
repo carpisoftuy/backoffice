@@ -79,7 +79,7 @@ class AlmacenesController extends Controller
 
         $almacenes = DB::table('almacen')
         ->join('ubicacion','ubicacion.id','=','almacen.id_ubicacion')
-        ->select('*')
+        ->select('almacen.id', 'espacio', 'espacio_ocupado', 'id_ubicacion', 'direccion', 'codigo_postal')
         ->get();
 
         $direcciones = DB::table('ubicacion')

@@ -67,7 +67,12 @@
                 <td>{{$almacen->espacio_ocupado}}</td>
                 <td>{{$almacen->direccion}}</td>
                 <td><a>Modificar</a></td>
-                <td><a>Eliminar</a></td>
+                <td><form action="{{ route('almacenes.delete', ['id' => $almacen->id]) }}" method="POST">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit">Eliminar</button>
+                </form>
+                </td>
             </tr>
             @endforeach
         </table>
