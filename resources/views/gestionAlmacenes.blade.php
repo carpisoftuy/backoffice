@@ -59,7 +59,7 @@
                 <th>Espacio ocupado</th>
                 <th>Dirección</th>
                 <th>Modificar</th>
-                <th></th>
+                <th>Eliminar</th>
             </tr>
             @foreach ($almacenes as $almacen)
             <tr>
@@ -67,7 +67,7 @@
                 <td>{{$almacen->espacio}}</td>
                 <td>{{$almacen->espacio_ocupado}}</td>
                 <td>{{$almacen->direccion}} {{$almacen->codigo_postal}}</td>
-                <td><a>Modificar</a></td>
+                <td><a href="/backoffice/almacenes/{{$almacen->id}}">Modificar</a></td>
                 <td><form action="{{ route('almacenes.delete', ['id' => $almacen->id]) }}" method="POST">
                     @csrf
                     @method('DELETE')
