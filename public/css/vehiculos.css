@@ -1,0 +1,43 @@
+:root {
+    --color-principal: #18181B;
+    --color-fuente: #A970DA;
+    --background: #3c2d43;
+    --background-ham: #26262a;
+  }
+
+  .container-form{
+    display: flex;
+    justify-content: center;
+}
+
+.formulario-almacen{
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    width: 450px;
+    height: 600px;
+    background-color: var(--color-principal);
+    margin-bottom: 50px;
+}
+
+.formulario-almacen input, .formulario-almacen select{
+    width: 50%;
+    margin: 10px;
+}
+
+.formulario-almacen button{
+    width: 25%;
+    height: 10%;
+    margin: 10px;
+    border-radius: 5px;
+    border: none;
+    background-color: var(--background);
+    font-weight: bold;
+    font-family: 'Poppins', sans-serif;
+}
+
+label{
+    font-family: 'Poppins', sans-serif;
+}

@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="{{ asset('css/fuentes.css') }}">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="{{ asset('/css/backoffice.css') }}">
+    <link rel="stylesheet" href="{{ asset('/css/vehiculos.css') }}">
 </head>
 <body>
 
@@ -73,6 +74,31 @@
             </tr>
             @endforeach
         </table>
+    </div>
+
+    <h2>Crear Vehiculo</h2>
+    <div class="container-form">
+        <form class="formulario-almacen" method="POST" action="../vehiculos"> 
+            <label for="codigo_pais">Código país (ej: UY)</label>
+            <input type="text" name="codigo_pais">
+            <label for="matricula">Matricula</label>
+            <input type="text" name="matricula">
+            <label for="capacidad_volumen">Capacidad (volumen)</label>
+            <input type="number"  name="capacidad_volumen">
+            <label for="capacidad_peso">Capacidad (peso)</label>
+            <input type="number" name="capacidad_peso">
+            <label for="peso_ocupado">Peso ocupado</label>
+            <input type="number"  name="peso_ocupado">
+            <label for="volumen_ocupado">Volumen ocupado</label>
+            <input type="number" name="volumen_ocupado">
+            <select>
+                <option>Camión</option>
+                <option>Camioneta</option>
+            </select>
+
+
+            <button type="submit">Crear</button>
+        </form>
     </div>
 
 
