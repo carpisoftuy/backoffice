@@ -8,42 +8,6 @@ use Illuminate\Support\Facades\DB;
 
 class AlmacenesController extends Controller
 {
-    /* public function GetAlmacenes(Request $request){
-        return Almacen::all();
-    }
-
-    public function GetAlmacen(Request $request){
-        return Almacen::find($request->id);
-    }
-    
-    public function CreateAlmacen(Request $request){
-        $almacen = new Almacen();
-        $almacen->espacio = $request->post('espacio');
-        $almacen->espacio_ocupado = $request->post('espacioOcupado');
-        $almacen->codigo_postal = $request->post('codigoPostal');
-        $almacen->calle = $request->post('calle');
-        $almacen->nro_puerta = $request->post('nroPuerta');
-        $almacen->observaciones_direccion = $request->post('observacionesDireccion');
-        $almacen->latitud = $request->post('latitud');
-        $almacen->longitud = $request->post('longitud');
-        $almacen->save();
-    }
-    public function UpdateAlmacen(Request $request){
-        $almacen = Almacen::find($request->id);
-        $almacen->espacio = $request->post('espacio');
-        $almacen->espacio_ocupado = $request->post('espacioOcupado');
-        $almacen->codigo_postal = $request->post('codigoPostal');
-        $almacen->calle = $request->post('calle');
-        $almacen->nro_puerta = $request->post('nroPuerta');
-        $almacen->observaciones_direccion = $request->post('observacionesDireccion');
-        $almacen->latitud = $request->post('latitud');
-        $almacen->longitud = $request->post('longitud');
-        $almacen->save();
-    }
-    public function DeleteAlmacen(Request $request){
-        $almacen = Almacen::find($request->id);
-        $almacen->delete();
-    } */
 
     public function GetAlmacenes(Request $request){
         return Almacen::join('ubicacion', 'ubicacion.id', '=', 'almacen.id_ubicacion')->get();
@@ -53,7 +17,7 @@ class AlmacenesController extends Controller
     public function GetAlmacen(Request $request){
         return Almacen::find($request->id);
     }
-    
+
     public function CreateAlmacen(Request $request){
         $almacen = new Almacen();
         $almacen->espacio = $request->post('espacio');
@@ -88,6 +52,21 @@ class AlmacenesController extends Controller
 
         return view('gestionAlmacenes', [
             'almacenes' => $almacenes,
+            'direcciones' => $direcciones
+        ]);
+
+    }
+
+    public function modificarAlmacen(Request $request){
+
+        $almacen = Almacen::find($request->id);
+
+        $direcciones = DB::table('ubicacion')
+        ->select('*')
+        ->get();
+
+        return view('modificarAlmacen', [
+            'almacen' => $almacen,
             'direcciones' => $direcciones
         ]);
 

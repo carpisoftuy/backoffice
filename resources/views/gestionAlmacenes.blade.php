@@ -52,7 +52,7 @@
     </header>
 
     <div class="table-container">
-        <table>    
+        <table>
             <tr>
                 <th>Id</th>
                 <th>Espacio</th>
@@ -97,10 +97,10 @@
             <button type="submit">Crear</button>
         </form>
     </div>
-    
+
     <h2>Ubicaciones</h2>
     <div class="table-container">
-        <table>    
+        <table>
             <tr>
                 <th>Id</th>
                 <th>Dirección</th>
@@ -117,7 +117,7 @@
                 <td>{{$direccion->codigo_postal}}</td>
                 <td>{{$direccion->latitud}}</td>
                 <td>{{$direccion->longitud}}</td>
-                <td><a>Modificar</a></td>
+                <td><a href="/backoffice/ubicaciones/{{$direccion->id}}">Modificar</a></td>
                 <td><form action="{{ route('ubicaciones.delete', ['id' => $direccion->id]) }}" method="POST">
                     @csrf
                     @method('DELETE')

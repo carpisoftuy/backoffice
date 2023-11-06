@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\DB;
 use App\Models\Vehiculo;
 use App\Models\Camion;
 use App\Models\Camioneta;
+use App\Models\Ubicacion;
 use App\Http\Controllers\Usuario;
 
 class VehiculoController extends Controller
@@ -121,6 +122,11 @@ class VehiculoController extends Controller
     public function DeleteVehiculo(Request $request){
         $vehiculo = Vehiculo::find($request->id);
         $vehiculo->delete();
+    }
+
+    public function ModificarUbicacion(Request $request){
+        $ubicacion = Ubicacion::find($request->id);
+        return view('modificarUbicacion', ["ubicacion" => $ubicacion]);
     }
 
 }
