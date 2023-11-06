@@ -98,6 +98,36 @@
         </form>
     </div>
     
+    <h2>Ubicaciones</h2>
+    <div class="table-container">
+        <table>    
+            <tr>
+                <th>Id</th>
+                <th>Dirección</th>
+                <th>Código postal</th>
+                <th>Latitud</th>
+                <th>Longitud</th>
+                <th>Modificar</th>
+                <th>Eliminar</th>
+            </tr>
+            @foreach ($direcciones as $direccion)
+            <tr>
+                <td>{{$direccion->id}}</td>
+                <td>{{$direccion->direccion}}</td>
+                <td>{{$direccion->codigo_postal}}</td>
+                <td>{{$direccion->latitud}}</td>
+                <td>{{$direccion->longitud}}</td>
+                <td><a>Modificar</a></td>
+                <td><form action="{{ route('ubicaciones.delete', ['id' => $direccion->id]) }}" method="POST">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit">Eliminar</button>
+                </form>
+                </td>
+            </tr>
+            @endforeach
+        </table>
+    </div>
 
 
     <footer id="footer">

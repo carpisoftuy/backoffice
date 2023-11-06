@@ -73,7 +73,7 @@ Route::prefix("v2")->group(function(){
     Route::get('ubicaciones/{id}', [UbicacionController::class, 'GetUbicacion']);
     Route::post('ubicaciones/', [UbicacionController::class, 'CreateUbicacion']);
     Route::put('ubicaciones/{id}', [UbicacionController::class, 'UpdateUbicacion']);
-    Route::delete('ubicaciones/{id}', [UbicacionController::class, 'DeleteUbicacion']);
+    Route::delete('ubicaciones/{id}', [UbicacionController::class, 'DeleteUbicacion'])->name('ubicaciones.delete');
 
 
     Route::get('/backoffice/vehiculos', [VehiculoController::class, 'menuVehiculos']);
