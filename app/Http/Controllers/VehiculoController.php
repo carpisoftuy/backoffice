@@ -30,10 +30,16 @@ class VehiculoController extends Controller
         ->where([])
         ->get();
 
+        $vehiculos = DB::table('vehiculo')
+        ->select('*')
+        ->get();
+
+
         return view('vehiculos', [
             'choferes' => $choferes,
             'camionetas' => $camionetas,
             'camiones' => $camiones,
+            'vehiculos' => $vehiculos,
         ]);
 
     }

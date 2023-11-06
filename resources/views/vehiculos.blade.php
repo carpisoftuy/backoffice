@@ -49,35 +49,26 @@
         <h2 id="bienvenido">Vehiculos</h2>
     </header>
 
-
-    <h2>Listado de choferes</h2>
     <div class="table-container">
         <table>
             <tr>
                 <th>id</th>
-                <th>Nombre de usuario</th>
-                <th>Nombre y apellido</th>
-                <th>Asignar camioneta</th>
-                <th></th>
+                <th>Pais registrado</th>
+                <th>Matrícula</th>
+                <th>Capacidad Volumen</th>
+                <th>Capacidad Peso</th>
+                <th>Peso ocupado</th>
+                <th>Volumen ocupado</th>
             </tr>
-            @foreach ($choferes as $chofer)
+            @foreach ($vehiculos as $vehiculo)
             <tr>
-                <form method="post" action="../chofer/asignar_camioneta">
-                    @csrf
-                    <input name="id_usuario" value="{{$chofer->id}}" style="display: none">
-                    <td>{{$chofer->id}}</td>
-                    <td>{{$chofer->username}}</td>
-                    <td>{{$chofer->nombre . " " . $chofer->apellido}}</td>
-                    <td>
-                        <select name="id_vehiculo">
-                            <option disabled selected></option>
-                        @foreach ($camionetas as $camioneta)
-                            <option value="{{$camioneta->id}}">{{$camioneta->matricula}}</option>
-                        @endforeach
-                    </select>
-                    </td>
-                    <td><button type="submit">Actualizar</button></td>
-                </form>
+                <td>{{$vehiculo->id}}</td>
+                <td>{{$vehiculo->codigo_pais}}</td>
+                <td>{{$vehiculo->matricula}}</td>
+                <td>{{$vehiculo->capacidad_volumen}}</td>
+                <td>{{$vehiculo->capacidad_peso}}</td>
+                <td>{{$vehiculo->peso_ocupado}}</td>
+                <td>{{$vehiculo->volumen_ocupado}}</td>
             </tr>
             @endforeach
         </table>
@@ -115,6 +106,39 @@
                 <td>{{$camion->id}}</td>
                 <td>{{$camion->codigo_pais}}</td>
                 <td>{{$camion->matricula}}</td>
+            </tr>
+            @endforeach
+        </table>
+    </div>
+
+    <h2>Listado de choferes</h2>
+    <div class="table-container">
+        <table>
+            <tr>
+                <th>id</th>
+                <th>Nombre de usuario</th>
+                <th>Nombre y apellido</th>
+                <th>Asignar camioneta</th>
+                <th></th>
+            </tr>
+            @foreach ($choferes as $chofer)
+            <tr>
+                <form method="post" action="../chofer/asignar_camioneta">
+                    @csrf
+                    <input name="id_usuario" value="{{$chofer->id}}" style="display: none">
+                    <td>{{$chofer->id}}</td>
+                    <td>{{$chofer->username}}</td>
+                    <td>{{$chofer->nombre . " " . $chofer->apellido}}</td>
+                    <td>
+                        <select name="id_vehiculo">
+                            <option disabled selected></option>
+                        @foreach ($camionetas as $camioneta)
+                            <option value="{{$camioneta->id}}">{{$camioneta->matricula}}</option>
+                        @endforeach
+                    </select>
+                    </td>
+                    <td><button type="submit">Actualizar</button></td>
+                </form>
             </tr>
             @endforeach
         </table>
