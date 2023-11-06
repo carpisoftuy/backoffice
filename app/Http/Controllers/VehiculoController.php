@@ -44,6 +44,13 @@ class VehiculoController extends Controller
 
     }
 
+    public function menuVehiculo(Request $request){
+        $vehiculo = Vehiculo::find($request->id);
+        if (Camioneta::find($vehiculo->id) != null) $vehiculo->tipo = "camioneta";
+        if (Camion::find($vehiculo->id) != null) $vehiculo->tipo = "camion";
+        return view('modificarVehiculo', ["vehiculo" => $vehiculo]);
+    }
+
     public function CreateVehiculo(request $request){
         $vehiculo = new Vehiculo();
         $vehiculo->codigo_pais = $request->post('codigo_pais');
@@ -86,7 +93,30 @@ class VehiculoController extends Controller
         $vehiculo->peso_ocupado = $request->peso_ocupado;
         $vehiculo->volumen_ocupado = $request->volumen_ocupado;
         $vehiculo->save();
-        return Vehiculo::find($request->id);
+
+        if($request->tipo == "camioneta"){
+            if(Camioneta::find($request->id) == null){
+                $tipo = new Camioneta();
+                $tipo->id = $vehiculo->id;
+                $tipo->save();
+            }
+            if(Camion::find($request->id) != null){
+                Camion::find($request->id)->delete();
+            }
+        }
+
+        if($request->tipo == "camion"){
+            if(Camion::find($request->id) == null){
+                $tipo = new Camion();
+                $tipo->id = $vehiculo->id;
+                $tipo->save();
+            }
+            if(Camioneta::find($request->id) != null){
+                Camioneta::find($request->id)->delete();
+            }
+        }
+        return "editado";
+        return [Vehiculo::find($request->id), Camion::find($request->id), Camioneta::find($request->id)];
     }
     public function DeleteVehiculo(Request $request){
         $vehiculo = Vehiculo::find($request->id);

@@ -76,6 +76,7 @@ Route::prefix("v1")->group(function(){
 
 
     Route::get('/backoffice/vehiculos', [VehiculoController::class, 'menuVehiculos']);
+    Route::get('/backoffice/vehiculos/{id}', [VehiculoController::class, 'menuVehiculo']);
 
     Route::get('/backoffice/almacenes', [AlmacenesController::class, 'menuAlmacenes']);
 
