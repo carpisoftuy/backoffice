@@ -197,6 +197,7 @@
                 <th>Camioneta asignada</th>
                 <th>Peso</th>
                 <th>Volumen</th>
+                <th>Finalizar transito</th>
             </tr>
             @foreach ($paquetes_en_transito as $paquete_transito)
             <tr>

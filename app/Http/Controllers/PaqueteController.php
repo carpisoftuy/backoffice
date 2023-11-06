@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Http\models\Paquete;
 
 class PaqueteController extends Controller
 {
@@ -18,7 +19,7 @@ class PaqueteController extends Controller
             'fecha_inicio' => now()
         ]);
 
-        return redirect('../v2');
+        return redirect('./');
 
     }
 
