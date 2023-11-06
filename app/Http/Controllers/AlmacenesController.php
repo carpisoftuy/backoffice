@@ -78,11 +78,17 @@ class AlmacenesController extends Controller
     public function menuAlmacenes(Request $request){
 
         $almacenes = DB::table('almacen')
+        ->join('ubicacion','ubicacion.id','=','almacen.id_ubicacion')
+        ->select('*')
+        ->get();
+
+        $direcciones = DB::table('ubicacion')
         ->select('*')
         ->get();
 
         return view('gestionAlmacenes', [
             'almacenes' => $almacenes,
+            'direcciones' => $direcciones
         ]);
 
     }

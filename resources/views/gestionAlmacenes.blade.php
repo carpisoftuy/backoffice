@@ -55,18 +55,39 @@
                 <th>Id</th>
                 <th>Espacio</th>
                 <th>Espacio ocupado</th>
-                <th>Id_ubicacion</th>
+                <th>Dirección</th>
+                <th>Modificar</th>
+                <th></th>
             </tr>
             @foreach ($almacenes as $almacen)
             <tr>
                 <td>{{$almacen->id}}</td>
                 <td>{{$almacen->espacio}}</td>
                 <td>{{$almacen->espacio_ocupado}}</td>
-                <td>{{$almacen->id_ubicacion}}</td>
+                <td>{{$almacen->direccion}}</td>
+                <td><a>Modificar</a></td>
+                <td><a>Eliminar</a></td>
             </tr>
             @endforeach
         </table>
     </div>
+
+    <h2>Crear Almacen</h2>
+    <form method="POST" action="../almacenes">
+
+        <input type="number" name="espacio" required>
+        <input type="number" name="espacio_ocupado" required>
+        <select name="id_ubicacion">
+            @foreach ($direcciones as $direccion)
+
+            <option>{{$direccion->id}}</option>
+            @endforeach
+        </select>
+
+        <button type="submit">Crear</button>
+
+    </form>
+    
 
 
     <footer id="footer">
