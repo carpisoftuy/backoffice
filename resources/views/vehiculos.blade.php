@@ -62,7 +62,7 @@
             </tr>
             @foreach ($choferes as $chofer)
             <tr>
-                <form method="post" action="v2/chofer/asignar_camioneta">
+                <form method="post" action="../chofer/asignar_camioneta">
                     @csrf
                     <input name="id_usuario" value="{{$chofer->id}}" style="display: none">
                     <td>{{$chofer->id}}</td>
