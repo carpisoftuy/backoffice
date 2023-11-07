@@ -91,4 +91,5 @@ Route::prefix("v1")->group(function(){
     Route::get('/backoffice/ubicaciones/{id}', [VehiculoController::class, 'modificarUbicacion']);
 
     Route::get('/backoffice/paquetes', [PaqueteController::class, 'menuPaquetes']);
+    Route::get('/backoffice/paquetes/{id}', [PaqueteController::class, 'menuPaquete']);
 

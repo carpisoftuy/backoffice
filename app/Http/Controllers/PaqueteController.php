@@ -84,7 +84,38 @@ class PaqueteController extends Controller
         $paquete->volumen = $request->post('volumen');
         $paquete->peso = $request->post('peso');
         $paquete->save();
-        return Paquete::find($request->id);
+
+        $paqueteParaEntregar = PaqueteParaEntregar::find($request->id);
+        $paqueteParaRecoger = PaqueteParaRecoger::find($request->id);
+        if($request->tipo == 'recoger'){
+            if ($paqueteParaRecoger){
+                $paqueteParaRecoger->almacen_destino = $request->almacen_destino;
+                $paqueteParaRecoger->save();
+            }
+            if ($paqueteParaEntregar){
+                $paqueteParaEntregar->delete();
+                $paqueteParaRecoger = new PaqueteParaRecoger();
+                $paqueteParaRecoger->id = $paquete->id;
+                $paqueteParaRecoger->almacen_destino = $request->almacen_destino;
+                $paqueteParaRecoger->save();
+            }
+        }
+        if($request->tipo == 'entregar'){
+            if ($paqueteParaEntregar){
+                $paqueteParaEntregar->ubicacion_destino = $request->ubicacion_destino;
+                $paqueteParaEntregar->save();
+            }
+            if ($paqueteParaRecoger){
+                $paqueteParaRecoger->delete();
+                $paqueteParaEntregar = new PaqueteParaEntregar();
+                $paqueteParaEntregar->id = $paquete->id;
+                $paqueteParaEntregar->ubicacion_destino = $request->ubicacion_destino;
+                $paqueteParaEntregar->save();
+            }
+        }
+
+
+        return redirect('/backoffice/paquetes');;
     }
 
     public function DeletePaquete(Request $request){
@@ -120,5 +151,26 @@ class PaqueteController extends Controller
         ]);
 
     }
+
+    public function menuPaquete(Request $request){
+
+        $paquete = Paquete::find($request->id);
+
+        $almacenes = DB::table('almacen')
+        ->join('ubicacion','ubicacion.id','=','almacen.id_ubicacion')
+        ->select('almacen.id', 'espacio', 'espacio_ocupado', 'id_ubicacion', 'direccion', 'codigo_postal')
+        ->get();
+
+        $ubicaciones = Ubicacion::all();
+
+        return view('modificarPaquete', [
+            'paquete' => $paquete,
+            'almacenes' => $almacenes,
+            'ubicaciones' => $ubicaciones
+        ]);
+
+    }
+
+
 
 }
