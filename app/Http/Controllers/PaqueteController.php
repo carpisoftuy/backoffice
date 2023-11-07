@@ -9,6 +9,7 @@ use App\Models\Almacen;
 use App\Models\Ubicacion;
 use App\Models\PaqueteParaRecoger;
 use App\Models\PaqueteParaEntregar;
+use App\Models\CargaPaquete;
 
 class PaqueteController extends Controller
 {
@@ -66,7 +67,7 @@ class PaqueteController extends Controller
         if($request->post('tipo') == 'recoger'){
             $paqueteParaRecoger = new PaqueteParaRecoger();
             $paqueteParaRecoger->id = $paquete->id;
-            $paqueteParaRecoger->almacen_destino = $request->post(); //aca esta mal seguro
+            $paqueteParaRecoger->almacen_destino = $request->post('almacen-destino');
             $paqueteParaRecoger->save();
         }
 
@@ -86,9 +87,20 @@ class PaqueteController extends Controller
         return Paquete::find($request->id);
     }
 
-    public function DeletePaquete(Request $request){ 
+    public function DeletePaquete(Request $request){
+        $paqueteParaEntregar = PaqueteParaEntregar::find($request->id);
+        $paqueteParaRecoger = PaqueteParaRecoger::find($request->id);
         $paquete = Paquete::find($request->id);
+        if($paqueteParaEntregar){
+            $paqueteParaEntregar->delete();
+        }
+        if($paqueteParaRecoger){
+            $paqueteParaRecoger->delete();
+        }
+
         $paquete->delete();
+
+        return redirect('/backoffice/paquetes');
     }
 
     public function menuPaquetes(Request $request){

@@ -80,29 +80,35 @@
     </div>
 
     <div class="container-form">
-        <form action="#" method="POST" class="formulario-almacen">
+        <form action="/paquetes" method="POST" class="formulario-almacen">
             <h4 id="añadirPaquete">Añadir paquete</h4>
 
             <p id="pPeso">Peso</p>
-            <input id="inputPeso" type="number" required>
+            <input name="peso" id="inputPeso" type="number" required>
 
             <p id="pVolumen">Volumen</p>
-            <input id="inputVolumen" type="number" required>
+            <input name="volumen" id="inputVolumen" type="number" required>
 
-            <select name="recogerEntregar" id="recogerEntregar">
+            <select name="tipo" id="recogerEntregar">
                 <option selected disabled>Seleccione una opción</option>
                 <option value="entregar">Para entregar</option>
                 <option value="recoger">Para recoger</option>
             </select>
 
             <p id="pDireccion" class="d-none">Dirección</p>
-            <input class="d-none" id="inputDireccion" type="text" required>
+            <input name="direccion" class="d-none" id="inputDireccion" type="text" required>
 
             <p class="d-none" id="pCodigo">Código postal</p>
-            <input  class="d-none" id="inputCodigo" type="number" required>
+            <input name="codigo_postal" class="d-none" id="inputCodigo" type="number" required>
+
+            <p class="d-none" id="pLatitud">Latitud</p>
+            <input name="latitud" class="d-none" id="inputLatitud" type="number" step="0.000000000000001" required>
+
+            <p class="d-none" id="pLongitud">Longitud</p>
+            <input name="longitud" class="d-none" id="inputLongitud" type="number" step="0.00000000000001" required>
 
             <p class="d-none" id="pAlmacen">Almacen</p>
-            <select class="d-none" id="selectAlmacen">
+            <select class="d-none" id="selectAlmacen" name="almacen-destino">
             @foreach ($almacenes as $almacen)
                 <option value="{{$almacen->id}}">{{$almacen->direccion}}</option>
             @endforeach
