@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>backOffice</title>
+    <title>Paquetes</title>
     <link rel="shortcut icon" href="{{ asset('img/carpifast.svg') }}" type="image/x-icon">
     <link rel="stylesheet" href="{{ asset('css/fuentes.css') }}">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="{{ asset('/css/backoffice.css') }}">
-    <link rel="stylesheet" href="{{ asset('/css/vehiculos.css') }}">
+    <link rel="stylesheet" href="{{ asset('/css/paquetes.css') }}">
 </head>
 <body>
 
@@ -23,11 +23,11 @@
 
         <ul class="nav-list">
             <li class="list-element-logo"><a href="./index.html"><img class="logo" src="{{ asset('img/carpifast.svg') }}"></a></li>
-            <li class="list-element"><a href="./index.html">Paquetes</a></li>
-            <li class="list-element"><a href="./backoffice/almacenes">Almacenes</a></li>
-            <li class="list-element"><a href="./backoffice/vehiculos">Vehiculos</a></li>
-            <li class="list-element"><a id="panel" href="./">Panel backoffice</a></li>
-            <li class="list-element"><a id="registro" href="./usuarios/crear">Registrar usuario</a></li>
+            <li class="list-element"><a href="./index.html">Inicio</a></li>
+            <li class="list-element"><a href="./paquetes">paquetes</a></li>
+            <li class="list-element"><a href="./vehiculos">Vehiculos</a></li>
+            <li class="list-element"><a id="panel" href="../">Panel backoffice</a></li>
+            <li class="list-element"><a id="registro" href="../usuarios/crear">Registrar usuario</a></li>
             <li class="list-element">
                 <div class="dropdown">
                   <button id="idioma" class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">Idioma</button>
@@ -47,22 +47,56 @@
         </ul>
     </nav>
 
-    <div class="container-form">
-        <form class="formulario-almacen" method="POST" action="../../ubicaciones/{{$ubicacion->id}}">
-            <input type="hidden" name="_method" value="put" />
-            <label for="direccion">Dirección (calle y nro)</label>
-            <input type="text" name="direccion"  value="{{$ubicacion->direccion}}">
-            <label for="codigo_postal">Código postal</label>
-            <input type="number" name="codigo_postal"  value="{{$ubicacion->codigo_postal}}">
-            <label for="latitud">Latitud</label>
-            <input type="number" name="latitud" step="0.000000000000001"  value="{{$ubicacion->latitud}}">
-            <label for="longitud">Longitud</label>
-            <input type="number" name="longitud" step="0.000000000000001"  value="{{$ubicacion->longitud}}">
+    <header>
+        <h2 id="bienvenido">paquetes</h2>
+    </header>
 
+    <div class="table-container">
+        <table>
+            <tr>
+                <th>Id</th>
+                <th>Fecha despacho</th>
+                <th>Peso</th>
+                <th>Volumen</th>
+                <th>Modificar</th>
+                <th>Eliminar</th>
+            </tr>
+            @foreach ($paquetes as $paquete)
+            <tr>
+                <td>{{$paquete->id}}</td>
+                <td>{{$paquete->fecha_despacho}}</td>
+                <td>{{$paquete->peso}}</td>
+                <td>{{$paquete->volumen}}</td>
+                <td><a href="/backoffice/paquetes/{{$paquete->id}}">Modificar</a></td>
+                <td><form action="{{ route('paquetes.delete', ['id' => $paquete->id]) }}" method="POST">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit">Eliminar</button>
+                </form>
+                </td>
+            </tr>
+            @endforeach
+        </table>
+    </div>
+
+    {{-- <h2>Crear paquete</h2>
+    <div class="container-form">
+        <form class="formulario-paquete" method="POST" action="../paquetes">
+            <label for="espacio" name="espacio">Espacio</label>
+            <input type="number" name="espacio" required>
+            <label for="espacio_ocupado" name="espacio_ocupado">Espacio ocupado</label>
+            <input type="number" name="espacio_ocupado" required>
+            <label for="id_ubicacion" name="id_ubicacion">Ubicación</label>
+            <select name="id_ubicacion">
+                @foreach ($direcciones as $direccion)
+
+                <option>{{$direccion->id}}</option>
+                @endforeach
+            </select>
 
             <button type="submit">Crear</button>
         </form>
-    </div>
+    </div> --}}
 
 
     <footer id="footer">

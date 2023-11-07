@@ -57,7 +57,7 @@ Route::prefix("v1")->group(function(){
     Route::get('paquetes/{id}', [PaqueteController::class, 'GetPaquete']);
     Route::post('paquetes', [PaqueteController::class, 'CreatePaquete']);
     Route::put('paquetes/{id}', [PaqueteController::class, 'UpdatePaquete']);
-    Route::delete('paquetes/{id}', [PaqueteController::class, 'DeletePaquete']);
+    Route::delete('paquetes/{id}', [PaqueteController::class, 'DeletePaquete'])->name('paquetes.delete');
 
     Route::post('/chofer/asignar_camioneta', [UsuariosController::class, 'AsignarChoferACamioneta']);
 
@@ -90,4 +90,5 @@ Route::prefix("v1")->group(function(){
     Route::get('/backoffice/almacenes/{id}', [AlmacenesController::class, 'modificarAlmacen']);
     Route::get('/backoffice/ubicaciones/{id}', [VehiculoController::class, 'modificarUbicacion']);
 
+    Route::get('/backoffice/paquetes', [PaqueteController::class, 'menuPaquetes']);
 

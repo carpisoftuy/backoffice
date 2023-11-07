@@ -62,5 +62,16 @@ class PaqueteController extends Controller
         $paquete->delete();
     }
 
+    public function menuPaquetes(Request $request){
+
+        $paquetes = DB::table('paquete')
+        ->select('*')
+        ->get();
+
+        return view('gestionPaquetes', [
+            'paquetes' => $paquetes,
+        ]);
+
+    }
 
 }
