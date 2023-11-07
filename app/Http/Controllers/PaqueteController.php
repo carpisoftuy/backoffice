@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use App\Http\models\Paquete;
+use App\Models\Paquete;
 
 class PaqueteController extends Controller
 {
@@ -36,4 +36,31 @@ class PaqueteController extends Controller
 
         return redirect('/');
     }
+
+    public function CreatePaquete (Request $request){
+        $paquete = new Paquete();
+        $paquete->fecha_despacho = now();
+        $paquete->peso = $request->peso;
+        $paquete->volumen = $request->volumen;
+        $paquete->save();
+    }
+
+    public function GetPaquete(Request $request){
+        return Paquete::find($request->id);
+    }
+
+    public function UpdatePaquete(Request $request){
+        $paquete = Paquete::find($request->id);
+        $paquete->volumen = $request->post('volumen');
+        $paquete->peso = $request->post('peso');
+        $paquete->save();
+        return Paquete::find($request->id);
+    }
+
+    public function DeletePaquete(Request $request){ 
+        $paquete = Paquete::find($request->id);
+        $paquete->delete();
+    }
+
+
 }

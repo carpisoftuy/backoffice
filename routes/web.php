@@ -53,6 +53,12 @@ Route::prefix("v1")->group(function(){
     Route::post('/paquete/asignar_camioneta', [PaqueteController::class, 'AsignarCamioneta']);
     Route::get('/paquete/finalizar_transito/{id}', [PaqueteController::class, 'FinalizarTransito']);
 
+    Route::get('paquetes', [PaqueteController::class, 'GetPaquetes']);
+    Route::get('paquetes/{id}', [PaqueteController::class, 'GetPaquete']);
+    Route::post('paquetes', [PaqueteController::class, 'CreatePaquete']);
+    Route::put('paquetes/{id}', [PaqueteController::class, 'UpdatePaquete']);
+    Route::delete('paquetes/{id}', [PaqueteController::class, 'DeletePaquete']);
+
     Route::post('/chofer/asignar_camioneta', [UsuariosController::class, 'AsignarChoferACamioneta']);
 
 
