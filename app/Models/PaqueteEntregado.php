@@ -5,18 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Paquete_para_entregar extends Model
+class PaqueteEntregado extends Model
 {
     use HasFactory;
 
-    protected $table = "paquete_para_entregar";
+    protected $table = "paquete_entregado";
 
     public $timestamps = false;
     protected $fillable = [
 
-        "id",
-        "ubicacion_destino"
+        "id"
 
     ];
-
 }

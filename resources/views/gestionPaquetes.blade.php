@@ -103,6 +103,9 @@
     
             <p class="d-none" id="pAlmacen">Almacen</p>
             <select class="d-none" id="selectAlmacen">
+            @foreach ($almacenes as $almacen)
+                <option value="{{$almacen->id}}">{{$almacen->direccion}}</option>
+            @endforeach
             </select><br>
     
             <button type="submit" id="crearPaquete">Crear paquete</button>
@@ -123,6 +126,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     <script src="{{ asset('/js/modoClaroOscuro/estiloBackoffice.js') }}"></script>
     <script src="{{ asset('/js/idiomas/backoffice_idioma.js') }}"></script>
+    <script src="{{ asset('/js/paquetes.js') }}"></script>
 
 </body>
 </html>

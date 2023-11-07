@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Paquete_recogido extends Model
+class PaqueteRecogido extends Model
 {
     use HasFactory;
 

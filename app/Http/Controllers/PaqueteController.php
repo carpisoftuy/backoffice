@@ -5,6 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Paquete;
+use App\Models\Almacen;
+use App\Models\Ubicacion;
+use App\Models\PaqueteParaRecoger;
+use App\Models\PaqueteParaEntregar;
 
 class PaqueteController extends Controller
 {
@@ -38,11 +42,36 @@ class PaqueteController extends Controller
     }
 
     public function CreatePaquete (Request $request){
+        DB::beginTransaction();
         $paquete = new Paquete();
         $paquete->fecha_despacho = now();
-        $paquete->peso = $request->peso;
-        $paquete->volumen = $request->volumen;
+        $paquete->volumen = $request->post('volumen');
+        $paquete->peso = $request->post('peso');
         $paquete->save();
+
+        if($request->post('tipo') == 'entregar'){
+            $ubicacion = new Ubicacion();
+            $ubicacion->direccion = $request->direccion;
+            $ubicacion->codigo_postal = $request->codigo_postal;
+            $ubicacion->latitud = $request->latitud;
+            $ubicacion->longitud = $request->longitud;
+            $ubicacion->save();
+
+            $paqueteParaEntregar = new PaqueteParaEntregar();
+            $paqueteParaEntregar->id = $paquete->id;
+            $paqueteParaEntregar->ubicacion_destino = $ubicacion->id;
+            $paqueteParaEntregar->save();
+        }
+
+        if($request->post('tipo') == 'recoger'){
+            $paqueteParaRecoger = new PaqueteParaRecoger();
+            $paqueteParaRecoger->id = $paquete->id;
+            $paqueteParaRecoger->almacen_destino = $request->post(); //aca esta mal seguro
+            $paqueteParaRecoger->save();
+        }
+
+        DB::commit();
+        return Paquete::find($paquete->id);
     }
 
     public function GetPaquete(Request $request){
@@ -68,8 +97,14 @@ class PaqueteController extends Controller
         ->select('*')
         ->get();
 
+        $almacenes = DB::table('almacen')
+        ->join('ubicacion','ubicacion.id','=','almacen.id_ubicacion')
+        ->select('almacen.id', 'espacio', 'espacio_ocupado', 'id_ubicacion', 'direccion', 'codigo_postal')
+        ->get();
+
         return view('gestionPaquetes', [
             'paquetes' => $paquetes,
+            'almacenes' => $almacenes,
         ]);
 
     }

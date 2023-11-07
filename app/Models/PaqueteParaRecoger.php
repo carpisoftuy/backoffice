@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Paquete_para_recoger extends Model
+class PaqueteParaRecoger extends Model
 {
     use HasFactory;
 
