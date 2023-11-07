@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="{{ asset('css/fuentes.css') }}">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="{{ asset('/css/backoffice.css') }}">
-    <link rel="stylesheet" href="{{ asset('/css/almacenes.css') }}">
+    <link rel="stylesheet" href="{{ asset('/css/paquetes.css') }}">
 </head>
 <body>
 
@@ -82,36 +82,36 @@
     <div class="container-form">
         <form action="#" method="POST" class="formulario-almacen">
             <h4 id="añadirPaquete">Añadir paquete</h4>
-    
+
             <p id="pPeso">Peso</p>
             <input id="inputPeso" type="number" required>
-    
+
             <p id="pVolumen">Volumen</p>
             <input id="inputVolumen" type="number" required>
-    
+
             <select name="recogerEntregar" id="recogerEntregar">
                 <option selected disabled>Seleccione una opción</option>
                 <option value="entregar">Para entregar</option>
                 <option value="recoger">Para recoger</option>
             </select>
-    
+
             <p id="pDireccion" class="d-none">Dirección</p>
             <input class="d-none" id="inputDireccion" type="text" required>
-    
+
             <p class="d-none" id="pCodigo">Código postal</p>
             <input  class="d-none" id="inputCodigo" type="number" required>
-    
+
             <p class="d-none" id="pAlmacen">Almacen</p>
             <select class="d-none" id="selectAlmacen">
             @foreach ($almacenes as $almacen)
                 <option value="{{$almacen->id}}">{{$almacen->direccion}}</option>
             @endforeach
             </select><br>
-    
+
             <button type="submit" id="crearPaquete">Crear paquete</button>
         </form>
     </div>
-    
+
 
 
     <footer id="footer">
