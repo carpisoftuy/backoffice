@@ -7,7 +7,6 @@ use App\Models\Usuario;
 use App\Models\Admin;
 use App\Models\Chofer;
 use App\Models\Almacenero;
-use App\Models\Informacion;
 use Illuminate\Support\Facades\DB;
 
 class UsuariosController extends Controller
@@ -118,7 +117,6 @@ class UsuariosController extends Controller
         $usuario->isAdmin = !is_null(Admin::find($usuario->id));
         $usuario->isAlmacenero = !is_null(Almacenero::find($usuario->id));
         $usuario->isChofer = !is_null(Chofer::find($usuario->id));
-        $usuario->informaciones = Informacion::where("id_usuario", "=", $usuario->id)->get();
         return view('formularioUsuarios', ["usuario" => $usuario]);
     }
 
