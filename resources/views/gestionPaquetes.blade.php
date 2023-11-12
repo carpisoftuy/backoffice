@@ -19,15 +19,15 @@
           <img class="hamburguesa" id="hamburguesa" src="{{ asset('img/list.svg') }}">
         </label>
         <h1 class="titulo">CARPIFAST</h1>
-        <a href="./index.html"><img class="logo-menu-hamburguesa" src="{{ asset('img/carpifast.svg') }}"></a>
+        <a href="/backoffice"><img class="logo-menu-hamburguesa" src="{{ asset('img/carpifast.svg') }}"></a>
 
         <ul class="nav-list">
-            <li class="list-element-logo"><a href="./index.html"><img class="logo" src="{{ asset('img/carpifast.svg') }}"></a></li>
+            <li class="list-element-logo"><a href="/backoffice"><img class="logo" src="{{ asset('img/carpifast.svg') }}"></a></li>
             <li class="list-element"><a href="/backoffice/paquetes">Paquetes</a></li>
             <li class="list-element"><a href="/backoffice/almacenes">Almacenes</a></li>
             <li class="list-element"><a href="/backoffice/vehiculos">Vehiculos</a></li>
-            <li class="list-element"><a id="panel" href="/">Panel backoffice</a></li>
-            <li class="list-element"><a id="registro" href="/usuarios/crear">Registrar usuario</a></li>
+            <li class="list-element"><a id="panel" href="/backoffice">Panel backoffice</a></li>
+            <li class="list-element"><a id="registro" href="/backoffice/usuarios/crear">Registrar usuario</a></li>
             <li class="list-element">
                 <div class="dropdown">
                   <button id="idioma" class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">Idioma</button>

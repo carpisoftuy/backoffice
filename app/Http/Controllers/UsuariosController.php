@@ -86,7 +86,7 @@ class UsuariosController extends Controller
             $almacenero->id = $usuario->id;
             $almacenero->save();
         }
-        return json_encode($usuario);
+        return redirect('/backofice/usuarios');
     }
 
     public function BorrarUsuario(Request $request){
