@@ -48,22 +48,26 @@
 
     <section>
         <div class="container-form">
-            <form action="
-            @if(isset($usuario))
-            /usuarios/actualizar/{{$usuario->id}}
-            @endif
-            @if(!isset($usuario))
-            @php
-            $usuario = new stdClass();
-            $usuario->isAdmin = false;
-            $usuario->isAlmacenero = false;
-            $usuario->isChofer = false;
+            <form action="/usuarios/
+@php
+$paraEditar = isset($usuario);
 
-            @endphp
-            /usuarios/crear/
-            @endif
+if($paraEditar){
+echo $usuario->id;
+}
+
+if(!$paraEditar){
+$usuario = new stdClass();
+$usuario->isAdmin = false;
+$usuario->isAlmacenero = false;
+$usuario->isChofer = false;
+}
+@endphp
             " method="post">
                 @csrf
+                @if($paraEditar)
+                <input type="hidden" name="_method" value="put">
+                @endif
                 <h3 id="registrar">Registre un nuevo usuario</h3>
                 <label for="nombreUsuario"><p>Nombre de Usuario</p></label><br>
                 <input class="form-control" id="nombreUsuario" name="username" type="text" value="{{$usuario->username ?? '' }}"><br>

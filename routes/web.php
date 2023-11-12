@@ -17,6 +17,14 @@ use App\Http\Controllers\UbicacionController;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::post('/usuarios/', [UsuariosController::class, 'CrearUsuario']);
+Route::put('/usuarios/{id}', [UsuariosController::class, 'UpdateUsuarios']);
+Route::delete('/usuarios/{id}', [UsuariosController::class, 'BorrarUsuario']);
+Route::get('/usuarios/{id}/borrar', [UsuariosController::class, 'BorrarUsuario']);
+
+Route::post('/paquete/asignar_camioneta', [PaqueteController::class, 'AsignarCamioneta']);
+Route::get('/paquete/finalizar_transito/{id}', [PaqueteController::class, 'FinalizarTransito']);
+Route::post('/chofer/asignar_camioneta', [UsuariosController::class, 'AsignarChoferACamioneta']);
 
 Route::post('/paquete/asignar_camioneta', [PaqueteController::class, 'AsignarCamioneta']);
 Route::get('/paquete/finalizar_transito/{id}', [PaqueteController::class, 'FinalizarTransito']);
@@ -53,6 +61,7 @@ Route::prefix('/backoffice')->group(function (){
     Route::get('/usuarios/crear', function(){
         return view('formularioUsuarios');
     });
+    Route::get('/usuarios/modificar/{id}', [UsuariosController::class, 'CrearFormulario']);
 
     Route::get('/vehiculos', [VehiculoController::class, 'menuVehiculos']);
     Route::get('/vehiculos/{id}', [VehiculoController::class, 'menuVehiculo']);

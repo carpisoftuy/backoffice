@@ -74,7 +74,7 @@ class VehiculoController extends Controller
             $tipo->save();
         }
 
-        return $vehiculo;
+        return redirect('/backoffice/vehiculos');
     }
 
     public function GetVehiculos(request $request){
@@ -116,7 +116,7 @@ class VehiculoController extends Controller
                 Camioneta::find($request->id)->delete();
             }
         }
-        return [Vehiculo::find($request->id), Camion::find($request->id), Camioneta::find($request->id)];
+        return redirect('/backoffice/vehiculos');
     }
     public function DeleteVehiculo(Request $request){
 
@@ -134,7 +134,7 @@ class VehiculoController extends Controller
         }
 
         $vehiculo->delete();
-        
+
     }
 }
     public function ModificarUbicacion(Request $request){

@@ -123,7 +123,7 @@ class UsuariosController extends Controller
     public function UpdateUsuarios(Request $request){
         $usuario = Usuario::find($request->id);
         $usuario->username = $request->post('username');
-        $usuario->password = password_hash($request->post('password'), PASSWORD_DEFAULT);
+        if ($request->post('password') != "") $usuario->password = password_hash($request->post('password'), PASSWORD_DEFAULT);
         $usuario->nombre = $request->post('nombre');
         $usuario->apellido = $request->post('apellido');
         $usuario->save();
@@ -167,6 +167,7 @@ class UsuariosController extends Controller
                   'fecha_inicio' => now()
         ]);
 
+        return redirect('/backoffice/vehiculos');
     }
 
 }

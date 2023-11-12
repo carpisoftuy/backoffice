@@ -76,8 +76,8 @@
                 Almacenero
                 @endif
                 </td>
-                <td><a href="./usuarios/borrar/{{ $usuario->id }}">Borrar</a></td>
-                <td><a href="./usuarios/actualizar/{{ $usuario->id }}">Modificar</a></td>
+                <td><a href="/usuarios/{{ $usuario->id }}/borrar/">Borrar</a></td>
+                <td><a href="/backoffice/usuarios/modificar/{{ $usuario->id }}">Modificar</a></td>
 
             </tr>
             @endforeach
