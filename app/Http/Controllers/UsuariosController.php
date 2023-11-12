@@ -7,6 +7,8 @@ use App\Models\Usuario;
 use App\Models\Admin;
 use App\Models\Chofer;
 use App\Models\Almacenero;
+use App\Models\Maneja;
+use App\Models\ManejaFin;
 use Illuminate\Support\Facades\DB;
 
 class UsuariosController extends Controller
@@ -22,19 +24,29 @@ class UsuariosController extends Controller
         $choferes = DB::table('usuario')
         ->select('*')
         ->join('chofer', 'chofer.id', '=', 'usuario.id')
-        ->where([])
         ->get();
 
         $paquetes = DB::table('paquete')
         ->select('*')
-        ->where([])
         ->get();
 
         $camionetas = DB::table('camioneta')
         ->select('*')
         ->join('vehiculo', 'camioneta.id', '=', 'vehiculo.id')
-        ->where([])
         ->get();
+
+        $vehiculos = DB::table('vehiculo')
+        ->select('*')
+        ->get();
+
+        $manejas = DB::table('maneja')
+        ->select('maneja.*', 'vehiculo.*', 'usuario.*', 'maneja.id')
+        ->join('vehiculo', 'vehiculo.id', '=', 'maneja.id_vehiculo')
+        ->join('usuario', 'usuario.id', '=', 'maneja.id_usuario')
+        ->whereNotIn('maneja.id',
+            DB::table('maneja_fin')
+            ->select('id')
+        )->get();
 
         $camiones = DB::table('camion')
         ->select('*')
@@ -56,12 +68,16 @@ class UsuariosController extends Controller
         ->get();
 
         return view('gestionUsuarios',
-            ['usuarios' => $usuarios,
+            [
+            'usuarios' => $usuarios,
             'choferes' => $choferes,
             'paquetes' => $paquetes,
             'camionetas' => $camionetas,
             'camiones' => $camiones,
-            'paquetes_en_transito' => $paquetes_en_transito]);
+            'paquetes_en_transito' => $paquetes_en_transito,
+            'vehiculos' => $vehiculos,
+            'manejas' => $manejas
+        ]);
     }
 
     public function CrearUsuario(Request $request){
@@ -86,7 +102,7 @@ class UsuariosController extends Controller
             $almacenero->id = $usuario->id;
             $almacenero->save();
         }
-        return redirect('/backofice/usuarios');
+        return redirect('/backoffice/');
     }
 
     public function BorrarUsuario(Request $request){
@@ -159,13 +175,44 @@ class UsuariosController extends Controller
         return redirect('/');
     }
 
-    public function AsignarChoferACamioneta(Request $request){
+    public function AsignarChoferAVehiculo(Request $request){
+
+        $manejasPreexistentes = Maneja::where(function ($query) use ($request){
+            $query->where('id_usuario', '=', $request->id_usuario)
+            ->orWhere('id_vehiculo', '=', $request->id_vehiculo);
+        })
+        ->whereNotIn('maneja.id',
+            DB::table('maneja_fin')
+            ->select('id')
+        )->get();
+
+
+        if($manejasPreexistentes){
+            foreach ($manejasPreexistentes as $manejaPreexistente) {
+                $manejaFin = new ManejaFin();
+                $manejaFin->id = $manejaPreexistente->id;
+                $manejaFin->fecha_fin = now();
+                $manejaFin->save();
+            }
+        }
 
         $maneja = DB::table('maneja')
         ->insert(['id_vehiculo' => $request->post('id_vehiculo'),
                   'id_usuario' => $request->post('id_usuario'),
                   'fecha_inicio' => now()
         ]);
+
+        return redirect('/backoffice/vehiculos');
+    }
+
+    public function DesasignarChoferAVehiculo(Request $request){
+
+        $manejaPreexistente = Maneja::findOrFail($request->id);
+
+        $manejaFin = new ManejaFin();
+        $manejaFin->id = $manejaPreexistente->id;
+        $manejaFin->fecha_fin = now();
+        $manejaFin->save();
 
         return redirect('/backoffice/vehiculos');
     }

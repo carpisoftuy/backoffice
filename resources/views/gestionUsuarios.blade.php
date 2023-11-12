@@ -11,40 +11,7 @@
 </head>
 <body>
 
-    <nav class="ourNavbar">
-
-        <input type="checkbox" id="check">
-        <label for="check" class="checkbtn">
-          <img class="hamburguesa" id="hamburguesa" src="{{ asset('img/list.svg') }}">
-        </label>
-        <h1 class="titulo">CARPIFAST</h1>
-        <a href="/backoffice"><img class="logo-menu-hamburguesa" src="{{ asset('img/carpifast.svg') }}"></a>
-
-        <ul class="nav-list">
-            <li class="list-element-logo"><a href="/backoffice"><img class="logo" src="{{ asset('img/carpifast.svg') }}"></a></li>
-            <li class="list-element"><a href="/backoffice/paquetes">Paquetes</a></li>
-            <li class="list-element"><a href="/backoffice/almacenes">Almacenes</a></li>
-            <li class="list-element"><a href="/backoffice/vehiculos">Vehiculos</a></li>
-            <li class="list-element"><a id="panel" href="/backoffice">Panel backoffice</a></li>
-            <li class="list-element"><a id="registro" href="/backoffice/usuarios/crear">Registrar usuario</a></li>
-            <li class="list-element">
-                <div class="dropdown">
-                  <button id="idioma" class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">Idioma</button>
-                  <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                    <li><a class="dropdown-item" href="#" id="es">Español</a></li>
-                    <li><a class="dropdown-item" href="#" id="en">English</a></li>
-                  </ul>
-                </div>
-              </li>
-            <li class="list-element" id="switch-container">
-                <p class="p-tema" style="margin: 0 20px 0 0;" id="tema">Tema</p>
-                <label class="switch">
-                <input id="switch" type="checkbox">
-                <span class="slider round"></span>
-              </label>
-            </li>
-        </ul>
-    </nav>
+    @include('header')
 
     <header>
         <h2 id="bienvenido">Bienvenido Administrador</h2>
@@ -92,30 +59,66 @@
                 <th>id</th>
                 <th>Nombre de usuario</th>
                 <th>Nombre y apellido</th>
-                <th>Asignar camioneta</th>
-                <th></th>
             </tr>
             @foreach ($choferes as $chofer)
             <tr>
-                <form method="post" action="./chofer/asignar_camioneta">
-                    @csrf
-                    <input name="id_usuario" value="{{$chofer->id}}" style="display: none">
-                    <td>{{$chofer->id}}</td>
-                    <td>{{$chofer->username}}</td>
-                    <td>{{$chofer->nombre . " " . $chofer->apellido}}</td>
-                    <td>
-                        <select name="id_vehiculo">
-                            <option disabled selected></option>
-                        @foreach ($camionetas as $camioneta)
-                            <option value="{{$camioneta->id}}">{{$camioneta->matricula}}</option>
-                        @endforeach
-                    </select>
-                    </td>
-                    <td><button type="submit">Actualizar</button></td>
-                </form>
+                <td>{{$chofer->id}}</td>
+                <td>{{$chofer->username}}</td>
+                <td>{{$chofer->nombre . " " . $chofer->apellido}}</td>
             </tr>
             @endforeach
         </table>
+    </div>
+
+    <h2>Listado de Choferes en actividad</h2>
+    <div class="table-container">
+        <table>
+            <tr>
+                <th>Nombre de usuario</th>
+                <th>Nombre</th>
+                <th>Vehiculo</th>
+                <th>Fecha de Inicio</th>
+                <th></th>
+            </tr>
+            @foreach ($manejas as $maneja)
+            <tr>
+                <td>{{$maneja->username}}</td>
+                <td>{{$maneja->nombre}} {{$maneja->apellido}}</td>
+                <td>{{$maneja->matricula}} ({{$maneja->codigo_pais}})</td>
+                <td>{{$maneja->fecha_inicio}}</td>
+                <td>
+                    <form action="/choferes/desasignar_vehiculo/{{$maneja->id}}" method="POST">
+                        <input type="hidden" name="_method" value="DELETE" />
+                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                        <button type="submit">Eliminar</button>
+                    </form>
+                </td>
+            </tr>
+            @endforeach
+        </table>
+    </div>
+
+    <h2>Asignar Chofer a Vehiculo</h2>
+    <div class="container-form">
+
+        <form class="formulario-asignar-chofer-vehiculo" method="POST" action="/choferes/asignar_vehiculo">
+            <label for="formulario-asignar-chofer-vehiculo-id_usuario">Usuario</label>
+            <select id="formulario-asignar-chofer-vehiculo-id_usuario" name="id_usuario" required>
+                <option disabled selected></option>
+            @foreach ($choferes as $chofer)
+                <option value="{{$chofer->id}}">{{$chofer->username}}</option>
+            @endforeach
+            </select>
+            <label for="formulario-asignar-chofer-vehiculo-id_vehiculo">Vehiculo</label>
+            <select id="formulario-asignar-chofer-vehiculo-id_vehiculo" name="id_vehiculo" required>
+                <option disabled selected></option>
+            @foreach ($vehiculos as $vehiculo)
+                <option value="{{$vehiculo->id}}">{{$vehiculo->matricula}} ({{$vehiculo->codigo_pais}})</option>
+            @endforeach
+            </select>
+
+            <button type="submit">Asignar</button>
+        </form>
     </div>
 
 
