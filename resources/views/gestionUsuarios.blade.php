@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="{{ asset('css/fuentes.css') }}">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="{{ asset('/css/backoffice.css') }}">
+    <link rel="stylesheet" href="{{ asset('/css/paquetes.css') }}">
 </head>
 <body>
 
@@ -107,7 +108,7 @@
     <h2>Asignar Chofer a Vehiculo</h2>
     <div class="container-form">
 
-        <form class="formulario-asignar-chofer-vehiculo" method="POST" action="/choferes/asignar">
+        <form class="formulario-almacen" method="POST" action="/choferes/asignar">
             <label for="formulario-asignar-chofer-vehiculo-id_usuario">Usuario</label>
             <select id="formulario-asignar-chofer-vehiculo-id_usuario" name="id_usuario" required>
                 <option disabled selected></option>

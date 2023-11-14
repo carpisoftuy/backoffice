@@ -136,7 +136,7 @@
     </div>
 
     <div class="container-form">
-        <form action="/paquetes/camioneta" method="POST" class="formulario-paquete-camioneta">
+        <form action="/paquetes/camioneta" method="POST" class="formulario-almacen">
             <h4 id="cargarPaqueteCamioneta">Cargar Paquete a Camioneta</h4>
 
             <label for="formulario-paquete-camioneta-select-paquete">Paquete</label>
@@ -187,7 +187,7 @@
     </div>
 
     <div class="container-form">
-        <form action="/paquetes/bulto" method="POST" class="formulario-paquete-bulto">
+        <form action="/paquetes/bulto" method="POST" class="formulario-almacen">
             <h4 id="cargarPaqueteBulto">Cargar Paquete a Bulto</h4>
 
             <label for="formulario-paquete-bulto-select-paquete">Paquete</label>
@@ -238,7 +238,7 @@
     </div>
 
     <div class="container-form">
-        <form action="/paquetes/almacen" method="POST" class="formulario-paquete-almacen">
+        <form action="/paquetes/almacen" method="POST" class="formulario-almacen">
             <h4 id="cargarPaqueteAlmacen">Cargar Paquete a Almacen</h4>
 
             <label for="formulario-paquete-almacen-select-paquete">Paquete</label>

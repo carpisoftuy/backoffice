@@ -47,7 +47,7 @@
     </div>
 
     <div class="container-form">
-        <form action="/bultos" method="POST" class="formulario-bultos">
+        <form action="/bultos" method="POST" class="formulario-almacen">
             <h4 id="crearBulto">Crear Bulto</h4>
             <p class="d-none" id="pAlmacen">Almacen de destino</p>
             <select id="selectAlmacen" name="almacen_destino">
@@ -88,7 +88,7 @@
     </div>
 
     <div class="container-form">
-        <form action="/bultos/camion" method="POST" class="formulario-bulto-camion">
+        <form action="/bultos/camion" method="POST" class="formulario-almacen">
             <h4 id="cargarBultoCamion">Cargar Bulto a Camión</h4>
 
             <label for="formulario-bulto-camion-select-bulto">Bulto</label>
@@ -139,7 +139,7 @@
     </div>
 
     <div class="container-form">
-        <form action="/bultos/almacen" method="POST" class="formulario-bulto-almacen">
+        <form action="/bultos/almacen" method="POST" class="formulario-almacen">
             <h4 id="cargarbultoAlmacen">Cargar Bulto a Almacen</h4>
 
             <label for="formulario-bulto-almacen-select-bulto">bulto</label>
