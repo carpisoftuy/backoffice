@@ -12,6 +12,7 @@ use App\Models\PaqueteParaEntregar;
 use App\Models\PaqueteRecogido;
 use App\Models\PaqueteEntregado;
 use App\Models\CargaPaquete;
+use App\Models\CargaPaqueteFin;
 use App\Models\BultoContiene;
 use App\Models\BultoContieneFin;
 use App\Models\AlmacenContienePaquete;
@@ -310,7 +311,7 @@ class PaqueteController extends Controller
     public function EntregarPaquete(Request $request){
         $paquete = Paquete::leftJoin('paquete_para_entregar', 'paquete.id', '=', 'paquete_para_entregar.id')
             ->leftJoin('paquete_para_recoger', 'paquete.id', '=', 'paquete_para_recoger.id')
-            ->select('paquete_para_recoger.id as para_recoger', 'paquete_para_entregar.id as para_entregar')
+            ->select('paquete_para_recoger.id as para_recoger', 'paquete_para_entregar.id as para_entregar', 'paquete.id')
             ->where('paquete.id', '=', $request->id)
             ->first();
 
@@ -326,6 +327,52 @@ class PaqueteController extends Controller
             $paqueteRecogido->fecha_recogido = now();
             $paqueteRecogido->save();
         }
+
+        $almacenesContienePaquete = AlmacenContienePaquete::where('almacen_contiene_paquete.id_paquete', '=', $paquete->id)
+            ->whereNotIn('almacen_contiene_paquete.id',
+                DB::table('almacen_contiene_paquete_fin')
+                ->select('id')
+            )
+            ->get();
+
+        foreach($almacenesContienePaquete as $almacenContienePaquete){
+            $almacenContienePaqueteFin = new AlmacenContienePaqueteFin();
+            $almacenContienePaqueteFin->id = $almacenContienePaquete->id;
+            $almacenContienePaqueteFin->fecha_fin = now();
+
+            $almacenContienePaqueteFin->save();
+        }
+
+        $paquetesEnBulto = BultoContiene::where('bulto_contiene.id_paquete', '=', $paquete->id)
+            ->whereNotIn('bulto_contiene.id',
+                DB::table('bulto_contiene_fin')
+                ->select('id')
+            )
+            ->get();
+
+        foreach($paquetesEnBulto as $paqueteEnBulto){
+            $paqueteEnBultoFin = new BultoContieneFin();
+            $paqueteEnBultoFin->id = $paqueteEnBulto->id;
+            $paqueteEnBultoFin->fecha_fin = now();
+
+            $paqueteEnBultoFin->save();
+        }
+
+        $paquetesEnCamioneta = CargaPaquete::where('carga_paquete.id_paquete', '=', $paquete->id)
+            ->whereNotIn('carga_paquete.id',
+                DB::table('carga_paquete_fin')
+                ->select('id')
+            )
+            ->get();
+
+        foreach($paquetesEnCamioneta as $paqueteEnCamioneta){
+            $paquetesEnCamionetaFin = new CargaPaqueteFin();
+            $paquetesEnCamionetaFin->id = $paqueteEnCamioneta->id;
+            $paquetesEnCamionetaFin->fecha_fin = now();
+
+            $paquetesEnCamionetaFin->save();
+        }
+
 
         return redirect('/backoffice/paquetes');
     }
