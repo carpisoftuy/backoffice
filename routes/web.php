@@ -6,6 +6,7 @@ use App\Http\Controllers\PaqueteController;
 use App\Http\Controllers\VehiculoController;
 use App\Http\Controllers\AlmacenesController;
 use App\Http\Controllers\UbicacionController;
+use App\Http\Controllers\BultosController;
 
 /*
 |--------------------------------------------------------------------------
@@ -37,6 +38,16 @@ Route::delete('/paquetes/bulto/{id}', [PaqueteController::class, 'DesasignarBult
 
 Route::post('/paquetes/almacen', [PaqueteController::class, 'AsignarAlmacen']);
 Route::delete('/paquetes/almacen/{id}', [PaqueteController::class, 'DesasignarAlmacen'])->name('paquetes/almacen.delete');
+
+Route::post('/bultos', [BultosController::class, 'CreateBulto']);
+Route::delete('/bultos/{id}', [BultosController::class, 'DeleteBulto'])->name('bultos.delete');
+
+Route::post('/bultos/camion', [BultosController::class, 'AsignarCamion']);
+Route::delete('/bultos/camion/{id}', [BultosController::class, 'FinalizarTransito'])->name('bultos/camion.delete');
+
+Route::post('/bultos/almacen', [BultosController::class, 'AsignarAlmacen']);
+Route::delete('/bultos/almacen/{id}', [BultosController::class, 'DesasignarAlmacen'])->name('bultos/almacen.delete');
+
 
 Route::post('/choferes/asignar', [UsuariosController::class, 'AsignarChoferAVehiculo']);
 Route::delete('/choferes/asignar/{id}', [UsuariosController::class, 'DesasignarChoferAVehiculo'])->name('choferes/asignar.delete');
@@ -79,6 +90,8 @@ Route::prefix('/backoffice')->group(function (){
 
     Route::get('/paquetes', [PaqueteController::class, 'menuPaquetes']);
     Route::get('/paquetes/{id}', [PaqueteController::class, 'menuPaquete']);
+
+    Route::get('/bultos', [BultosController::class, 'menuBultos']);
 });
 
 

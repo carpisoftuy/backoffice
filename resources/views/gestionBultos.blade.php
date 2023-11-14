@@ -26,7 +26,6 @@
                 <th>Volumen</th>
                 <th>Peso</th>
                 <th>Destino</th>
-                <th>Modificar</th>
                 <th>Eliminar</th>
             </tr>
             @foreach ($bultos as $bulto)
@@ -35,9 +34,8 @@
                 <td>{{$bulto->fecha_armado}}</td>
                 <td>{{$bulto->volumen}}</td>
                 <td>{{$bulto->peso}}</td>
-                <td>{{$bulto->almacen_destino->direccion}}, {{$bulto->almacen_destino->codigo_postal}}</td>
-                <td><a href="/backoffice/bultos/{{$bulto->id}}">Modificar</a></td>
-                <td><form action="{{ route('paquetes.delete', ['id' => $paquete->id]) }}" method="POST">
+                <td>{{$bulto->direccion}}, {{$bulto->codigo_postal}}</td>
+                <td><form action="{{ route('bultos.delete', ['id' => $bulto->id]) }}" method="POST">
                     @csrf
                     @method('DELETE')
                     <button type="submit">Eliminar</button>
@@ -49,44 +47,120 @@
     </div>
 
     <div class="container-form">
-        <form action="/paquetes" method="POST" class="formulario-almacen">
-            <h4 id="añadirPaquete">Añadir paquete</h4>
-
-            <p id="pPeso">Peso</p>
-            <input name="peso" id="inputPeso" type="number" required>
-
-            <p id="pVolumen">Volumen</p>
-            <input name="volumen" id="inputVolumen" type="number" required>
-
-            <select name="tipo" id="recogerEntregar">
-                <option selected disabled>Seleccione una opción</option>
-                <option value="entregar">Para entregar</option>
-                <option value="recoger">Para recoger</option>
-            </select>
-
-            <p id="pDireccion" class="d-none">Dirección</p>
-            <input name="direccion" class="d-none" id="inputDireccion" type="text" required>
-
-            <p class="d-none" id="pCodigo">Código postal</p>
-            <input name="codigo_postal" class="d-none" id="inputCodigo" type="number" required>
-
-            <p class="d-none" id="pLatitud">Latitud</p>
-            <input name="latitud" class="d-none" id="inputLatitud" type="number" step="0.000000000000001" required>
-
-            <p class="d-none" id="pLongitud">Longitud</p>
-            <input name="longitud" class="d-none" id="inputLongitud" type="number" step="0.00000000000001" required>
-
-            <p class="d-none" id="pAlmacen">Almacen</p>
-            <select class="d-none" id="selectAlmacen" name="almacen-destino">
+        <form action="/bultos" method="POST" class="formulario-bultos">
+            <h4 id="crearBulto">Crear Bulto</h4>
+            <p class="d-none" id="pAlmacen">Almacen de destino</p>
+            <select id="selectAlmacen" name="almacen_destino">
             @foreach ($almacenes as $almacen)
-                <option value="{{$almacen->id}}">{{$almacen->direccion}}</option>
+                <option value="{{$almacen->id}}">{{$almacen->direccion}}, {{$almacen->codigo_postal}}</option>
             @endforeach
             </select><br>
 
-            <button type="submit" id="crearPaquete">Crear paquete</button>
+            <button type="submit" id="crearPaquete">Crear bulto</button>
         </form>
     </div>
 
+    <h2>Bultos cargados en un camión</h2>
+
+    <div class="table-container">
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Fecha de Carga</th>
+                <th>Camión</th>
+                <th>Eliminar</th>
+            </tr>
+            @foreach ($bultosEnCamion as $bulto)
+            <tr>
+                <td>{{$bulto->id}}</td>
+                <td>{{$bulto->fecha_inicio}}</td>
+                <td>{{$bulto->matricula}} ({{$bulto->codigo_pais}})</td>
+                <td>
+                    <form action="{{ route('bultos/camion.delete', ['id' => $bulto->carga_bulto_id]) }}" method="POST">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit">Eliminar</button>
+                    </form>
+                </td>
+            </tr>
+            @endforeach
+        </table>
+    </div>
+
+    <div class="container-form">
+        <form action="/bultos/camion" method="POST" class="formulario-bulto-camion">
+            <h4 id="cargarBultoCamion">Cargar Bulto a Camión</h4>
+
+            <label for="formulario-bulto-camion-select-bulto">Bulto</label>
+            <select name="id_bulto" id="formulario-bulto-camion-select-bulto">
+                <option selected disabled>Seleccione una opción</option>
+                @foreach ($bultosNoCargados as $bulto)
+                <option value="{{$bulto->id}}">{{$bulto->id}}: {{$bulto->fecha_armado}}</option>
+                @endforeach
+            </select>
+
+            <label for="formulario-bulto-camion-select-camion">Camion</label>
+            <select name="id_vehiculo" id="formulario-bulto-camion-select-camion">
+                <option selected disabled>Seleccione una opción</option>
+                @foreach ($camiones as $camion)
+                <option value="{{$camion->id}}">{{$camion->matricula}} ({{$camion->codigo_pais}})</option>
+                @endforeach
+            </select>
+
+            <button type="submit" id="cargarPaquete">Cargar paquete</button>
+        </form>
+    </div>
+
+    <h2>Bultos cargados en un almacen</h2>
+
+    <div class="table-container">
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Fecha de Carga</th>
+                <th>Almacen</th>
+                <th>Eliminar</th>
+            </tr>
+            @foreach ($bultosEnAlmacen as $bulto)
+            <tr>
+                <td>{{$bulto->id}}</td>
+                <td>{{$bulto->fecha_inicio}}</td>
+                <td>{{$bulto->direccion}}, {{$bulto->codigo_postal}}</td>
+                <td>
+                    <form action="{{ route('bultos/almacen.delete', ['id' => $bulto->bulto_almacen_id]) }}" method="POST">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit">Eliminar</button>
+                    </form>
+                </td>
+            </tr>
+            @endforeach
+        </table>
+    </div>
+
+    <div class="container-form">
+        <form action="/bultos/almacen" method="POST" class="formulario-bulto-almacen">
+            <h4 id="cargarbultoAlmacen">Cargar Bulto a Almacen</h4>
+
+            <label for="formulario-bulto-almacen-select-bulto">bulto</label>
+            <select name="id_bulto" id="formulario-bulto-almacen-select-bulto">
+                <option selected disabled>Seleccione una opción</option>
+                @foreach ($bultosNoCargados as $bulto)
+                <option value="{{$bulto->id}}">{{$bulto->id}}: {{$bulto->peso}}Kg {{$bulto->volumen}}L</option>
+                @endforeach
+            </select>
+
+            <label for="formulario-bulto-almacen-select-almacen">Almacen</label>
+            <select name="id_almacen" id="formulario-bulto-almacen-select-almacen">
+                <option selected disabled>Seleccione una opción</option>
+                @foreach ($almacenes as $almacen)
+                <option value="{{$almacen->id}}">{{$almacen->id}}</option>
+                @endforeach
+            </select>
+
+            <button type="submit" id="cargarBulto">Cargar bulto</button>
+        </form>
+    </div>
 
 
     <footer id="footer">
