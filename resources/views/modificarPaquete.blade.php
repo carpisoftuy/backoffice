@@ -31,7 +31,7 @@
                 <option value="recoger">Para recoger</option>
             </select>
 
-            <p class="d-none" id="pUbicacion">Almacen</p>
+            <p class="d-none" id="pUbicacion">Ubicacion</p>
             <select class="d-none" id="selectUbicacion" name="ubicacion_destino">
             @foreach ($ubicaciones as $ubicacion)
                 <option value="{{$ubicacion->id}}">{{$ubicacion->direccion}}</option>
