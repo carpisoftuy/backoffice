@@ -22,19 +22,21 @@
         <table>
             <tr>
                 <th>Id</th>
-                <th>Fecha despacho</th>
-                <th>Peso</th>
+                <th>Fecha armado</th>
                 <th>Volumen</th>
+                <th>Peso</th>
+                <th>Destino</th>
                 <th>Modificar</th>
                 <th>Eliminar</th>
             </tr>
-            @foreach ($paquetes as $paquete)
+            @foreach ($bultos as $bulto)
             <tr>
-                <td>{{$paquete->id}}</td>
-                <td>{{$paquete->fecha_despacho}}</td>
-                <td>{{$paquete->peso}}</td>
-                <td>{{$paquete->volumen}}</td>
-                <td><a href="/backoffice/paquetes/{{$paquete->id}}">Modificar</a></td>
+                <td>{{$bulto->id}}</td>
+                <td>{{$bulto->fecha_armado}}</td>
+                <td>{{$bulto->volumen}}</td>
+                <td>{{$bulto->peso}}</td>
+                <td>{{$bulto->almacen_destino->direccion}}, {{$bulto->almacen_destino->codigo_postal}}</td>
+                <td><a href="/backoffice/bultos/{{$bulto->id}}">Modificar</a></td>
                 <td><form action="{{ route('paquetes.delete', ['id' => $paquete->id]) }}" method="POST">
                     @csrf
                     @method('DELETE')

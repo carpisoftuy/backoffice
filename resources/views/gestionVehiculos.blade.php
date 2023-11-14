@@ -113,39 +113,6 @@
         </table>
     </div>
 
-    <h2>Listado de choferes</h2>
-    <div class="table-container">
-        <table>
-            <tr>
-                <th>id</th>
-                <th>Nombre de usuario</th>
-                <th>Nombre y apellido</th>
-                <th>Asignar camioneta</th>
-                <th></th>
-            </tr>
-            @foreach ($choferes as $chofer)
-            <tr>
-                <form method="post" action="../chofer/asignar_camioneta">
-                    @csrf
-                    <input name="id_usuario" value="{{$chofer->id}}" style="display: none">
-                    <td>{{$chofer->id}}</td>
-                    <td>{{$chofer->username}}</td>
-                    <td>{{$chofer->nombre . " " . $chofer->apellido}}</td>
-                    <td>
-                        <select name="id_vehiculo">
-                            <option disabled selected></option>
-                        @foreach ($camionetas as $camioneta)
-                            <option value="{{$camioneta->id}}">{{$camioneta->matricula}}</option>
-                        @endforeach
-                    </select>
-                    </td>
-                    <td><button type="submit">Actualizar</button></td>
-                </form>
-            </tr>
-            @endforeach
-        </table>
-    </div>
-
     <footer id="footer">
         <img class="logo-footer" src="{{ asset('img/carpifast.svg') }}">
         <ul class="contacto">

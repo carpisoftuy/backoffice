@@ -15,7 +15,7 @@
     @include('header')
 
     <header>
-        <h2 id="bienvenido">paquetes</h2>
+        <h2 id="bienvenido">Paquetes</h2>
     </header>
 
     <div class="table-container">
@@ -85,7 +85,107 @@
         </form>
     </div>
 
+    <h2>Paquetes cargados en una camioneta</h2>
 
+    <div class="table-container">
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Fecha de Carga</th>
+                <th>Camioneta</th>
+                <th>Eliminar</th>
+            </tr>
+            @foreach ($paquetesEnCamioneta as $paquete)
+            <tr>
+                <td>{{$paquete->id}}</td>
+                <td>{{$paquete->fecha_inicio}}</td>
+                <td>{{$paquete->matricula}} ({{$paquete->codigo_pais}})</td>
+                <td>
+                    <form action="{{ route('paquetes/camioneta.delete', ['id' => $paquete->carga_paquete_id]) }}" method="POST">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit">Eliminar</button>
+                    </form>
+                </td>
+            </tr>
+            @endforeach
+        </table>
+    </div>
+
+    <div class="container-form">
+        <form action="/paquetes/camioneta" method="POST" class="formulario-paquete-camioneta">
+            <h4 id="cargarPaqueteCamioneta">Cargar Paquete a Camioneta</h4>
+
+            <label for="formulario-paquete-camioneta-select-paquete">Paquete</label>
+            <select name="id_paquete" id="formulario-paquete-camioneta-select-paquete">
+                <option selected disabled>Seleccione una opción</option>
+                @foreach ($paquetesNoCargados as $paquete)
+                <option value="{{$paquete->id}}">{{$paquete->id}}: {{$paquete->peso}}Kg {{$paquete->volumen}}L</option>
+                @endforeach
+            </select>
+
+            <label for="formulario-paquete-camioneta-select-camioneta">Camioneta</label>
+            <select name="id_vehiculo" id="formulario-paquete-camioneta-select-camioneta">
+                <option selected disabled>Seleccione una opción</option>
+                @foreach ($camionetas as $camioneta)
+                <option value="{{$camioneta->id}}">{{$camioneta->matricula}} ({{$camioneta->codigo_pais}})</option>
+                @endforeach
+            </select>
+
+            <button type="submit" id="cargarPaquete">Cargar paquete</button>
+        </form>
+    </div>
+
+    <h2>Paquetes cargados en un bulto</h2>
+
+    <div class="table-container">
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Fecha de Carga</th>
+                <th>Bulto</th>
+                <th>Eliminar</th>
+            </tr>
+            @foreach ($paquetesEnBulto as $paquete)
+            <tr>
+                <td>{{$paquete->id}}</td>
+                <td>{{$paquete->fecha_inicio}}</td>
+                <td>{{$paquete->id_bulto}}</td>
+                <td>
+                    <form action="{{ route('paquetes/bulto.delete', ['id' => $paquete->bulto_contiene_id]) }}" method="POST">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit">Eliminar</button>
+                    </form>
+                </td>
+            </tr>
+            @endforeach
+        </table>
+    </div>
+
+    <div class="container-form">
+        <form action="/paquetes/bulto" method="POST" class="formulario-paquete-bulto">
+            <h4 id="cargarPaqueteBulto">Cargar Paquete a Bulto</h4>
+
+            <label for="formulario-paquete-bulto-select-paquete">Paquete</label>
+            <select name="id_paquete" id="formulario-paquete-bulto-select-paquete">
+                <option selected disabled>Seleccione una opción</option>
+                @foreach ($paquetesNoCargados as $paquete)
+                <option value="{{$paquete->id}}">{{$paquete->id}}: {{$paquete->peso}}Kg {{$paquete->volumen}}L</option>
+                @endforeach
+            </select>
+
+            <label for="formulario-paquete-camioneta-select-bulto">Bulto</label>
+            <select name="id_bulto" id="formulario-paquete-bulto-select-bulto">
+                <option selected disabled>Seleccione una opción</option>
+                @foreach ($bultos as $bulto)
+                <option value="{{$bulto->id}}">{{$bulto->id}}</option>
+                @endforeach
+            </select>
+
+            <button type="submit" id="cargarPaquete">Cargar paquete</button>
+        </form>
+    </div>
 
     <footer id="footer">
         <img class="logo-footer" src="{{ asset('img/carpifast.svg') }}">

@@ -53,20 +53,6 @@ class UsuariosController extends Controller
         ->join('vehiculo', 'camion.id', '=', 'vehiculo.id')
         ->get();
 
-        $paquetes_finalizados = DB::table('carga_paquete_fin')
-        ->select('id');
-
-        $paquetes_en_transito = DB::table('carga_paquete')
-        ->select('paquete.id', 'usuario.nombre', 'usuario.apellido', 'vehiculo.matricula', 'paquete.peso', 'paquete.volumen', 'carga_paquete.id as id_paquete')
-        ->join('paquete', 'carga_paquete.id_paquete', '=', 'paquete.id')
-        ->join('camioneta', 'carga_paquete.id_vehiculo', '=', 'camioneta.id')
-        ->join('vehiculo', 'camioneta.id', '=', 'vehiculo.id')
-        ->join('maneja', 'maneja.id_vehiculo', '=', 'vehiculo.id')
-        ->join('chofer', 'chofer.id', '=', 'maneja.id_usuario')
-        ->join('usuario', 'usuario.id', '=', 'chofer.id')
-        ->whereNotIn('carga_paquete.id', $paquetes_finalizados)
-        ->get();
-
         return view('gestionUsuarios',
             [
             'usuarios' => $usuarios,
@@ -74,7 +60,6 @@ class UsuariosController extends Controller
             'paquetes' => $paquetes,
             'camionetas' => $camionetas,
             'camiones' => $camiones,
-            'paquetes_en_transito' => $paquetes_en_transito,
             'vehiculos' => $vehiculos,
             'manejas' => $manejas
         ]);
@@ -102,7 +87,7 @@ class UsuariosController extends Controller
             $almacenero->id = $usuario->id;
             $almacenero->save();
         }
-        return redirect('/backoffice/');
+        return redirect('/backoffice/usuarios');
     }
 
     public function BorrarUsuario(Request $request){
@@ -125,7 +110,7 @@ class UsuariosController extends Controller
 
         $usuario->delete();
 
-        return redirect('/');
+        return redirect('/backoffice/usuarios');
     }
 
     public function CrearFormulario(Request $request){
@@ -172,7 +157,7 @@ class UsuariosController extends Controller
             $almacenero->delete();
         }
 
-        return redirect('/');
+        return redirect('/backoffice/usuarios');
     }
 
     public function AsignarChoferAVehiculo(Request $request){
@@ -202,7 +187,7 @@ class UsuariosController extends Controller
                   'fecha_inicio' => now()
         ]);
 
-        return redirect('/backoffice/vehiculos');
+        return redirect('/backoffice/usuarios');
     }
 
     public function DesasignarChoferAVehiculo(Request $request){
@@ -214,7 +199,7 @@ class UsuariosController extends Controller
         $manejaFin->fecha_fin = now();
         $manejaFin->save();
 
-        return redirect('/backoffice/vehiculos');
+        return redirect('/backoffice/usuarios');
     }
 
 }

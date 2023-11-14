@@ -19,15 +19,9 @@ use App\Http\Controllers\UbicacionController;
 */
 Route::post('/usuarios/', [UsuariosController::class, 'CrearUsuario']);
 Route::put('/usuarios/{id}', [UsuariosController::class, 'UpdateUsuarios']);
-Route::delete('/usuarios/{id}', [UsuariosController::class, 'BorrarUsuario']);
-Route::get('/usuarios/{id}/borrar', [UsuariosController::class, 'BorrarUsuario']);
+Route::delete('/usuarios/{id}', [UsuariosController::class, 'BorrarUsuario'])->name('usuarios.delete');
 
-Route::post('/paquete/asignar_camioneta', [PaqueteController::class, 'AsignarCamioneta']);
-Route::get('/paquete/finalizar_transito/{id}', [PaqueteController::class, 'FinalizarTransito']);
-Route::post('/chofer/asignar_camioneta', [UsuariosController::class, 'AsignarChoferACamioneta']);
 
-Route::post('/paquete/asignar_camioneta', [PaqueteController::class, 'AsignarCamioneta']);
-Route::get('/paquete/finalizar_transito/{id}', [PaqueteController::class, 'FinalizarTransito']);
 
 Route::get('/paquetes', [PaqueteController::class, 'GetPaquetes']);
 Route::get('/paquetes/{id}', [PaqueteController::class, 'GetPaquete']);
@@ -35,8 +29,14 @@ Route::post('/paquetes', [PaqueteController::class, 'CreatePaquete']);
 Route::put('/paquetes/{id}', [PaqueteController::class, 'UpdatePaquete']);
 Route::delete('/paquetes/{id}', [PaqueteController::class, 'DeletePaquete'])->name('paquetes.delete');
 
-Route::post('/choferes/asignar_vehiculo', [UsuariosController::class, 'AsignarChoferAVehiculo']);
-Route::delete('/choferes/desasignar_vehiculo/{id}', [UsuariosController::class, 'DesasignarChoferAVehiculo']);
+Route::post('/paquetes/camioneta', [PaqueteController::class, 'AsignarCamioneta']);
+Route::delete('/paquetes/camioneta/{id}', [PaqueteController::class, 'FinalizarTransito'])->name('paquetes/camioneta.delete');
+
+Route::post('/paquetes/bulto', [PaqueteController::class, 'AsignarBulto']);
+Route::delete('/paquetes/bulto/{id}', [PaqueteController::class, 'DesasignarBulto'])->name('paquetes/bulto.delete');
+
+Route::post('/choferes/asignar', [UsuariosController::class, 'AsignarChoferAVehiculo']);
+Route::delete('/choferes/asignar/{id}', [UsuariosController::class, 'DesasignarChoferAVehiculo'])->name('choferes/asignar.delete');
 
 Route::get('/vehiculos', [VehiculoController::class, 'GetVehiculos']);
 Route::get('/vehiculos/{id}', [VehiculoController::class, 'GetVehiculo']);
@@ -58,7 +58,9 @@ Route::delete('/ubicaciones/{id}', [UbicacionController::class, 'DeleteUbicacion
 
 Route::redirect('/', '/backoffice');
 Route::prefix('/backoffice')->group(function (){
-    Route::get('/', [UsuariosController::class, 'MenuUsuarios']);
+    Route::redirect('/', '/backoffice/usuarios');
+
+    Route::get('/usuarios', [UsuariosController::class, 'MenuUsuarios']);
     Route::get('/usuarios/crear', function(){
         return view('formularioUsuarios');
     });

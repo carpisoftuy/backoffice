@@ -10,21 +10,20 @@ use App\Models\Ubicacion;
 use App\Models\PaqueteParaRecoger;
 use App\Models\PaqueteParaEntregar;
 use App\Models\CargaPaquete;
+use App\Models\BultoContiene;
+use App\Models\BultoContieneFin;
 
 class PaqueteController extends Controller
 {
     public function AsignarCamioneta (Request $request){
 
-        $paquete = $request->paquete;
-        $camioneta = $request->camioneta;
-
         DB::table('carga_paquete')->insert([
-            'id_paquete' => $paquete,
-            'id_vehiculo' => $camioneta,
+            'id_paquete' => $request->id_paquete,
+            'id_vehiculo' => $request->id_vehiculo,
             'fecha_inicio' => now()
         ]);
 
-        return redirect('./');
+        return redirect('/backoffice/paquetes');
 
     }
 
@@ -39,7 +38,7 @@ class PaqueteController extends Controller
 
         ]);
 
-        return redirect('/');
+        return redirect('/backoffice/paquetes');
     }
 
     public function CreatePaquete (Request $request){
@@ -72,7 +71,7 @@ class PaqueteController extends Controller
         }
 
         DB::commit();
-        return Paquete::find($paquete->id);
+        return redirect('/backoffice/paquetes');
     }
 
     public function GetPaquete(Request $request){
@@ -122,12 +121,12 @@ class PaqueteController extends Controller
         $paqueteParaEntregar = PaqueteParaEntregar::find($request->id);
         $paqueteParaRecoger = PaqueteParaRecoger::find($request->id);
         $paquete = Paquete::find($request->id);
-        if($paqueteParaEntregar){
+        /*if($paqueteParaEntregar){
             $paqueteParaEntregar->delete();
         }
         if($paqueteParaRecoger){
             $paqueteParaRecoger->delete();
-        }
+        }*/
 
         $paquete->delete();
 
@@ -135,19 +134,76 @@ class PaqueteController extends Controller
     }
 
     public function menuPaquetes(Request $request){
+        $almacenes = DB::table('almacen')
+            ->join('ubicacion','ubicacion.id','=','almacen.id_ubicacion')
+            ->select('almacen.id', 'espacio', 'espacio_ocupado', 'id_ubicacion', 'direccion', 'codigo_postal')
+            ->get();
+
+        $camionetas = DB::table('vehiculo')
+            ->whereIn('vehiculo.id',
+                DB::table('camioneta')->select('id')
+            )
+            ->get();
 
         $paquetes = DB::table('paquete')
-        ->select('*')
-        ->get();
+            ->select('*')
+            ->get();
 
-        $almacenes = DB::table('almacen')
-        ->join('ubicacion','ubicacion.id','=','almacen.id_ubicacion')
-        ->select('almacen.id', 'espacio', 'espacio_ocupado', 'id_ubicacion', 'direccion', 'codigo_postal')
-        ->get();
+        $bultos = DB::table('bulto')
+            ->whereNotIn('bulto.id',
+                DB::table('bulto_desarmado')
+                ->select('id')
+            )
+            ->select('*')
+            ->get();
+
+        $paquetesEnCamioneta = DB::table('paquete')
+            ->join('carga_paquete', 'carga_paquete.id_paquete', '=', 'paquete.id')
+            ->whereNotIn('carga_paquete.id',
+                DB::table('carga_paquete_fin')
+                ->select('id')
+            )
+            ->join('vehiculo', 'carga_paquete.id_vehiculo', '=', 'vehiculo.id')
+            ->select('*', 'carga_paquete.id as carga_paquete_id', 'paquete.id')
+            ->get();
+
+        $paquetesEnBulto = DB::table('paquete')
+            ->join('bulto_contiene', 'paquete.id', '=', 'bulto_contiene.id_paquete')
+            ->whereNotIn('bulto_contiene.id',
+                DB::table('bulto_contiene_fin')
+                ->select('id')
+            )
+            ->select('*', 'bulto_contiene.id as bulto_contiene_id', 'paquete.id')
+            ->get();
+
+        $paquetesNoCargados = DB::table('paquete')
+            ->whereNotIn('paquete.id',
+                DB::table('carga_paquete')
+                ->whereNotIn('carga_paquete.id',
+                    DB::table('carga_paquete_fin')
+                    ->select('id')
+                )
+                ->select('carga_paquete.id_paquete')
+            )
+            ->whereNotIn('paquete.id',
+                DB::table('bulto_contiene')
+                ->whereNotIn('bulto_contiene.id',
+                    DB::table('bulto_contiene_fin')
+                    ->select('id')
+                )
+                ->select('bulto_contiene.id_paquete')
+            )
+            ->select('*', 'paquete.id')
+            ->get();
 
         return view('gestionPaquetes', [
             'paquetes' => $paquetes,
             'almacenes' => $almacenes,
+            'paquetesEnCamioneta' => $paquetesEnCamioneta,
+            'paquetesNoCargados' => $paquetesNoCargados,
+            'paquetesEnBulto' => $paquetesEnBulto,
+            'camionetas' => $camionetas,
+            'bultos' => $bultos
         ]);
 
     }
@@ -169,6 +225,27 @@ class PaqueteController extends Controller
             'ubicaciones' => $ubicaciones
         ]);
 
+    }
+
+    public function AsignarBulto(Request $request){
+        $bultoContiene = new BultoContiene();
+        $bultoContiene->id_paquete = $request->id_paquete;
+        $bultoContiene->id_bulto = $request->id_bulto;
+        $bultoContiene->fecha_inicio = now();
+
+        $bultoContiene->save();
+
+        return redirect('/backoffice/paquetes');
+    }
+
+    public function DesasignarBulto(Request $request){
+        $bultoContieneFin = new BultoContieneFin();
+        $bultoContieneFin->id = $request->id;
+        $bultoContieneFin->fecha_fin = now();
+
+        $bultoContieneFin->save();
+
+        return redirect('/backoffice/paquetes');
     }
 
 

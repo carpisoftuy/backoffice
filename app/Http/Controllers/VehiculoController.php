@@ -36,7 +36,7 @@ class VehiculoController extends Controller
         ->get();
 
 
-        return view('vehiculos', [
+        return view('gestionVehiculos', [
             'choferes' => $choferes,
             'camionetas' => $camionetas,
             'camiones' => $camiones,
