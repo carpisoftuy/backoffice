@@ -35,6 +35,9 @@ Route::delete('/paquetes/camioneta/{id}', [PaqueteController::class, 'FinalizarT
 Route::post('/paquetes/bulto', [PaqueteController::class, 'AsignarBulto']);
 Route::delete('/paquetes/bulto/{id}', [PaqueteController::class, 'DesasignarBulto'])->name('paquetes/bulto.delete');
 
+Route::post('/paquetes/almacen', [PaqueteController::class, 'AsignarAlmacen']);
+Route::delete('/paquetes/almacen/{id}', [PaqueteController::class, 'DesasignarAlmacen'])->name('paquetes/almacen.delete');
+
 Route::post('/choferes/asignar', [UsuariosController::class, 'AsignarChoferAVehiculo']);
 Route::delete('/choferes/asignar/{id}', [UsuariosController::class, 'DesasignarChoferAVehiculo'])->name('choferes/asignar.delete');
 

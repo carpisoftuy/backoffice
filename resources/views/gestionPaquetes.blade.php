@@ -25,6 +25,8 @@
                 <th>Fecha despacho</th>
                 <th>Peso</th>
                 <th>Volumen</th>
+                <th>Tipo de Entrega</th>
+                <th>Direccion de Entrega</th>
                 <th>Modificar</th>
                 <th>Eliminar</th>
             </tr>
@@ -34,6 +36,25 @@
                 <td>{{$paquete->fecha_despacho}}</td>
                 <td>{{$paquete->peso}}</td>
                 <td>{{$paquete->volumen}}</td>
+                <td>
+                    @if ($paquete->direccion_recoger != null)
+                        Recoger
+                    @elseif ($paquete->direccion_entregar != null)
+                        Entregar
+                    @else
+                        Ninguno
+                    @endif
+                </td>
+
+                <td>
+                    @if ($paquete->direccion_recoger != null)
+                        {{$paquete->direccion_recoger}}, {{$paquete->codigo_postal_recoger}}
+                    @elseif ($paquete->direccion_entregar != null)
+                        {{$paquete->direccion_entregar}}, {{$paquete->codigo_postal_entregar}}
+                    @else
+                        No se encontró
+                    @endif
+                </td>
                 <td><a href="/backoffice/paquetes/{{$paquete->id}}">Modificar</a></td>
                 <td><form action="{{ route('paquetes.delete', ['id' => $paquete->id]) }}" method="POST">
                     @csrf
@@ -175,11 +196,62 @@
                 @endforeach
             </select>
 
-            <label for="formulario-paquete-camioneta-select-bulto">Bulto</label>
+            <label for="formulario-paquete-bulto-select-bulto">Bulto</label>
             <select name="id_bulto" id="formulario-paquete-bulto-select-bulto">
                 <option selected disabled>Seleccione una opción</option>
                 @foreach ($bultos as $bulto)
                 <option value="{{$bulto->id}}">{{$bulto->id}}</option>
+                @endforeach
+            </select>
+
+            <button type="submit" id="cargarPaquete">Cargar paquete</button>
+        </form>
+    </div>
+
+    <h2>Paquetes cargados en un almacen</h2>
+
+    <div class="table-container">
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Fecha de Carga</th>
+                <th>Almacen</th>
+                <th>Eliminar</th>
+            </tr>
+            @foreach ($paquetesEnAlmacen as $paquete)
+            <tr>
+                <td>{{$paquete->id}}</td>
+                <td>{{$paquete->fecha_inicio}}</td>
+                <td>{{$paquete->direccion}}, {{$paquete->codigo_postal}}</td>
+                <td>
+                    <form action="{{ route('paquetes/almacen.delete', ['id' => $paquete->paquete_almacen_id]) }}" method="POST">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit">Eliminar</button>
+                    </form>
+                </td>
+            </tr>
+            @endforeach
+        </table>
+    </div>
+
+    <div class="container-form">
+        <form action="/paquetes/almacen" method="POST" class="formulario-paquete-almacen">
+            <h4 id="cargarPaqueteAlmacen">Cargar Paquete a Almacen</h4>
+
+            <label for="formulario-paquete-almacen-select-paquete">Paquete</label>
+            <select name="id_paquete" id="formulario-paquete-almacen-select-paquete">
+                <option selected disabled>Seleccione una opción</option>
+                @foreach ($paquetesNoCargados as $paquete)
+                <option value="{{$paquete->id}}">{{$paquete->id}}: {{$paquete->peso}}Kg {{$paquete->volumen}}L</option>
+                @endforeach
+            </select>
+
+            <label for="formulario-paquete-almacen-select-almacen">Almacen</label>
+            <select name="id_almacen" id="formulario-paquete-almacen-select-almacen">
+                <option selected disabled>Seleccione una opción</option>
+                @foreach ($almacenes as $almacen)
+                <option value="{{$almacen->id}}">{{$almacen->id}}</option>
                 @endforeach
             </select>
 
