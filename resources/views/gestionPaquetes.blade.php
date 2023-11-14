@@ -28,6 +28,7 @@
                 <th>Tipo de Entrega</th>
                 <th>Direccion de Entrega</th>
                 <th>Modificar</th>
+                <th>Entregar</th>
                 <th>Eliminar</th>
             </tr>
             @foreach ($paquetes as $paquete)
@@ -56,6 +57,7 @@
                     @endif
                 </td>
                 <td><a href="/backoffice/paquetes/{{$paquete->id}}">Modificar</a></td>
+                <td><a href="/paquetes/{{$paquete->id}}/entregar">Entregar</a></td>
                 <td><form action="{{ route('paquetes.delete', ['id' => $paquete->id]) }}" method="POST">
                     @csrf
                     @method('DELETE')

@@ -9,6 +9,8 @@ use App\Models\Almacen;
 use App\Models\Ubicacion;
 use App\Models\PaqueteParaRecoger;
 use App\Models\PaqueteParaEntregar;
+use App\Models\PaqueteRecogido;
+use App\Models\PaqueteEntregado;
 use App\Models\CargaPaquete;
 use App\Models\BultoContiene;
 use App\Models\BultoContieneFin;
@@ -305,6 +307,28 @@ class PaqueteController extends Controller
         return redirect('/backoffice/paquetes');
     }
 
+    public function EntregarPaquete(Request $request){
+        $paquete = Paquete::leftJoin('paquete_para_entregar', 'paquete.id', '=', 'paquete_para_entregar.id')
+            ->leftJoin('paquete_para_recoger', 'paquete.id', '=', 'paquete_para_recoger.id')
+            ->select('paquete_para_recoger.id as para_recoger', 'paquete_para_entregar.id as para_entregar')
+            ->where('paquete.id', '=', $request->id)
+            ->first();
+
+        if($paquete->para_entregar != null){
+            $paqueteEntregado = new PaqueteEntregado();
+            $paqueteEntregado->id = $paquete->para_entregar;
+            $paqueteEntregado->fecha_entregado = now();
+            $paqueteEntregado->save();
+        }
+        if($paquete->para_recoger != null){
+            $paqueteRecogido = new PaqueteRecogido();
+            $paqueteRecogido->id = $paquete->para_recoger;
+            $paqueteRecogido->fecha_recogido = now();
+            $paqueteRecogido->save();
+        }
+
+        return redirect('/backoffice/paquetes');
+    }
 
 
 }

@@ -30,6 +30,8 @@ Route::post('/paquetes', [PaqueteController::class, 'CreatePaquete']);
 Route::put('/paquetes/{id}', [PaqueteController::class, 'UpdatePaquete']);
 Route::delete('/paquetes/{id}', [PaqueteController::class, 'DeletePaquete'])->name('paquetes.delete');
 
+Route::get('/paquetes/{id}/entregar', [PaqueteController::class, 'EntregarPaquete']);
+
 Route::post('/paquetes/camioneta', [PaqueteController::class, 'AsignarCamioneta']);
 Route::delete('/paquetes/camioneta/{id}', [PaqueteController::class, 'FinalizarTransito'])->name('paquetes/camioneta.delete');
 
