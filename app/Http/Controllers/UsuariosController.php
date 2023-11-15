@@ -25,7 +25,7 @@ class UsuariosController extends Controller
     }
 
     public function Login(Request $request) {
-        $user = User::where('username', $request->username)->first();
+        $user = Usuario::where('username', $request->username)->first();
 
         if (!$user) {
             return response()->json([
@@ -45,10 +45,7 @@ class UsuariosController extends Controller
             $token = $user->createToken('auth_token')->accessToken;
             $user->token = $token;
             auth()->login($user);
-            return response()->json([
-                'message' => 'Logueado',
-                'user' => $user
-            ]);
+            return redirect('/');
         }
         return response()->json([
             'message' => 'La contraseña ingresada es incorrecta'
