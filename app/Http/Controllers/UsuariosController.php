@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Usuario;
+use App\Models\User;
 use App\Models\Admin;
 use App\Models\Chofer;
 use App\Models\Almacenero;
@@ -13,6 +14,47 @@ use Illuminate\Support\Facades\DB;
 
 class UsuariosController extends Controller
 {
+
+    public function ValidateToken(Request $request){
+        return auth('api')->user();
+    }
+
+    public function Logout(Request $request){
+        $request->user()->token()->revoke();
+        return ['message' => 'Token Revoked'];
+    }
+
+    public function Login(Request $request) {
+        $user = User::where('username', $request->username)->first();
+
+        if (!$user) {
+            return response()->json([
+                'message' => 'No se ha encontrado el usuario'
+            ], 404);
+        }
+
+        $administrador = Admin::find($user->id);
+        if(!$administrador){
+            return response()->json([
+                'message' => 'Usuario sin permisos de admin'
+            ], 401);
+        }
+
+
+        if (password_verify($request->password, $user->password)) {
+            $token = $user->createToken('auth_token')->accessToken;
+            $user->token = $token;
+            auth()->login($user);
+            return response()->json([
+                'message' => 'Logueado',
+                'user' => $user
+            ]);
+        }
+        return response()->json([
+            'message' => 'La contraseña ingresada es incorrecta'
+        ], 401);
+    }
+
     public function MenuUsuarios(Request $request){
         $usuarios = Usuario::all();
         foreach($usuarios as $usuario){

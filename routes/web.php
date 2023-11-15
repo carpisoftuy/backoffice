@@ -96,4 +96,12 @@ Route::prefix('/backoffice')->group(function (){
     Route::get('/bultos', [BultosController::class, 'menuBultos']);
 });
 
+Route::get('/login',function(){
+    return view('login');
+});
+
+Route::get('/validar',[UsuariosController::class,"ValidateToken"])->middleware('auth:api');
+Route::post('/usuario/validar',[UsuariosController::class,"Login"]);
+Route::get('/logout',[UsuariosController::class,"Logout"])->middleware('auth:api');
+
 
