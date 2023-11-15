@@ -17,7 +17,7 @@ class CreateVehiculoCorrectamente extends TestCase
     public function testCreateVehiculoCorrectamente() {
         $response = $this->post('/vehiculos', [
 
-            'codigo_pais' => "CO",
+            'codigo_pais' => "AO",
             'matricula' => "SBZ-1441",
             'capacidad_volumen' => 1000,
             'capacidad_peso' => 1000,
