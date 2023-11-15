@@ -45,7 +45,10 @@ class UsuariosController extends Controller
             $token = $user->createToken('auth_token')->accessToken;
             $user->token = $token;
             auth()->login($user);
-            return redirect('/');
+            return response()->json([
+                'message' => 'Logueado',
+                'user' => $user
+            ]);
         }
         return response()->json([
             'message' => 'La contraseña ingresada es incorrecta'

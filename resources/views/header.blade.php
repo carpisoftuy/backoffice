@@ -15,6 +15,7 @@
         <li class="list-element"><a href="/backoffice/vehiculos">Vehiculos</a></li>
         <li class="list-element"><a id="panel" href="/backoffice">Panel backoffice</a></li>
         <li class="list-element"><a id="registro" href="/backoffice/usuarios/crear">Registrar usuario</a></li>
+        <li class="list-element"><a id="cerrar_sesion" style="cursor: pointer;" onclick="cerrarSesion()">Cerrar sesión</a></li>
         <li class="list-element">
             <div class="dropdown">
               <button id="idioma" class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">Idioma</button>
