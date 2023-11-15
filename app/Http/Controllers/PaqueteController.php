@@ -231,6 +231,14 @@ class PaqueteController extends Controller
                 )
                 ->select('almacen_contiene_paquete.id_paquete')
             )
+            ->whereNotIn('paquete.id',
+                DB::table('paquete_entregado')
+                ->select('id')
+            )
+            ->whereNotIn('paquete.id',
+                DB::table('paquete_recogido')
+                ->select('id')
+            )
             ->select('*', 'paquete.id')
             ->get();
 
