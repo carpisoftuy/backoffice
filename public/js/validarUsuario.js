@@ -1,5 +1,5 @@
 jQuery.ajax({
-    url: 'http://127.0.0.1:8000/validar',
+    url: 'http://127.0.0.1:8000/api/validar',
     type: 'GET',
     headers:{
         Authorization: "Bearer " + localStorage.getItem("token"),
@@ -19,7 +19,7 @@ jQuery.ajax({
 function cerrarSesion(){
 
     jQuery.ajax({
-        url: 'http://127.0.0.1:8000/logout',
+        url: 'http://127.0.0.1:8000/api/logout',
         type: 'GET',
         headers:{
             Authorization: "Bearer " + localStorage.getItem("token"),

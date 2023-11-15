@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AlmacenesController;
 use App\Http\Controllers\BultosController;
+use App\Http\Controllers\UsuariosController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,3 +20,7 @@ use App\Http\Controllers\BultosController;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::get('/validar',[UsuariosController::class,"ValidateToken"])->middleware('auth:api');
+Route::post('/usuario/validar',[UsuariosController::class,"Login"]);
+Route::get('/logout',[UsuariosController::class,"Logout"])->middleware('auth:api');
