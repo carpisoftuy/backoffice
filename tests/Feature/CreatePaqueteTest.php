@@ -22,7 +22,7 @@ class CreatePaqueteTest extends TestCase
 
         ]);
 
-        $response->assertStatus(200);
+        $response->assertStatus(302);
 
         $paqueteCreadoId = Paquete::latest('id')->first()->id;
 

@@ -17,7 +17,7 @@ class CreateVehiculoCorrectamente extends TestCase
     public function testCreateVehiculoCorrectamente() {
         $response = $this->post('/vehiculos', [
 
-            'codigo_pais' => "ZM",
+            'codigo_pais' => "CO",
             'matricula' => "SBZ-1441",
             'capacidad_volumen' => 1000,
             'capacidad_peso' => 1000,
@@ -27,7 +27,7 @@ class CreateVehiculoCorrectamente extends TestCase
 
         ]);
 
-        $response->assertStatus(201);
+        $response->assertStatus(302);
 
         $vehiculoCreadoId = Vehiculo::latest('id')->first()->id;
 

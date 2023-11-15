@@ -16,7 +16,7 @@ class UpdateVehiculoTest extends TestCase
     public function testUpdateVehiculo(){
 
         $vehiculo = Vehiculo::create([
-            'codigo_pais' => "LY",
+            'codigo_pais' => "GU",
             'matricula' => "SBZ-1441",
             'capacidad_volumen' => 1000,
             'capacidad_peso' => 1000,
@@ -24,18 +24,19 @@ class UpdateVehiculoTest extends TestCase
             'volumen_ocupado' => 0
         ]);
 
-        $nuevoCodigo = "ZM";
+        $nuevoCodigo = "CY";
+        $nuevaMatricula = "OLA-0000";
 
         $response = $this->put("/vehiculos/{$vehiculo->id}", [
             'codigo_pais' => $nuevoCodigo,
-            'matricula' => "SBZ-1441",
+            'matricula' => $nuevaMatricula,
             'capacidad_volumen' => 1000,
             'capacidad_peso' => 1000,
             'peso_ocupado' => 0,
             'volumen_ocupado' => 0
         ]);
 
-        $response->assertStatus(200);
+        $response->assertStatus(302);
 
         // Verifica que los datos del vehiculo actualizado coincidan con los nuevos datos
         $this->assertEquals($nuevoCodigo, $vehiculo->fresh()->codigo_pais);

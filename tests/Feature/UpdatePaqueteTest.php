@@ -29,7 +29,7 @@ class UpdatePaqueteTest extends TestCase
             'peso' => $nuevoPeso,
         ]);
 
-        $response->assertStatus(200);
+        $response->assertStatus(302);
 
         // Verifica que los datos del paquete actualizado coincidan con los nuevos datos
         $this->assertEquals($nuevoVolumen, $paquete->fresh()->volumen);

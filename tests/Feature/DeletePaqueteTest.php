@@ -22,7 +22,7 @@ class DeletePaqueteTest extends TestCase
     ]);
 
     $response = $this->delete("/paquetes/{$paquete->id}");
-    $response->assertStatus(200);
+    $response->assertStatus(302);
 
     }
 
